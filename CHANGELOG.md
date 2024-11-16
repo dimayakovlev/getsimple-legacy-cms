@@ -7,6 +7,7 @@ All notable changes of GetSimple Legacy CMS will be documented in this file.
 ### Added
 
 - Support WEBP image format. PHP 5.4 or higher required.
+- Automatic transliteration of names when uploading files and creating directories.
 
 ### Changed
 

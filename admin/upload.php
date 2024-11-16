@@ -52,6 +52,7 @@ if (isset($_FILES['file'])) {
 			$extension = pathinfo($file,PATHINFO_EXTENSION);
 			if(getDef('GSUPLOADSLC',true)) $extension = lowercase($extension);
 	  		$name      = pathinfo($file,PATHINFO_FILENAME);
+			$name = doTransliteration($name);
 			$name      = clean_img_name(to7bit($name));
 			$base      = $name . '.' . $extension;
 
@@ -112,7 +113,8 @@ if (isset($_GET['newfolder'])) {
 	
 	$newfolder = $_GET['newfolder'];
 	// check for invalid chars
-	$cleanname = clean_url(to7bit(strippath($newfolder), "UTF-8"));
+	$cleanname = doTransliteration(strippath($newfolder));
+	$cleanname = clean_url(to7bit($cleanname, 'UTF-8'));
 	if (file_exists($path.$cleanname) || $cleanname=='') {
 			$error = i18n_r('ERROR_FOLDER_EXISTS');
 	} else {

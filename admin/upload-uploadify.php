@@ -4,7 +4,7 @@
  *
  * Ajax action file for jQuery uploader
  *
- * @package GetSimple
+ * @package GetSimple Legacy
  * @subpackage Files
  */
 
@@ -29,6 +29,7 @@ if ($_POST['sessionHash'] === $SESSIONHASH) {
 		$extension = pathinfo($file,PATHINFO_EXTENSION);
 		if(getDef('GSUPLOADSLC',true)) $extension = lowercase($extension);
   		$name      = pathinfo($file,PATHINFO_FILENAME);
+		$name = doTransliteration($name);
 		$name      = clean_img_name(to7bit($name));
 
 		$targetPath = (isset($_POST['path'])) ? GSDATAUPLOADPATH.$_POST['path']."/" : GSDATAUPLOADPATH;

@@ -2,6 +2,12 @@
 
 All notable changes of GetSimple Legacy CMS will be documented in this file.
 
+## [Unreleased]
+
+### Added
+
+- Automatic transliteration of names for uploading files and creating directories.
+
 ## [2024.1] - 2024-11-11
 
 ### Added

@@ -8,6 +8,10 @@ All notable changes of GetSimple Legacy CMS will be documented in this file.
 
 - Automatic transliteration of names for uploading files and creating directories.
 
+### Changed
+
+- Show real name of the user in the welcome message.
+
 ## [2024.1] - 2024-11-11
 
 ### Added

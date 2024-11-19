@@ -22,6 +22,10 @@ All this makes it possible to consider and successfully use **GetSimple Legacy C
 
 **GetSimple Legacy CMS** is licensed under the GNU GENERAL PUBLIC LICENSE v3. See [LICENSE](LICENSE.txt).
 
+## Changelog
+
+See [CHANGELOG](CHANGELOG.md) for details on changes and fixes were made.
+
 ## Contributing
 
 **GetSimple Legacy CMS** supported and developed by [Dmitry Yakovlev](http://dimayakovlev.ru).

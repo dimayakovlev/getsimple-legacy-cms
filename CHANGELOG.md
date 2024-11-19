@@ -11,6 +11,7 @@ All notable changes of GetSimple Legacy CMS will be documented in this file.
 ### Changed
 
 - Show real name of the user in the welcome message.
+- Use line wrapping option for CodeMirror to improve usability while work with long strings of code.
 
 ## [2024.1] - 2024-11-11
 

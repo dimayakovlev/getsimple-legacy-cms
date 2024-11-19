@@ -179,6 +179,7 @@ window.onload = function() {
         indentUnit: 4,
         indentWithTabs: true,
         enterMode: "keep",
+        lineWrapping: true,
         mode:"<?php echo $mode; ?>",
         tabMode: "shift",
         theme:'default',

@@ -7,6 +7,7 @@ All notable changes of GetSimple Legacy CMS will be documented in this file.
 ### Added
 
 - Automatic transliteration of names for uploading files and creating directories.
+- Use CodeMirror to highlight and improve components code editing.
 
 ### Changed
 

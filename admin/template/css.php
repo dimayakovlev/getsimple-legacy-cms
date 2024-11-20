@@ -2110,3 +2110,9 @@ a.disabled:visited {
 .cke_toolbar_separator {
 	box-shadow: 1px 0 1px rgba(0, 0, 0, 0.14) !important;
 }
+
+/* Override CodeMirror styles for components */
+#components .CodeMirror, #components .CodeMirror-scroll {
+	height: auto;
+	max-height: 660px;
+}

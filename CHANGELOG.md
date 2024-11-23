@@ -2,6 +2,12 @@
 
 All notable changes of GetSimple Legacy CMS will be documented in this file.
 
+## [Unreleased]
+
+### Fixed
+
+- Remove call of deprecated function utf8_encode() from the template function get_link_menu_array(). Use normal spaces instead \xA0 to indent menu items.
+
 ## [2024.1] - 2024-11-11
 
 ### Added

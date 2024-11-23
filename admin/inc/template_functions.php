@@ -1,14 +1,12 @@
-<?php if(!defined('IN_GS')){ die('you cannot load this page directly.'); }
+<?php if (!defined('IN_GS')) { die('you cannot load this page directly.'); }
 /**
  * Template Functions
  *
  * These functions are used within the back-end of a GetSimple installation
  *
- * @package GetSimple
- * @subpackage Zip
- */ 
-	
-	
+ * @package GetSimple Legacy
+ */
+
 /**
  * Get Template
  *
@@ -670,53 +668,53 @@ function updateSlugs($existingUrl, $newurl=null){
       }
 }
 
-          
+
 /**
  * Get Link Menu Array
- * 
+ *
  * get an array of menu links sorted by heirarchy and indented
- * 
+ *
  * @uses $pagesSorted
  *
- * @since  3.3.0
+ * @since 3.3.0
+ * @since 2024.1.1 Remove function utf8_encode(). Use normal spaces instead \xA0
  * @param string $parent
  * @param array $array
  * @param int $level
- * @return array menuitems title,url,parent
+ * @return array menuitems title, url, parent
  */
-function get_link_menu_array($parent='', $array=array(), $level=0) {
-	
+function get_link_menu_array($parent = '', $array = array(), $level = 0){
 	global $pagesSorted;
-	
+
 	$items=array();
 	// $pageList=array();
 
 	foreach ($pagesSorted as $page) {
 		if ($page['parent']==$parent){
 			$items[(string)$page['url']]=$page;
-		}	
-	}	
+		}
+	}
 
-	if (count($items)>0){
+	if (count($items) > 0) {
 		foreach ($items as $page) {
-		  	$dash="";
-		  	if ($page['parent'] != '') {
-	  			$page['parent'] = $page['parent']."/";
-	  		}
-			for ($i=0;$i<=$level-1;$i++){
-				if ($i!=$level-1){
-	  				$dash .= utf8_encode("\xA0\xA0"); // outer level
-          } else {
+			$dash = '';
+			if ($page['parent'] != '') {
+				$page['parent'] = $page['parent'] . '/';
+			}
+			for ($i = 0; $i <= $level - 1; $i++) {
+				if ($i != $level - 1) {
+					$dash .= '  ';
+				} else {
 					$dash .= '- '; // inner level
-            }   
-          } 
-			array_push($array, array( $dash . $page['title'], find_url($page['url'], $page['parent'])));
+				}
+			}
+			array_push($array, array($dash . $page['title'], find_url($page['url'], $page['parent'])));
 			// recurse submenus
-			$array=get_link_menu_array((string)$page['url'], $array,$level+1);	 
-        }
-      }
+			$array = get_link_menu_array((string) $page['url'], $array, $level + 1);
+		}
+	}
 	return $array;
-} 
+}
 
 /**
  * List Pages Json

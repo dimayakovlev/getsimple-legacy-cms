@@ -2,6 +2,12 @@
 
 All notable changes of GetSimple Legacy CMS will be documented in this file.
 
+## [Unreleased]
+
+### Fixed
+
+- Prevent implicit conversion from float to int while create images thumbnails on PHP 8.1 and later.
+
 ## [2024.1.1] - 2024-11-23
 
 ### Fixed

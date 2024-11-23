@@ -4,8 +4,12 @@
  *
  * @link //www.zubrag.com/scripts/
  * @version 1.3
+ * 
+ * @version 1.3.1
+ * @author Dmitry Yakovlev
+ * @since 1.3.1 Convert $this->max_x and $this->max_y to integer to prevent implicit conversion errors in PHP 8.1 and later
  *
- * @package GetSimple
+ * @package GetSimple Legacy
  * @subpackage Images
  */ 
 
@@ -142,24 +146,24 @@ class Zubrag_image {
     if ($orig_img_type < 1 or $orig_img_type > 3) die("Image type not supported");
  
     if ($orig_x > $this->max_x or $orig_y > $this->max_y) {
- 
       // resize
       $per_x = $orig_x / $this->max_x;
       $per_y = $orig_y / $this->max_y;
       if ($per_y > $per_x) {
         $this->max_x = $orig_x / $per_y;
-      }
-      else {
+      } else {
         $this->max_y = $orig_y / $per_x;
       }
- 
-    }
-    else {
+      // make everything integer
+      if (PHP_VERSION >= '8.1') {
+        $this->max_x = intval($this->max_x);
+        $this->max_y = intval($this->max_y);
+      }
+    } else {
       // keep original sizes, i.e. just copy
       if ($this->save_to_file) {
         @copy($from_name, $to_name);
-      }
-      else {
+      } else {
         switch ($this->image_type) {
           case 1:
               header("Content-type: image/gif");
@@ -177,7 +181,7 @@ class Zubrag_image {
       }
       return;
     }
- 
+
     if ($this->image_type == 1) {
       // should use this function for gifs (gifs are palette images)
       $ni = imagecreate($this->max_x, $this->max_y);
@@ -211,5 +215,3 @@ class Zubrag_image {
   }
 
 }
-
-?>

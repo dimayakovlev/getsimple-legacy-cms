@@ -7,7 +7,7 @@
  */
 
 $site_full_name     = 'GetSimple Legacy CMS';
-$site_version_no    = '2024.1';
+$site_version_no    = '2024.1.1';
 $name_url_clean     = lowercase(str_replace(' ', '-', $site_full_name));
 $ver_no_clean       = str_replace('.', '', $site_version_no);
 $site_link_back_url = 'https://github.com/dimayakovlev/getsimple-legacy-cms';

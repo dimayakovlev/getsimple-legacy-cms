@@ -1,25 +1,28 @@
-<?php if(!defined('IN_GS')){ die('you cannot load this page directly.'); }
+<?php if (!defined('IN_GS')) { die('you cannot load this page directly.'); }
 /**
  * Error Checking
  *
- * Displays error and success messages	
+ * Displays error and success messages
  *
- * @package GetSimple
- *  
+ * @package GetSimple Legacy
+ *
  * Modified by Jorge H. [ http://www.jorgehoya.es ] on 07/09/2011
  *
  * Modified by Shawn_a 8/01/2012
  * You can pass $update(global) directly if not using a redirrect and querystring
  *
+ * Modified by Dmitry Yakovlev on 24/11/2024
+ * Don't display the non-Apache web server check error message on the public admin pages.
+ *
  */
- 
+
 	if ( file_exists(GSUSERSPATH._id($USR).".xml.reset") && get_filename_id()!='index' && get_filename_id()!='resetpassword' ) {
 		echo '<div class="error"><p>'.i18n_r('ER_PWD_CHANGE').'</p></div>';
 	}
 
-  if ((!defined('GSNOAPACHECHECK') || GSNOAPACHECHECK == false) and !server_is_apache()) {
-      echo '<div class="error">'.i18n_r('WARNING').': <a href="health-check.php">'.i18n_r('SERVER_SETUP').' non-Apache</a></div>';
-  }
+	if ((!defined('GSNOAPACHECHECK') || GSNOAPACHECHECK == false) && !isAuthPage() && !server_is_apache()) {
+		echo '<div class="error">' . i18n_r('WARNING') . ': <a href="health-check.php">' . i18n_r('SERVER_SETUP') . ' non-Apache</a></div>';
+	}
 
 	if(!isset($update)) $update = '';
 	$err = '';

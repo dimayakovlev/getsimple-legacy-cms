@@ -8,6 +8,10 @@
  * @version 1.3.1
  * @author Dmitry Yakovlev
  * @since 1.3.1 Convert $this->max_x and $this->max_y to integer to prevent implicit conversion errors in PHP 8.1 and later
+ * 
+ * @version 1.3.2
+ * @author Dmitry Yakovlev
+ * @since 1.3.2 Support WEBP image. PHP 5.4 or higher required
  *
  * @package GetSimple Legacy
  * @subpackage Images
@@ -85,28 +89,42 @@ class Zubrag_image {
           }
         }
         break;
+      case 18:
+        if ($this->save_to_file) {
+          header("Content-type: image/webp");
+          $res = ImageWEBP($im, $filename, $this->quality);
+          $res = ImageWEBP($im, NULL, $this->quality);
+        } else {
+          header("Content-type: image/webp");
+          $res = ImageWEBP($im, $filename, $this->quality);
+          $res = ImageWEBP($im, NULL, $this->quality);
+        }
+        break;
     }
- 
+
     return $res;
  
   }
- 
-  function ImageCreateFromType($type,$filename) {
-   $im = null;
-   switch ($type) {
-     case 1:
-       $im = ImageCreateFromGif($filename);
-       break;
-     case 2:
-       $im = ImageCreateFromJpeg($filename);
-       break;
-     case 3:
-       $im = ImageCreateFromPNG($filename);
-       break;
+
+  function ImageCreateFromType($type,$filename){
+    $im = null;
+    switch ($type) {
+      case 1:
+        $im = ImageCreateFromGif($filename);
+        break;
+      case 2:
+        $im = ImageCreateFromJpeg($filename);
+        break;
+      case 3:
+        $im = ImageCreateFromPNG($filename);
+        break;
+      case 18:
+        $im = ImageCreateFromWEBP($filename);
+        break;
     }
     return $im;
   }
- 
+
    // generate thumb from image and save it
   function GenerateThumbFile($from_name, $to_name) {
  
@@ -130,21 +148,22 @@ class Zubrag_image {
 
     // check if file exists
     if (!file_exists($from_name)) die("Source image does not exist!");
-    
+
     // get source image size (width/height/type)
-    // orig_img_type 1 = GIF, 2 = JPG, 3 = PNG
+    // orig_img_type 1 = GIF, 2 = JPG, 3 = PNG, 18 = WEBP
     list($orig_x, $orig_y, $orig_img_type, $img_sizes) = @GetImageSize($from_name);
 
     // cut image if specified by user
     if ($this->cut_x > 0) $orig_x = min($this->cut_x, $orig_x);
     if ($this->cut_y > 0) $orig_y = min($this->cut_y, $orig_y);
- 
+
     // should we override thumb image type?
     $this->image_type = ($this->image_type != -1 ? $this->image_type : $orig_img_type);
- 
+
     // check for allowed image types
-    if ($orig_img_type < 1 or $orig_img_type > 3) die("Image type not supported");
- 
+    if ($orig_img_type != 1 && $orig_img_type != 2 && $orig_img_type != 3 && $orig_img_type != 18) die("Image type not supported");
+    if ($orig_img_type == 18 && function_exists('imagecreatefromwebp') == false) die("Image type cannot be processed");
+
     if ($orig_x > $this->max_x or $orig_y > $this->max_y) {
       // resize
       $per_x = $orig_x / $this->max_x;
@@ -175,6 +194,10 @@ class Zubrag_image {
             break;
           case 3:
               header("Content-type: image/png");
+              readfile($from_name);
+            break;
+          case 18:
+              header("Content-type: image/webp");
               readfile($from_name);
             break;
         }

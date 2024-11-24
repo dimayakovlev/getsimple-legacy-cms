@@ -21,7 +21,10 @@ function genStdThumb($path,$name){
 
 	$ext = lowercase(pathinfo($name, PATHINFO_EXTENSION));
 	
-	if ($ext == 'jpg' || $ext == 'jpeg' || $ext == 'gif' || $ext == 'png') {
+	// Check if webp supported
+	if ($ext == 'webp' && function_exists('imagecreatefromwebp') == false) return false;
+
+	if ($ext == 'jpg' || $ext == 'jpeg' || $ext == 'gif' || $ext == 'png' || $ext == 'webp') {
 
 		$thumbsPath = GSTHUMBNAILPATH.$path;
 
@@ -41,18 +44,21 @@ function genStdThumb($path,$name){
 	$imgsize = getimagesize($targetFile);
 
 	switch ($ext) {
-			case 'jpeg':
-			case 'jpg':
-				$image = imagecreatefromjpeg($targetFile);
+		case 'jpeg':
+		case 'jpg':
+			$image = imagecreatefromjpeg($targetFile);
 			break;
-			case 'png':
-				$image = imagecreatefrompng($targetFile);
+		case 'png':
+			$image = imagecreatefrompng($targetFile);
 			break;
-			case 'gif':
-				$image = imagecreatefromgif($targetFile);
+		case 'gif':
+			$image = imagecreatefromgif($targetFile);
 			break;
-			default:
-				return;
+		case 'webp':
+			$image = imagecreatefromwebp($targetFile);
+			break;
+		default:
+			return;
 			break;
 	}
 
@@ -68,19 +74,23 @@ function genStdThumb($path,$name){
 	
 	if ($bool) {
 		$thumbnailFile = $thumbsPath . 'thumbnail.' . $name;
-		switch (lowercase(substr($targetFile, -3))) {
+		switch ($ext) {
+			case 'jpeg':
 			case "jpg":
 				$bool2 = imagejpeg($picture, $thumbnailFile, 85);
-			break;
-			case "png":
+				break;
+				case "png":
 				imagepng($picture, $thumbnailFile);
-			break;
+				break;
 			case "gif":
 				imagegif($picture, $thumbnailFile);
-			break;
+				break;
+			case "webp":
+				imagewebp($picture, $thumbnailFile, 85);
+				break;
 		}
 	}
-	
+
 	imagedestroy($picture);
 	imagedestroy($image);
 
@@ -148,6 +158,10 @@ class ImageManipulation {
 			//WBMP
 			$this->image["format"] = "WBMP";
 			$this->image["src"] = ImageCreateFromWBMP($imgfile);
+		} elseif ( $this->image["format"] == "WEBP" ) {
+			//WEBP
+			$this->image["format"] = "WEBP";
+			$this->image["src"] = ImageCreateFromWEBP($imgfile);
 		} else {
 			//DEFAULT
 			return false;
@@ -247,6 +261,9 @@ class ImageManipulation {
 		} elseif ($this->image["format"] == "WBMP") {
 			//WBMP
 			imageWBMP($this->image["des"]);
+		} elseif ($this->image["format"] == "WEBP") {
+			//WEBP
+			imageWEBP($this->image["des"], null, $this->image["quality"]);
 		}
 	}
 
@@ -289,6 +306,9 @@ class ImageManipulation {
 		} elseif ($this->image["format"] == "WBMP") {
 			//WBMP
 			imageWBMP($this->image["des"], $save);
+		} elseif ($this->image["format"] == "WEBP") {
+			//WEBP
+			imageWEBP($this->image["des"], $save, $this->image["quality"]);
 		}
 		header("Content-Type: text/html");
 	}

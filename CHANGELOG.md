@@ -4,6 +4,10 @@ All notable changes of GetSimple Legacy CMS will be documented in this file.
 
 ## [Unreleased]
 
+### Added
+
+- Support WEBP image format. PHP 5.4 or higher required.
+
 ### Fixed
 
 - Prevent implicit conversion from float to int while create images thumbnails on PHP 8.1 and later.

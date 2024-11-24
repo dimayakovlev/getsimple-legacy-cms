@@ -2,7 +2,7 @@
 /**
  * Security
  *
- * @package GetSimple
+ * @package GetSimple Legacy
  * @subpackage init
  */
 
@@ -270,7 +270,13 @@ function var_out($var, $filter = 'special'){
 	return filter_var($var, FILTER_SANITIZE_SPECIAL_CHARS);
 }
 
+/**
+ * Performs check if filename extension is a valid image file extension
+ * 
+ * @param string $file Filename to check
+ * @return bool
+ */
 function validImageFilename($file){
-	$image_exts = array('jpg','jpeg','gif','png');
-	return in_array(getFileExtension($file),$image_exts);
+	$image_exts = array('jpg', 'jpeg', 'gif', 'png', 'webp');
+	return in_array(getFileExtension($file), $image_exts);
 }

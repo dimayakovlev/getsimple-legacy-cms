@@ -4,11 +4,10 @@
  *
  * Displays and creates static components
  *
- * @package GetSimple
+ * @package GetSimple Legacy
  * @subpackage Components
- * @link http://get-simple.info/docs/what-are-components
  */
- 
+
 # setup inclusions
 $load['plugin'] = true;
 include('inc/common.php');
@@ -40,7 +39,7 @@ if (isset($_POST['submitted'])){
 
 	# start creation of top of components.xml file
 	$xml = new SimpleXMLExtended('<?xml version="1.0" encoding="UTF-8"?><channel></channel>');
-	if (!empty($ids)){
+	if (!empty($ids)) {
 
 		$ct = 0; $coArray = array();
 		foreach ($ids as $id){
@@ -60,7 +59,7 @@ if (isset($_POST['submitted'])){
 			$ct++;
 		}
 		
-		$ids = subval_sort($coArray,'title');
+		$ids = subval_sort($coArray, 'title');
 
 		$count = 0;
 		foreach ($ids as $comp){
@@ -84,7 +83,7 @@ if (isset($_GET['undo'])){
 
 	# check for csrf
 	$nonce = $_GET['nonce'];
-	if (!check_nonce($nonce, "undo")){
+	if (!check_nonce($nonce, "undo")) {
 		die("CSRF detected!");
 	}
 
@@ -124,26 +123,91 @@ if (count($componentsec) != 0) {
 		
 	}
 
-get_template('header', cl($SITENAME).' &raquo; '.i18n_r('COMPONENTS')); 
+if (!getDef('GSNOHIGHLIGHT', true)) {
+	register_script('codemirror', $SITEURL.$GSADMIN.'/template/js/codemirror/lib/codemirror-compressed.js', '0.2.0', FALSE);
 
+	register_style('codemirror-css',$SITEURL.$GSADMIN.'/template/js/codemirror/lib/codemirror.css','screen',FALSE);
+	register_style('codemirror-theme',$SITEURL.$GSADMIN.'/template/js/codemirror/theme/default.css','screen',FALSE);
+
+	queue_script('codemirror', GSBACK);
+
+	queue_style('codemirror-css', GSBACK);
+	queue_style('codemirror-theme', GSBACK);
+}
+
+get_template('header', cl($SITENAME) . ' &raquo; ' . i18n_r('COMPONENTS'));
+
+include('template/include-nav.php');
+
+if (!getDef('GSNOHIGHLIGHT', true)) {
 ?>
-	
-<?php include('template/include-nav.php'); ?>
+<script>
+window.onload = function() {
+	var foldFunc = CodeMirror.newFoldFunction(CodeMirror.braceRangeFinder);
+	function keyEvent(cm, e){
+		if (e.keyCode == 81 && e.ctrlKey) {
+			if (e.type == "keydown") {
+				e.stop();
+				setTimeout(function(){foldFunc(cm, cm.getCursor().line);}, 50);
+			}
+			return true;
+		}
+	}
+	function toggleFullscreenEditing(){
+		var editorDiv = $('.CodeMirror-scroll');
+		if (!editorDiv.hasClass('fullscreen')) {
+			toggleFullscreenEditing.beforeFullscreen = { height: editorDiv.height(), width: editorDiv.width() }
+			editorDiv.addClass('fullscreen');
+			editorDiv.height('100%');
+			editorDiv.width('100%');
+			editor.refresh();
+		} else {
+			editorDiv.removeClass('fullscreen');
+			editorDiv.height(toggleFullscreenEditing.beforeFullscreen.height);
+			editorDiv.width(toggleFullscreenEditing.beforeFullscreen.width);
+			editor.refresh();
+		}
+	}
+	var components = document.querySelectorAll("textarea[name^=val]");
+	for (var i = 0, cnt = components.length; i < cnt; i++) {
+		var editor = CodeMirror.fromTextArea(components[i], {
+			lineNumbers: true,
+			matchBrackets: true,
+			indentUnit: 4,
+			indentWithTabs: true,
+			enterMode: "keep",
+			lineWrapping: true,
+			mode:"application/x-httpd-php",
+			tabMode: "shift",
+			theme:'default',
+			onGutterClick: foldFunc,
+			extraKeys: {"Ctrl-Q": function(cm){foldFunc(cm, cm.getCursor().line);}, "F11": toggleFullscreenEditing, "Esc": toggleFullscreenEditing},
+			onCursorActivity: function(){
+				editor.setLineClass(hlLine, null);
+				hlLine = editor.setLineClass(editor.getCursor().line, "activeline");
+			}
+		});
+		var hlLine = editor.setLineClass(0, "activeline");
+	}
+}
+</script>
+<?php
+}
+?>
 
 <div class="bodycontent clearfix">
-	
+
 	<div id="maincontent">
 	<div class="main">
 	<h3 class="floated"><?php echo i18n('EDIT_COMPONENTS');?></h3>
-	<div class="edit-nav" >
-		<a href="#" id="addcomponent" accesskey="<?php echo find_accesskey(i18n_r('ADD_COMPONENT'));?>" ><?php i18n('ADD_COMPONENT');?></a>
+	<div class="edit-nav">
+		<a href="#" id="addcomponent" accesskey="<?php echo find_accesskey(i18n_r('ADD_COMPONENT'));?>"><?php i18n('ADD_COMPONENT');?></a>
 		<div class="clear"></div>
 	</div>
-	
+
 	<form class="manyinputs" action="<?php myself(); ?>" method="post" accept-charset="utf-8" >
 		<input type="hidden" id="id" value="<?php echo $count; ?>" />
 		<input type="hidden" id="nonce" name="nonce" value="<?php echo get_nonce("modify_components"); ?>" />
-
 		<div id="divTxt"></div> 
 		<?php echo $table; ?>
 		<p id="submit_line" class="<?php echo $submitclass; ?>" >
@@ -152,7 +216,7 @@ get_template('header', cl($SITENAME).' &raquo; '.i18n_r('COMPONENTS'));
 	</form>
 	</div>
 	</div>
-	
+
 	<div id="sidebar">
 		<?php include('template/sidebar-theme.php'); ?>
 		<?php if ($listc != '') { echo '<div class="compdivlist">'.$listc .'</div>'; } ?>

@@ -10,7 +10,7 @@ if (cookie_check()) {
 	if (isDebug()) {
 		echo '<li class="debug"><a href="#gsdebug">' . i18n_r('DEBUG_MODE') . '</a></li>';
 	}
-	echo '<li class="rightnav"><a href="settings.php#profile">' . i18n_r('WELCOME') . ' <strong>' . $USR . '</strong>!</a></li></ul>';
+	echo '<li class="rightnav"><a href="settings.php#profile">' . i18n_r('WELCOME') . ', <strong>' . ($datau->NAME != '' ? var_out($datau->NAME) : $USR) . '</strong>!</a></li></ul>';
 }
 
 //determine page type if plugin is being shown

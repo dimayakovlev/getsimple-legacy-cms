@@ -49,13 +49,13 @@ foreach ($pluginfiles as $fi) {
 			$trclass = 'disabled';
 		}
 
-		$table .= '<tr id="tr-'.$counter.'" class="'.$trclass.'" >';
-		$table .= '<td style="width:150px" ><b>'.$plugin_info[$pathName]['name'].'</b></td>';
+		$table .= '<tr id="tr-'.$counter.'" class="'.$trclass.'">';
+		$table .= '<td style="width:150px"><b>'.$plugin_info[$pathName]['name'].'</b></td>';
 		$table .= '<td><span>'.$plugin_info[$pathName]['description'];
 		if ($plugin_info[$pathName]['version']!='disabled') {
 			$table .= '<br /><b>'.i18n_r('PLUGIN_VER') .' '. $plugin_info[$pathName]['version'].'</b> &mdash; '.i18n_r('AUTHOR').': <a href="'.$plugin_info[$pathName]['author_url'].'" target="_blank">'.$plugin_info[$pathName]['author'].'</a></span>';
 		}
-		$table.= '</td><td style="width:60px;" class="status"><a href="plugins.php?set='.$fi.$setNonce.'" class="toggleEnable '.$cls_Enabled.'" style="padding: 1px 3px;" title="'.i18n_r('ENABLE').': '.$plugin_info[$pathName]['name'] .'" >'.i18n_r('ENABLE').'</a><a href="plugins.php?set='.$fi.$setNonce.'" class="cancel toggleEnable '.$cls_Disabled.'" title="'.i18n_r('DISABLE').': '.$plugin_info[$pathName]['name'] .'">'.i18n_r('DISABLE').'</a></td>';
+		$table.= '</td><td style="width:60px;" class="status"><a href="plugins.php?set='.$fi.$setNonce.'" class="toggleEnable '.$cls_Enabled.'" style="padding: 1px 3px;" title="'.i18n_r('ENABLE').': '.$plugin_info[$pathName]['name'] .'">'.i18n_r('ENABLE').'</a><a href="plugins.php?set='.$fi.$setNonce.'" class="cancel toggleEnable '.$cls_Disabled.'" title="'.i18n_r('DISABLE').': '.$plugin_info[$pathName]['name'] .'">'.i18n_r('DISABLE').'</a></td>';
 		$table .= "</tr>\n";
 		$counter++;
 	}
@@ -71,15 +71,13 @@ get_template('header', cl($SITENAME) . ' &raquo; ' . i18n_r('PLUGINS_MANAGEMENT'
 <div class="bodycontent clearfix">
 
 	<div id="maincontent">
-		<div class="main" >
+		<div class="main">
 		<h3><?php i18n('PLUGINS_MANAGEMENT'); ?></h3>
 
-		<?php if ($counter > 0) { ?>
-			<table class="edittable highlight">
-				<tr><th><?php i18n('PLUGIN_NAME'); ?></th><th><?php i18n('PLUGIN_DESC'); ?></th><th><?php i18n('STATUS'); ?></th></tr>
-				<?php echo $table; ?>
-			</table>
-		<?php } ?>
+		<table class="edittable highlight">
+			<tr><th><?php i18n('PLUGIN_NAME'); ?></th><th><?php i18n('PLUGIN_DESC'); ?></th><th><?php i18n('STATUS'); ?></th></tr>
+			<?php echo $table; ?>
+		</table>
 
 		<p><em><b><span id="pg_counter"><?php echo $counter; ?></span></b> <?php i18n('PLUGINS_INSTALLED'); ?></em></p>
 

@@ -17,7 +17,8 @@ All notable changes of GetSimple Legacy CMS will be documented in this file.
 - Don't display the non-Apache web server check error message on the public admin pages.
 - Use line wrapping in CodeMirror to improve usability when working with long strings of code.
 - The Connect section in the sidebar of the Innovation theme template is only displayed if one or more fields in the Innovation Theme Settings plugin are filled in.
-- Show table header on "Page Backups" if no backups are available.
+- Show table header on Page Backups if no backups are available.
+- Show table header on Plugin Management if no plugins are installed.
 
 ### Fixed
 

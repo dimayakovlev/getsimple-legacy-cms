@@ -10,6 +10,7 @@ All notable changes of GetSimple Legacy CMS will be documented in this file.
 - Automatic transliteration of names when uploading files and creating directories.
 - Use CodeMirror to highlight and improve components code editing.
 - Show real name of the user in the welcome message.
+- Don't cache the administration panel stylesheet file when Debug Mode is enabled.
 
 ### Changed
 

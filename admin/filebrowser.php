@@ -4,17 +4,19 @@
  *
  * Displays and selects file link to insert into CKEditor
  *
- * @package GetSimple
+ * @package GetSimple Legacy
  * @subpackage Files
- * 
+ *
  * Version: 1.1 (2011-03-12)
+ * Version: 1.2 (2024-11-25)
  */
 
 // Setup inclusions
 include('inc/common.php');
 login_cookie_check();
 
-$filesSorted=null;$dirsSorted=null;
+$filesSorted = null;
+$dirsSorted = null;
 
 $path = (isset($_GET['path'])) ? "../data/uploads/".$_GET['path'] : "../data/uploads/";
 $subPath = (isset($_GET['path'])) ? $_GET['path'] : "";
@@ -35,10 +37,10 @@ $LANG_header = preg_replace('/(?:(?<=([a-z]{2}))).*/', '', $LANG);
 <!DOCTYPE html>
 <html lang="<?php echo $LANG_header; ?>">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"  />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title><?php echo i18n_r('FILE_BROWSER'); ?></title>
 	<link rel="shortcut icon" href="favicon.png" type="image/x-icon" />
-	<link rel="stylesheet" type="text/css" href="template/style.php?v=<?php echo GSVERSION; ?>" media="screen" />
+	<link rel="stylesheet" type="text/css" href="template/style.php?v=<?php echo GSVERSION; ?><?php if (isDebug()) echo '&amp;nocache'; ?>" media="screen">
 	<style>
 		.wrapper, #maincontent, #imageTable { width: 100% }
 	</style>
@@ -124,7 +126,7 @@ $LANG_header = preg_replace('/(?:(?<=([a-z]{2}))).*/', '', $LANG);
 
 	echo '<table class="highlight" id="imageTable">';
 
-	if (count($dirsSorted) != 0) {       
+	if (count($dirsSorted) != 0) {
 		foreach ($dirsSorted as $upload) {
 			echo '<tr class="All" >';  
 			echo '<td class="" colspan="5">';
@@ -145,7 +147,7 @@ $LANG_header = preg_replace('/(?:(?<=([a-z]{2}))).*/', '', $LANG);
 		}
 	}
 
-	if (count($filesSorted) != 0) { 			
+	if (count($filesSorted) != 0) {
 		foreach ($filesSorted as $upload) {
 			$upload['name'] = rawurlencode($upload['name']);
 			$thumb = null; $thumbnailLink = null;
@@ -195,9 +197,9 @@ $LANG_header = preg_replace('/(?:(?<=([a-z]{2}))).*/', '', $LANG);
 	}
 	echo '</table>';
 	echo '<p><em><b>'. $counter .'</b> '.i18n_r('TOTAL_FILES').' ('. fSize($totalsize) .')</em></p>';
-?>	
+?>
 	</div>
   </div>
- </div>	
+ </div>
 </body>
 </html>

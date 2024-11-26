@@ -1,37 +1,43 @@
-<?php if(!defined('IN_GS')){ die('you cannot load this page directly.'); }
+<?php if (!defined('IN_GS')) { die('you cannot load this page directly.'); }
 /****************************************************
 *
 * @File:  caching_functions.php
-* @Package: GetSimple
+* @Package: GetSimple Legacy
 * @since 3.1
-* @Action:  Plugin to create pages.xml and new functions  
+* @since 2024.2 Improve functions
+* @Action:  Plugin to create pages.xml and new functions
 *
 *****************************************************/
 
 $pagesArray = array();
 
-add_action('index-header','getPagesXmlValues',array(false));      // make $pagesArray available to the front 
-add_action('header', 'getPagesXmlValues',array(get_filename_id() != 'pages'));  // make $pagesArray available to the back
-add_action('page-delete', 'create_pagesxml',array(true));         // Create pages.array if page deleted
-add_action('page-restored', 'create_pagesxml',array(true));        // Create pages.array if page undo
-add_action('changedata-aftersave', 'create_pagesxml',array(true));     // Create pages.array if page is updated
+add_action('index-header','getPagesXmlValues', array(false)); // make $pagesArray available to the front
+add_action('header', 'getPagesXmlValues', array(get_filename_id() != 'pages')); // make $pagesArray available to the back
+add_action('page-delete', 'create_pagesxml', array(true)); // Create pages.array if page deleted
+add_action('page-restored', 'create_pagesxml', array(true)); // Create pages.array if page undo
+add_action('changedata-aftersave', 'create_pagesxml', array(true)); // Create pages.array if page is updated
 
 /**
  * Get Page Content
  *
  * Retrieve and display the content of the requested page. 
- * As the Content is not cahed the file is read in.
+ * As the Content is not cached the file is read in.
  *
  * @since 2.0
- * @param $page - slug of the page to retrieve content
+ * @since 2024.2 Check if page file exists before load it to prevent error
+ * @param string $page Slug of the page to retrieve content
+ * @param string $field Optional name of the field whose content is to be displayed. By default is 'content'
  *
+ * @return void
  */
-function getPageContent($page,$field='content'){   
-	$thisfile = file_get_contents(GSDATAPAGESPATH.$page.'.xml');
-	$data = simplexml_load_string($thisfile);
+function getPageContent($page, $field = 'content'){
+	$file = GSDATAPAGESPATH . $page . '.xml';
+	if (!file_exists($file)) return;
+	$data = simplexml_load_file($file);
+	if (!data) return;
 	$content = stripslashes(htmlspecialchars_decode($data->$field, ENT_QUOTES));
-	if ($field=='content'){
-		$content = exec_filter('content',$content);
+	if ($field == 'content') {
+		$content = exec_filter('content', $content);
 	}
 	echo $content;
 }
@@ -42,88 +48,90 @@ function getPageContent($page,$field='content'){
  * Retrieve and display the requested field from the given page. 
  *
  * @since 3.1
- * @param $page - slug of the page to retrieve content
- * @param $field - the Field to display
- * 
+ * @param string $page Slug of the page to retrieve field content
+ * @param string $field Name of the field whose content is to be displayed
+ *
+ * @return void
  */
-function getPageField($page,$field){   
+function getPageField($page, $field){
 	global $pagesArray;
-	if(!$pagesArray) getPagesXmlValues();	
-	
-	if ($field=="content"){
-	  getPageContent($page);  
+	if (!$pagesArray) getPagesXmlValues();
+	if ($field == 'content') {
+		getPageContent($page);
 	} else {
-		if (array_key_exists($field, $pagesArray[(string)$page])){
-	  		echo strip_decode($pagesArray[(string)$page][(string)$field]);
+		if (array_key_exists($field, $pagesArray[(string) $page])) {
+			echo strip_decode($pagesArray[(string) $page][(string) $field]);
 		} else {
-			getPageContent($page,$field);
+			getPageContent($page, $field);
 		}
-	} 
+	}
 }
 
 /**
  * Echo Page Field
  *
- * Retrieve and display the requested field from the given page. 
+ * Retrieve and display the requested field from the given page.
  *
  * @since 3.1
  * @param $page - slug of the page to retrieve content
  * @param $field - the Field to display
- * 
+ *
  */
-function echoPageField($page,$field){
-	getPageField($page,$field);
+function echoPageField($page, $field){
+	getPageField($page, $field);
 }
 
 
 /**
  * Return Page Content
  *
- * Return the content of the requested page. 
+ * Return the content of the requested page.
  * As the Content is not cahed the file is read in.
  *
  * @since 3.1
- * @param $page - slug of the page to retrieve content
- * @param $raw false - if true return raw xml
- * @param $nofilter false - if true skip content filter execution
- *
+ * @since 2024.2 Check if page file exists before load it to prevent error
+ * @param string $page Slug of the page to retrieve content or value of the field
+ * @param string $field Optional name of the field whose content is to be returned. By default is 'content'
+ * @param boolean $raw If true return raw xml. By default is false
+ * @param boolean $nofilter If true skip content filter execution. By default is false
+ * @return string|null Content of the requested page or null on error
  */
-function returnPageContent($page, $field='content', $raw = false, $nofilter = false){   
-	$thisfile = file_get_contents(GSDATAPAGESPATH.$page.'.xml');
-	$data = simplexml_load_string($thisfile);
-	if(!$data) return;
+function returnPageContent($page, $field='content', $raw = false, $nofilter = false){
+	$file = GSDATAPAGESPATH . $page . '.xml';
+	if (!file_exists($file)) return null;
+	$data = simplexml_load_file($file);
+	if (!$data) return null;
 	$content = $data->$field;
-	if(!$raw) $content = stripslashes(htmlspecialchars_decode($content, ENT_QUOTES));
-	if ($field=='content' and !$nofilter){
+	if (!$raw) $content = stripslashes(htmlspecialchars_decode($content, ENT_QUOTES));
+	if ($field == 'content' and !$nofilter) {
 		$content = exec_filter('content',$content);
 	}
-  	return $content;
+	return $content;
 }
 
 /**
  * Get Page Field
  *
- * Retrieve and display the requested field from the given page. 
+ * Retrieve and display the requested field from the given page.
  * If the field is "content" it will call returnPageContent()
  *
  * @since 3.1
- * @param $page - slug of the page to retrieve content
- * @param $field - the Field to display
- * 
+ * @param string $page Slug of the page to retrieve content
+ * @param string $field Name of the field whose content is to be returned
+ * @return string|null Content of the requested field or null on error
  */
-function returnPageField($page,$field){   
+function returnPageField($page, $field){
 	global $pagesArray;
-	if(!$pagesArray) getPagesXmlValues();	
-
-	if ($field=="content"){
-	  $ret=returnPageContent($page); 
+	if (!$pagesArray) getPagesXmlValues();
+	if ($field == 'content') {
+		$ret = returnPageContent($page);
 	} else {
-		if (isset($pagesArray[(string)$page]) && array_key_exists($field, $pagesArray[(string)$page])){
-	  		$ret=strip_decode(@$pagesArray[(string)$page][(string)$field]);
+		if (isset($pagesArray[(string) $page]) && array_key_exists($field, $pagesArray[(string) $page])) {
+			$ret = strip_decode(@$pagesArray[(string) $page][(string) $field]);
 		} else {
-			$ret = returnPageContent($page,$field);
+			$ret = returnPageContent($page, $field);
 		}
-	} 
+	}
 	return $ret;
 }
 
@@ -329,7 +337,3 @@ if ((isset($_GET['upd']) && $_GET['upd']=="edit-success") || $flag===true || $fl
   }
 }
 }
-
-
-
-?>

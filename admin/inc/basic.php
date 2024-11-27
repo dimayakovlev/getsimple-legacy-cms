@@ -1186,18 +1186,18 @@ function is_frontend() {
 }
 
 /**
- * Get Installed GetSimple Version
+ * Get Installed GetSimple Legacy Version
  *
- * This will return the version of GetSimple that is installed
+ * This will print or return the version of GetSimple Legacy that is installed
  *
  * @since 1.0
+ * @since 2024.2 Don't include configuration.php. Use already defined constant GSVERSION
  * @uses GSVERSION
  *
  * @param bool $echo Optional, default is true. False will 'return' value
  * @return string Echos or returns based on param $echo
  */
-function get_site_version($echo=true) {
-	include(GSADMININCPATH.'configuration.php');
+function get_site_version($echo = true){
 	if ($echo) {
 		echo GSVERSION;
 	} else {

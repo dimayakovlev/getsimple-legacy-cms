@@ -109,50 +109,49 @@ function to7bit($text, $from_enc = 'UTF-8'){
  * Formats Email to HTML Style
  *
  * @since 3.1
- *
+ * @since 2024.2 Include file configuration.php. Use function get_site_lang()
+ * @uses get_site_lang()
+ * @uses GSNAME
+ * @uses GSVERSION
+ * @uses $site_link_back_url
  * @param string $message
  * @return string
  */
 function email_template($message) {
+	include(GSADMININCPATH . 'configuration.php');
 	$data = '
-	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-	<html xmlns="http://www.w3.org/1999/xhtml">
-	<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" >
-	<style>
-	 table td p {margin-bottom:15px;}
-	 a img {border:none;}
-	</style>
-	</head>
-	<body style="padding:0;margin:0;background: #f3f3f3;font-family:arial, \'helvetica neue\', helvetica, serif" >
-	<table cellpadding="0" cellspacing="0" border="0" align="center" width="100%" style="padding: 0 0 35px 0; background: #f3f3f3;">
-  	<tr>
-	    <td align="center" style="margin: 0; padding: 0;">
-	      <center>
-	        <table border="0" cellpadding="0" cellspacing="0" width="580" style="border-radius:3px;">
-						<tr>
-							<th style="padding:15px 0 15px 20px;text-align:left;vertical-align:top;background:#171E25;border-radius:4px 4px 0 0;" >
-								<a href="http://get-simple.info/"><img src="http://get-simple.info/GSSW/gssw_assets/images/logo.png" alt="GetSimple CMS"></a>
-							</th>
-						</tr>
-						<tr>
-							<td style="background:#fff;border-bottom:1px solid #e1e1e1;border-right:1px solid #e1e1e1;border-left:1px solid #e1e1e1;font-size:13px;font-family:arial, helvetica, sans-serif;padding:20px;line-height:22px;" >
-								'.$message.'
-							</td>
-						</tr>
-						<tr>
-							<td style="padding-top:10px;font-size:10px;color:#aaa;line-height:14px;font-family:arial, \'helvetica neue\', helvetica, serif" >
-								<p class="meta">This is a system-generated email, please do not reply to it. For help or questions about GetSimple, please visit our <a href="http://get-simple.info/" style="color:#aaa;" >website</a>.<br />&copy; '.date('Y').' GetSimple CMS. All Rights Reserved.&nbsp;<a href="http://get-simple.info/start/privacy" style="color:#aaa;" >Privacy Policy</a>. </p>
-							</td>
-						</tr>
-					</table>
-				</center>
-			</td>
-		</tr>
-	</table>
-	</body>
-	</html>
-	';
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="' . get_site_lang(true) . '">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style>
+	body {background: #f3f3f3; font-family: "Arial", sans-serif; font-size: 14px; padding: 0; margin: 0;}
+	table td p {margin-bottom:14px;}
+	a img {border:none;}
+</style>
+</head>
+<body>
+<table cellpadding="0" cellspacing="0" border="0" align="center" width="100%" style="padding: 0 0 28px 0;">
+<tr>
+	<td align="center" style="margin: 0; padding: 0;">
+		<center>
+			<table border="0" cellpadding="0" cellspacing="0" width="580">
+				<tr>
+					<th style="font-weight: bold; padding: 14px; text-align: left; vertical-align: top; background: #000;"><a href="' . $site_link_back_url . '" style="color: #fff; text-decoration: none;"><span style="font-size: 42px;">' . GSNAME . '</span><br /><span style="color: #e1e1e1;">' . GSVERSION . '</span></a></th>
+				</tr>
+				<tr>
+					<td style="background: #fff; border-bottom: 1px solid #e1e1e1; border-right: 1px solid #e1e1e1; border-left: 1px solid #e1e1e1; padding: 20px; line-height: 21px;">' . $message . '</td>
+				</tr>
+				<tr>
+					<td style="padding-top: 10px; font-size: 10px; color: #aaa; line-height: 14px;"><p class="meta">This is a system-generated email, please do not reply to it. For help or questions about ' . GSNAME . ', please visit project <a href="' . $site_link_back_url . '" style="color: #aaa;">website</a>.</p></td>
+				</tr>
+			</table>
+		</center>
+	</td>
+</tr>
+</table>
+</body>
+</html>';
 	return $data;
 }
 

@@ -30,6 +30,7 @@ All notable changes of GetSimple Legacy CMS will be documented in this file.
 ### Removed
 
 - Remove support for the no longer available service addthis.com from the Innovation theme template.
+- Remove functions get_api_details(), debug_api_details() and global variable $api_url.
 
 ## [2024.1.1] - 2024-11-23
 

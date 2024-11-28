@@ -2,11 +2,9 @@
 /**
  * Cookie Functions
  *
- * @package GetSimple
+ * @package GetSimple Legacy
  * @subpackage Login
  */
-require_once(GSADMININCPATH.'configuration.php');
-
 
 /**
  * set a gs cookie

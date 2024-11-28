@@ -258,43 +258,40 @@ function get_page_url($echo=false) {
  * @uses $site_full_name from configuration.php
  * @uses GSADMININCPATH
  *
- * @return string HTML for template header
+ * @since 2024.2 Don't include file configuration.php
+ *
+ * @return void
  */
-function get_header($full=true) {
+function get_header($full = true){
 	global $metad;
 	global $title;
 	global $content;
-	include(GSADMININCPATH.'configuration.php');
-	
-	// meta description	
+
+	// meta description
 	if ($metad != '') {
-		$desc = get_page_meta_desc(FALSE);
-	}
-	else if(getDef('GSAUTOMETAD',true))
-	{
+		$desc = get_page_meta_desc(false);
+	} elseif(getDef('GSAUTOMETAD', true)) {
 		// use content excerpt, NOT filtered
 		$desc = strip_decode($content);
-		if(getDef('GSCONTENTSTRIP',true)) $desc = strip_content($desc);
-		$desc = cleanHtml($desc,array('style','script')); // remove unwanted elements that strip_tags fails to remove
-		$desc = getExcerpt($desc,160); // grab 160 chars
+		if (getDef('GSCONTENTSTRIP', true)) $desc = strip_content($desc);
+		$desc = cleanHtml($desc, array('style', 'script')); // remove unwanted elements that strip_tags fails to remove
+		$desc = getExcerpt($desc, 160); // grab 160 chars
 		$desc = strip_whitespace($desc); // remove newlines, tab chars
 		$desc = encode_quotes($desc);
 		$desc = trim($desc);
 	}
 
-	if(!empty($desc)) echo '<meta name="description" content="'.$desc.'" />'."\n";
+	if (!empty($desc)) echo '<meta name="description" content="'.$desc.'" />'."\n";
 
 	// meta keywords
-	$keywords = get_page_meta_keywords(FALSE);
+	$keywords = get_page_meta_keywords(false);
 	if ($keywords != '') echo '<meta name="keywords" content="'.$keywords.'" />'."\n";
 	
-	if ($full) {
-		echo '<link rel="canonical" href="'. get_page_url(true) .'" />'."\n";
-	}
+	if ($full) echo '<link rel="canonical" href="'. get_page_url(true) .'" />'."\n";
 
 	// script queue
 	get_scripts_frontend();
-	
+
 	exec_action('theme-header');
 }
 

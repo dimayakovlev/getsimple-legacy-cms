@@ -26,9 +26,9 @@ get_template('header', cl($SITENAME) . ' &raquo; ' . i18n_r('SUPPORT') . ' &raqu
 
 	<div id="maincontent">
 		<div class="main">
-			<h3><?php echo $site_full_name; ?></h3>
+			<h3><?php echo GSNAME; ?></h3>
 			<table class="highlight healthcheck">
-				<tr><td style="width: 445px;"><?php echo $site_full_name; ?> <?php i18n('VERSION'); ?></td><td><span class="OKmsg"><b><?php echo $site_version_no; ?></b></span></td></tr>
+				<tr><td style="width: 445px;"><?php echo GSNAME; ?> <?php i18n('VERSION'); ?></td><td><span class="OKmsg"><b><?php echo GSVERSION; ?></b></span></td></tr>
                 <?php 
                 if(defined('GSADMIN') && GSADMIN!='admin') echo '<tr><td>GSADMIN</td><td><span class="hint">'.GSADMIN.'</span></td></tr>'; 
                 

@@ -149,11 +149,11 @@ if(isset($_POST['submitted'])) {
 		}
 		
 		# send email to new administrator
-		$subject  = $site_full_name .' '. i18n_r('EMAIL_COMPLETE');
+		$subject  = GSNAME .' '. i18n_r('EMAIL_COMPLETE');
 		$message .= '<p>'.i18n_r('EMAIL_USERNAME') . ': <strong>'. stripslashes($_POST['user']).'</strong>';
 		$message .= '<br>'. i18n_r('EMAIL_PASSWORD') .': <strong>'. $random.'</strong>';
 		$message .= '<br>'. i18n_r('EMAIL_LOGIN') .': <a href="'.$SITEURL.$GSADMIN.'/">'.$SITEURL.$GSADMIN.'/</a></p>';
-		$message .= '<p><em>'. i18n_r('EMAIL_THANKYOU') .' '.$site_full_name.'!</em></p>';
+		$message .= '<p><em>'. i18n_r('EMAIL_THANKYOU') .' '.GSNAME.'!</em></p>';
 		$status   = sendmail($EMAIL,$subject,$message);
 		# activate default plugins
 		change_plugin('InnovationPlugin.php',true);
@@ -164,11 +164,11 @@ if(isset($_POST['submitted'])) {
 	}
 }
 
-get_template('header', $site_full_name.' &raquo; '. i18n_r('INSTALLATION'));
+get_template('header', GSNAME . ' &raquo; ' . i18n_r('INSTALLATION'));
 
 ?>
 	
-		<h1><?php echo $site_full_name; ?></h1>
+		<h1><?php echo GSNAME; ?></h1>
 	</div>
 </div>
 <div class="wrapper">
@@ -196,7 +196,7 @@ get_template('header', $site_full_name.' &raquo; '. i18n_r('INSTALLATION'));
 
 	if (!$success) { ?>
 		<div class="main" >
-			<h3><?php echo $site_full_name .' '. i18n_r('INSTALLATION'); ?></h3>
+			<h3><?php echo GSNAME .' '. i18n_r('INSTALLATION'); ?></h3>
 			<form action="<?php myself(); ?>" method="post" accept-charset="utf-8" >
 				<input name="siteurl" type="hidden" value="<?php echo $fullpath; ?>" />
 				<input name="lang" type="hidden" value="<?php echo $LANG; ?>" />

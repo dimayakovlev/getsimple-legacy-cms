@@ -128,11 +128,11 @@ if(empty($APIKEY)){
 		$kill = i18n_r('CHMOD_ERROR');
 }
 
-get_template('header', $site_full_name.' &raquo; '. i18n_r('INSTALLATION') ); 
+get_template('header', GSNAME.' &raquo; '. i18n_r('INSTALLATION') ); 
 
 ?>
 	
-	<h1><?php echo $site_full_name; ?></h1>
+	<h1><?php echo GSNAME; ?></h1>
 </div>
 </div>
 <div class="wrapper">
@@ -145,10 +145,10 @@ get_template('header', $site_full_name.' &raquo; '. i18n_r('INSTALLATION') );
 
 	<div id="maincontent">
 	<div class="main" >
-	<h3><?php echo $site_full_name .' '. i18n_r('INSTALLATION'); ?></h3>
+	<h3><?php echo GSNAME .' '. i18n_r('INSTALLATION'); ?></h3>
 
 			<table class="highlight healthcheck">
-			<tr><td style="width:380px;"><?php echo $site_full_name; ?> <?php i18n_r('VERSION'); ?></td><td><span class="OKmsg" ><b><?php echo $site_version_no; ?></b> - <?php i18n('OK'); ?></span></td></tr>
+			<tr><td style="width:380px;"><?php echo GSNAME; ?> <?php i18n_r('VERSION'); ?></td><td><span class="OKmsg" ><b><?php echo GSVERSION; ?></b> - <?php i18n('OK'); ?></span></td></tr>
 			<tr><td>
 			<?php
 				if (version_compare(PHP_VERSION, '5.3.0', '<')) {

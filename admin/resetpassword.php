@@ -53,7 +53,7 @@ if(isset($_POST['submitted'])){
 				$status = XMLsave($data, GSUSERSPATH . $file);
 				
 				# send the email with the new password
-				$subject = $site_full_name .' '. i18n_r('RESET_PASSWORD') .' '. i18n_r('ATTEMPT');
+				$subject = GSNAME .' '. i18n_r('RESET_PASSWORD') .' '. i18n_r('ATTEMPT');
 				$message = "<p>". cl($SITENAME) ." ". i18n_r('RESET_PASSWORD') ." ". i18n_r('ATTEMPT').'</p>';
 				$message .= "<p>". i18n_r('LABEL_USERNAME').": <strong>". $USR."</strong>";
 				$message .= "<br>". i18n_r('NEW_PASSWORD').": <strong>". $random."</strong>";

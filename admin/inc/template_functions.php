@@ -1056,18 +1056,18 @@ function debug_api_details($msg = null ,$prefix = "API: "){
 }
 
 /**
- * Get GetSimple Version
+ * Get GetSimple Legacy Version
  *
- * Returns the version of this GetSimple installation
+ * Returns the version of this GetSimple Legacy installation
  *
  * @since 3.1
+ * @since 2024.2 Don't include configuration.php. Use already defined constant GSVERSION
  * @uses GSADMININCPATH
  * @uses GSVERSION
- * 
- * @returns string
+ *
+ * @return string
  */
-function get_gs_version() {
-	include(GSADMININCPATH.'configuration.php');
+function get_gs_version(){
 	return GSVERSION;
 }
 

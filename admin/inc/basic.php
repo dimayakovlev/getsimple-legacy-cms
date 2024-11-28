@@ -109,16 +109,15 @@ function to7bit($text, $from_enc = 'UTF-8'){
  * Formats Email to HTML Style
  *
  * @since 3.1
- * @since 2024.2 Include file configuration.php. Use function get_site_lang()
+ * @since 2024.2 Change code of the message template. Use GSNAME, GSVERSION, GSURL, function get_site_lang()
  * @uses get_site_lang()
  * @uses GSNAME
  * @uses GSVERSION
- * @uses $site_link_back_url
+ * @uses GSURL
  * @param string $message
  * @return string
  */
 function email_template($message) {
-	include(GSADMININCPATH . 'configuration.php');
 	$data = '
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="' . get_site_lang(true) . '">
@@ -137,13 +136,13 @@ function email_template($message) {
 		<center>
 			<table border="0" cellpadding="0" cellspacing="0" width="580">
 				<tr>
-					<th style="font-weight: bold; padding: 14px; text-align: left; vertical-align: top; background: #000;"><a href="' . $site_link_back_url . '" style="color: #fff; text-decoration: none;"><span style="font-size: 42px;">' . GSNAME . '</span><br /><span style="color: #e1e1e1;">' . GSVERSION . '</span></a></th>
+					<th style="font-weight: bold; padding: 14px; text-align: left; vertical-align: top; background: #000;"><a href="' . GSURL . '" style="color: #fff; text-decoration: none;"><span style="font-size: 42px;">' . GSNAME . '</span><br /><span style="color: #e1e1e1;">' . GSVERSION . '</span></a></th>
 				</tr>
 				<tr>
 					<td style="background: #fff; border-bottom: 1px solid #e1e1e1; border-right: 1px solid #e1e1e1; border-left: 1px solid #e1e1e1; padding: 20px; line-height: 21px;">' . $message . '</td>
 				</tr>
 				<tr>
-					<td style="padding-top: 10px; font-size: 10px; color: #aaa; line-height: 14px;"><p class="meta">This is a system-generated email, please do not reply to it. For help or questions about ' . GSNAME . ', please visit project <a href="' . $site_link_back_url . '" style="color: #aaa;">website</a>.</p></td>
+					<td style="padding-top: 10px; font-size: 10px; color: #aaa; line-height: 14px;"><p class="meta">This is a system-generated email, please do not reply to it. For help or questions about ' . GSNAME . ', please visit project <a href="' . GSURL . '" style="color: #aaa;">website</a>.</p></td>
 				</tr>
 			</table>
 		</center>

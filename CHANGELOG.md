@@ -11,6 +11,7 @@ All notable changes of GetSimple Legacy CMS will be documented in this file.
 - Use CodeMirror to highlight and improve components code editing.
 - Show real name of the user in the welcome message.
 - Don't cache the administration panel stylesheet file when Debug Mode is enabled.
+- New constant GSURL to replace the $site_link_back_url global variable.
 
 ### Changed
 

@@ -26,7 +26,7 @@ get_template('header', cl($SITENAME).' &raquo; '.i18n_r('SUPPORT') );
 			<p><?php i18n('WELCOME_MSG'); ?></p>
 			<p><?php i18n('WELCOME_P'); ?></p>
 			<ul>
-				<li><a href="<?php echo var_out($site_link_back_url, 'url'); ?>" target="_blank"><?php echo var_out($site_full_name); ?> GitHub</a></li>
+				<li><a href="<?php echo GSURL; ?>" target="_blank"><?php echo GSNAME; ?> GitHub</a></li>
 			</ul>
 			<ul>
 				<li><a href="health-check.php"><?php i18n('WEB_HEALTH_CHECK'); ?></a></li>

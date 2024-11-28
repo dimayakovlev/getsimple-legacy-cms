@@ -29,3 +29,4 @@ $cookie_redirect = 'pages.php';
 
 if (!defined('GSNAME')) define('GSNAME', $site_full_name);
 if (!defined('GSVERSION')) define('GSVERSION', $site_version_no);
+if (!defined('GSURL')) define('GSURL', $site_link_back_url);

@@ -21,6 +21,7 @@ All notable changes of GetSimple Legacy CMS will be documented in this file.
 - Show table header on Page Backups if no backups are available.
 - Show table header on Plugin Management if no plugins are installed.
 - Function get_site_lang() return the ISO language code, not the value of the global variable $LANG.
+- Function get_site_credits() will print current GetSimple Legacy CMS if the second parameter is set to true.
 
 ### Fixed
 

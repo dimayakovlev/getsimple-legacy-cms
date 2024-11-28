@@ -424,15 +424,16 @@ function get_site_email($echo=true) {
  * @since 2024.1 Use constant GSNAME instead of $site_full_name
  * @uses GSNAME
  *
- * @since 2024.2 Use constant GSURL instead $site_link_back_url. Don't include configuration.php. Show GetSimple Legacy version
+ * @since 2024.2 Use constant GSURL instead $site_link_back_url. Don't include configuration.php. Show GetSimple Legacy version if $version is true
  * @uses GSURL
  *
  * @param string $text Optional, default is 'Powered by'.
+ * @param boolean $version Optional, default is false. If true will show GetSimple Legacy version
  * @return void
  */
-function get_site_credits($text = 'Powered by '){
+function get_site_credits($text = 'Powered by ', $version = false){
 	$text = (string) $text;
-	$site_credit_link = '<a href="' . GSURL . '" target="_blank">' . htmlspecialchars($text) . GSNAME . ' ' . GSVERSION . '</a>';
+	$site_credit_link = '<a href="' . GSURL . '" target="_blank">' . htmlspecialchars($text) . GSNAME . ($version ? ' ' . GSVERSION : '') . '</a>';
 	echo stripslashes($site_credit_link);
 }
 

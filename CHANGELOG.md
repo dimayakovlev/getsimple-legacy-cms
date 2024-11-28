@@ -19,6 +19,7 @@ All notable changes of GetSimple Legacy CMS will be documented in this file.
 - The Connect section in the sidebar of the Innovation theme template is only displayed if one or more fields in the Innovation Theme Settings plugin are filled in.
 - Show table header on Page Backups if no backups are available.
 - Show table header on Plugin Management if no plugins are installed.
+- Function get_site_lang() return the ISO language code, not the value of the global variable $LANG.
 
 ### Fixed
 

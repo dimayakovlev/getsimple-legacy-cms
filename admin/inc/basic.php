@@ -1206,21 +1206,22 @@ function get_site_version($echo = true){
 
 
 /**
- * Get GetSimple Language
+ * Get GetSimple Legacy Language
+ *
+ * Returns the ISO language code for the current language
  *
  * @since 3.1
+ * @since 2024.2 Return ISO language code, not raw value of the $LANG variable
  * @uses $LANG
  *
- * @param string
+ * @param boolean $short Optional, default is false. If true, will return only the first part of the language code
+ * @return string
  */
-function get_site_lang($short=false) {
+function get_site_lang($short = false){
 	global $LANG;
-	if ($short) {
-		$LANG_header = preg_replace('/(?:(?<=([a-z]{2}))).*/', '', $LANG);
-		return $LANG_header;
-	} else {
-		return $LANG;
-	}
+	$lang_header = str_replace('_', '-', $LANG);
+	if (!$short) return $lang_header;
+	return explode('-', $lang_header)[0];
 }
 
 /**

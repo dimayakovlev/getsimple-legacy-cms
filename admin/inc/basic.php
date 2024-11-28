@@ -142,7 +142,7 @@ function email_template($message) {
 					<td style="background: #fff; border-bottom: 1px solid #e1e1e1; border-right: 1px solid #e1e1e1; border-left: 1px solid #e1e1e1; padding: 20px; line-height: 21px;">' . $message . '</td>
 				</tr>
 				<tr>
-					<td style="padding-top: 10px; font-size: 10px; color: #aaa; line-height: 14px;"><p class="meta">This is a system-generated email, please do not reply to it. For help or questions about ' . GSNAME . ', please visit project <a href="' . GSURL . '" style="color: #aaa;">website</a>.</p></td>
+					<td style="padding-top: 10px; font-size: 10px; color: #aaa; line-height: 14px;"><p class="meta">This is a system-generated email, please do not reply to it. For help or questions about ' . GSNAME . ', please visit <a href="' . GSURL . '" style="color: #aaa;">website</a>.</p></td>
 				</tr>
 			</table>
 		</center>

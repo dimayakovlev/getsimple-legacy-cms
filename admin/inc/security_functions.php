@@ -163,16 +163,16 @@ function check_nonce($nonce, $action, $file = ""){
  * @uses file_mime_type
  * @uses $mime_type_blacklist
  * @uses $file_ext_blacklist
+ * 
+ * @since 2024.2 Don't include file configuration.php
  *
  * @param string $file, absolute path
  * @param string $name, filename
  * @param string $mime, optional
  * @return bool
- */	
+ */
 function validate_safe_file($file, $name, $mime = null){
 	global $mime_type_blacklist, $file_ext_blacklist, $mime_type_whitelist, $file_ext_whitelist;
-
-	include(GSADMININCPATH.'configuration.php');
 
 	$file_extension = lowercase(pathinfo($name,PATHINFO_EXTENSION));
 	if(!$mime)$mime = file_mime_type($file);

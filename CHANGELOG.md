@@ -11,7 +11,7 @@ All notable changes of GetSimple Legacy CMS will be documented in this file.
 - Use CodeMirror to highlight and improve components code editing.
 - Show real name of the user in the welcome message.
 - Don't cache the administration panel stylesheet file when Debug Mode is enabled.
-- New constant GSURL to replace the $site_link_back_url global variable.
+- Use constants instead of variables: GSNAME instead of $site_full_name, GSVERSION instead of $site_version_no, GSURL instead of $site_link_back_url. These variables are deprecated.
 
 ### Changed
 
@@ -22,6 +22,7 @@ All notable changes of GetSimple Legacy CMS will be documented in this file.
 - Show table header on Plugin Management if no plugins are installed.
 - Function get_site_lang() return the ISO language code, not the value of the global variable $LANG.
 - Function get_site_credits() will print current GetSimple Legacy CMS if the second parameter is set to true.
+- One-time inclusion of the configuration.php file. Don't include it in your plugins files and inside functions.
 
 ### Fixed
 
@@ -31,6 +32,7 @@ All notable changes of GetSimple Legacy CMS will be documented in this file.
 
 - Remove support for the no longer available service addthis.com from the Innovation theme template.
 - Remove functions get_api_details(), debug_api_details() and global variable $api_url.
+- Variables $name_url_clean and $ver_no_clean are not available.
 
 ## [2024.1.1] - 2024-11-23
 

@@ -601,4 +601,5 @@ $i18n = array(
  * for components.php
  */
 "SAVE_COMPONENTS_TO_UPDATE_CODE" => 'Save components to update code',
+"COMPONENT_TITLE" => 'Title',
 );

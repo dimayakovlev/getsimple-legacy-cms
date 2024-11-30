@@ -26,6 +26,7 @@ All notable changes of GetSimple Legacy CMS will be documented in this file.
 - Function get_site_credits() will print current GetSimple Legacy CMS if the second parameter is set to true.
 - One-time inclusion of the configuration.php file. Don't include it in your plugins files and inside functions.
 - Innovation Plugin is not automatically enabled during installation.
+- Improve components user interface localization.
 
 ### Fixed
 

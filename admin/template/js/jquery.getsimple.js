@@ -216,9 +216,11 @@ jQuery(document).ready(function () {
  
 	});
 	$("b.editable").dblclick(function () {
-		var t = $(this).html();
+		//var t = $(this).text();
+		t = $(this).parents('.compdiv').find("input.comptitle").val();
 		$(this).parents('.compdiv').find("input.comptitle").hide();
-		$(this).after('<div id="changetitle"><b>' + GS.i18n['COMPONENT_TITLE'] + ':</b> <input class="text newtitle titlesaver" name="title-new" value="' + t + '" /></div>');
+		$(this).after('<div id="changetitle"><b>' + GS.i18n['COMPONENT_TITLE'] + ':</b> <input class="text newtitle titlesaver" name="title-new" value="" /></div>');
+		$(this).parents('.compdiv').find('[name="title-new"]').val(t);
 		$(this).next('#changetitle').children('input').focus();
 		$(this).parents('.compdiv').find("input.compslug").val('');
 		$(this).hide();
@@ -226,12 +228,13 @@ jQuery(document).ready(function () {
 	$("input.newtitle").live("keyup", function () {
 		var myval = $(this).val();
 		$(this).parents('.compdiv').find("code").html(GS.i18n['SAVE_COMPONENTS_TO_UPDATE_CODE']);
-		$(this).parents('.compdiv').find("b.editable").html(myval);
+		$(this).parents('.compdiv').find("b.editable").text(myval);
 	}).live("focusout", function () {
 		var myval = $(this).val();
 		$(this).parents('.compdiv').find("code").html(GS.i18n['SAVE_COMPONENTS_TO_UPDATE_CODE']);
-		$(this).parents('.compdiv').find("b.editable").html(myval);
+		$(this).parents('.compdiv').find("b.editable").text(myval);
 		$(this).parents('.compdiv').find("input.comptitle").val(myval);
+		$(this).parents('.compdiv').find('a.delcomponent').attr('title', GS.i18n['DELETE_COMPONENT'] + '?');
 		$("b.editable").show();
 		$('#changetitle').remove();
 	}).live("keypress", function (event) {

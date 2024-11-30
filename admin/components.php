@@ -108,12 +108,12 @@ $componentsec = $data->item;
 $count= 0;
 if ($componentsec && count($componentsec) != 0) {
 	foreach ($componentsec as $component) {
-		$table .= '<div class="compdiv" id="section-' . $count . '"><table class="comptable" ><tr><td><b title="' . i18n_r('DOUBLE_CLICK_EDIT').'" class="editable">'. stripslashes($component->title) . '</b></td>';
-		$table .= '<td style="text-align:right;"><code>&lt;?php get_component(<span class="compslugcode">\'' . $component->slug . '\'</span>); ?&gt;</code></td><td class="delete">';
-		$table .= '<a href="#" title="' . i18n_r('DELETE_COMPONENT') . ': '. cl($component->title) . '?" class="delcomponent" rel="' . $count . '">&times;</a></td></tr></table>';
-		$table .= '<textarea class="text" name="val[]">' . stripslashes($component->value) . '</textarea>';
-		$table .= '<input type="hidden" class="compslug" name="slug[]" value="' . $component->slug . '" />';
-		$table .= '<input type="hidden" class="comptitle" name="title[]" value="' . stripslashes($component->title) . '" />';
+		$table .= '<div class="compdiv" id="section-' . $count . '"><table class="comptable" ><tr><td><b title="' . i18n_r('DOUBLE_CLICK_EDIT').'" class="editable">' . htmlentities((string) $component->title, ENT_QUOTES, 'UTF-8', false) . '</b></td>';
+		$table .= '<td style="text-align:right;"><code>&lt;?php get_component(<span class="compslugcode">\'' . htmlentities((string) $component->slug, ENT_QUOTES, 'UTF-8', false) . '\'</span>); ?&gt;</code></td><td class="delete">';
+		$table .= '<a href="#" title="' . i18n_r('DELETE_COMPONENT') . ': '. htmlentities((string) $component->title, ENT_QUOTES, 'UTF-8', false) . '?" class="delcomponent" rel="' . $count . '">&times;</a></td></tr></table>';
+		$table .= '<textarea class="text" name="val[]">' . stripslashes((string) $component->value) . '</textarea>';
+		$table .= '<input type="hidden" class="compslug" name="slug[]" value="' . htmlentities((string) $component->slug, ENT_QUOTES, 'UTF-8', false) . '" />';
+		$table .= '<input type="hidden" class="comptitle" name="title[]" value="' . htmlentities((string) $component->title, ENT_QUOTES, 'UTF-8', false) . '" />';
 		$table .= '<input type="hidden" name="id[]" value="' . $count . '" />';
 		exec_action('component-extras');
 		$table .= '</div>';
@@ -125,7 +125,7 @@ $listc = ''; $submitclass = '';
 if ($count > 1) {
 	$item = 0;
 	foreach ($componentsec as $component) {
-		$listc .= '<a id="divlist-' . $item . '" href="#section-' . $item . '" class="component">' . $component->title . '</a>';
+		$listc .= '<a id="divlist-' . $item . '" href="#section-' . $item . '" class="component">' . htmlentities((string) $component->title, ENT_QUOTES, 'UTF-8', false) . '</a>';
 		$item++;
 	}
 } elseif ($count == 0) {

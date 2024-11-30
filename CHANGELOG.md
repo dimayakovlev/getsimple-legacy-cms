@@ -30,6 +30,7 @@ All notable changes of GetSimple Legacy CMS will be documented in this file.
 ### Fixed
 
 - Prevent implicit conversion from float to int while create images thumbnails on PHP 8.1 and later.
+- Components are no longer saved automatically when the Enter key is pressed during title entry.
 
 ### Removed
 

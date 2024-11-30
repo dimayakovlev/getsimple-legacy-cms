@@ -218,12 +218,12 @@ jQuery(document).ready(function () {
 	$("b.editable").dblclick(function () {
 		var t = $(this).html();
 		$(this).parents('.compdiv').find("input.comptitle").hide();
-		$(this).after('<div id="changetitle"><b>Title: </b><input class="text newtitle titlesaver" name="title[]" value="' + t + '" /></div>');
+		$(this).after('<div id="changetitle"><b>Title: </b><input class="text newtitle titlesaver" name="title-new" value="' + t + '" /></div>');
 		$(this).next('#changetitle').children('input').focus();
 		$(this).parents('.compdiv').find("input.compslug").val('');
 		$(this).hide();
 	});
-	$("input.titlesaver").live("keyup", function () {
+	$("input.newtitle").live("keyup", function () {
 		var myval = $(this).val();
 		$(this).parents('.compdiv').find("code").html(GS.i18n['SAVE_COMPONENTS_TO_UPDATE_CODE']);
 		$(this).parents('.compdiv').find("b.editable").html(myval);
@@ -234,9 +234,13 @@ jQuery(document).ready(function () {
 		$(this).parents('.compdiv').find("input.comptitle").val(myval);
 		$("b.editable").show();
 		$('#changetitle').remove();
+	}).live("keypress", function (event) {
+		if (event.which == 13) {
+			event.preventDefault();
+			$(this).parents('.compdiv').find('textarea').focus();
+		}
 	});
- 
- 
+
 	// other general functions
 	$(".snav a.current").live("click", function ($e) {
 		$e.preventDefault();

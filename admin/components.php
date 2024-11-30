@@ -106,7 +106,7 @@ if (isset($_GET['undo'])){
 $data = getXML($path . $file);
 $componentsec = $data->item;
 $count= 0;
-if (count($componentsec) != 0) {
+if ($componentsec && count($componentsec) != 0) {
 	foreach ($componentsec as $component) {
 		$table .= '<div class="compdiv" id="section-' . $count . '"><table class="comptable" ><tr><td><b title="' . i18n_r('DOUBLE_CLICK_EDIT').'" class="editable">'. stripslashes($component->title) . '</b></td>';
 		$table .= '<td style="text-align:right;"><code>&lt;?php get_component(<span class="compslugcode">\'' . $component->slug . '\'</span>); ?&gt;</code></td><td class="delete">';

@@ -2,7 +2,8 @@
 /**
  * Plugin Functions
  *
- * @package GetSimple
+ * @since 2024.2 Use JQuery 1.7.2
+ * @package GetSimple Legacy
  * @subpackage Plugin-Functions
  */
 
@@ -29,13 +30,13 @@ $GS_asset_objects['jquery']    = 'jQuery';
 $GS_asset_objects['jquery-ui'] = 'jQuery.ui'; 
 
 // jquery
-$jquery_ver    = '1.7.1';
+$jquery_ver    = '1.7.2';
 $jquery_ui_ver = '1.8.17';
 
 $GS_script_assets['jquery']['cdn']['url']      = '//ajax.googleapis.com/ajax/libs/jquery/'.$jquery_ver.'/jquery.min.js';
 $GS_script_assets['jquery']['cdn']['ver']      = $jquery_ver;
 
-$GS_script_assets['jquery']['local']['url']    = $ASSETURL.$GSADMIN.'/template/js/jquery.min.js';
+$GS_script_assets['jquery']['local']['url']    = $ASSETURL.$GSADMIN.'/template/js/jquery-' . $jquery_ver . '.min.js';
 $GS_script_assets['jquery']['local']['ver']    = $jquery_ver;
 
 // jquery-ui

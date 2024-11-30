@@ -28,6 +28,7 @@ All notable changes of GetSimple Legacy CMS will be documented in this file.
 - Innovation Plugin is not automatically enabled during installation.
 - Improve components user interface localization.
 - Function clean_url() replace dots with hyphens and trim trailing hyphens.
+- Update JQuery to version 1.7.2. This is the last version of JQuery 1.7.
 
 ### Fixed
 

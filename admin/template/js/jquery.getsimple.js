@@ -225,11 +225,11 @@ jQuery(document).ready(function () {
 	});
 	$("input.titlesaver").live("keyup", function () {
 		var myval = $(this).val();
-		$(this).parents('.compdiv').find(".compslugcode").html("'" + myval.toLowerCase() + "'");
+		$(this).parents('.compdiv').find("code").html(GS.i18n['SAVE_COMPONENTS_TO_UPDATE_CODE']);
 		$(this).parents('.compdiv').find("b.editable").html(myval);
 	}).live("focusout", function () {
 		var myval = $(this).val();
-		$(this).parents('.compdiv').find(".compslugcode").html("'" + myval.toLowerCase() + "'");
+		$(this).parents('.compdiv').find("code").html(GS.i18n['SAVE_COMPONENTS_TO_UPDATE_CODE']);
 		$(this).parents('.compdiv').find("b.editable").html(myval);
 		$(this).parents('.compdiv').find("input.comptitle").val(myval);
 		$("b.editable").show();

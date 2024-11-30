@@ -9,6 +9,8 @@ All notable changes of GetSimple Legacy CMS will be documented in this file.
 - Support WEBP image format. PHP 5.4 or higher required.
 - Automatic transliteration of names when uploading files and creating directories.
 - Use CodeMirror to highlight and improve components code editing.
+- Automatically create missing titles for components.
+- Use transliteration to create components slugs. Aviod components with empty slugs.
 - Show real name of the user in the welcome message.
 - Don't cache the administration panel stylesheet file when Debug Mode is enabled.
 - Use constants instead of variables: GSNAME instead of $site_full_name, GSVERSION instead of $site_version_no, GSURL instead of $site_link_back_url. These variables are deprecated.
@@ -34,6 +36,7 @@ All notable changes of GetSimple Legacy CMS will be documented in this file.
 - Remove support for the no longer available service addthis.com from the Innovation theme template.
 - Remove functions get_api_details(), debug_api_details() and global variable $api_url.
 - Variables $name_url_clean and $ver_no_clean are not available.
+- Remove live update PHP code snippets for components usage. If component title has been edited, components must be saved to generate slugs and update PHP code snippets.
 
 ## [2024.1.1] - 2024-11-23
 

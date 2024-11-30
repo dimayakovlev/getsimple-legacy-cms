@@ -11,6 +11,10 @@
  * Version: GetSimple Legacy 2024.1
  * Traductors: Dmitry Yakovlev
  * 
+ * Revision: Nov 2024
+ * Version: GetSimple Legacy 2024.2
+ * Traductors: Dmitry Yakovlev
+ * 
  * @package GetSimple Legacy
  * @subpackage Language
  */
@@ -587,6 +591,14 @@ $i18n = array(
 /*
  * Additions for 3.1
  */
-"DEBUG_CONSOLE" => 'Debug Console'
+"DEBUG_CONSOLE" => 'Debug Console',
 
+/***********************************************************************************
+ * SINCE Version 2024.2
+***********************************************************************************/
+
+/*
+ * for components.php
+ */
+"SAVE_COMPONENTS_TO_UPDATE_CODE" => 'Save components to update code',
 );

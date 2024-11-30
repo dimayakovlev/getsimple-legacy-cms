@@ -57,8 +57,11 @@ if (get_filename_id() != 'index') exec_action('admin-pre-header');
 		// init gs namespace and i18n
 		var GS = {};
 		GS.i18n = new Array();
-		GS.i18n['PLUGIN_UPDATED'] = '<?php i18n("PLUGIN_UPDATED"); ?>';
-		GS.i18n['ERROR'] = '<?php i18n("ERROR"); ?>';
+		GS.i18n['PLUGIN_UPDATED'] = '<?php i18n('PLUGIN_UPDATED'); ?>';
+		GS.i18n['ERROR'] = '<?php i18n('ERROR'); ?>';
+<?php if (get_filename_id() == 'components') { ?>
+		GS.i18n['SAVE_COMPONENTS_TO_UPDATE_CODE'] = '<?php i18n('SAVE_COMPONENTS_TO_UPDATE_CODE'); ?>';
+<?php } ?>
 	</script>
 </head>
 

@@ -42,20 +42,30 @@ if (isset($_POST['submitted'])){
 	if (!empty($ids)) {
 
 		$ct = 0; $coArray = array();
-		foreach ($ids as $id){
-			if ($title[$ct] != null) {
-				if ($slug[$ct] == null){
-					$slug_tmp = to7bit($title[$ct], 'UTF-8');
-					$slug[$ct] = clean_url($slug_tmp);
-					$slug_tmp = '';
-				}
-
-				$coArray[$ct]['id'] = $ids[$ct];
-				$coArray[$ct]['slug'] = $slug[$ct];
-				$coArray[$ct]['title'] = safe_slash_html($title[$ct]);
-				$coArray[$ct]['value'] = safe_slash_html($value[$ct]);
-				
+		foreach ($ids as $id) {
+			$title[$ct] = isset($title[$ct]) ? trim($title[$ct]) : '';
+			if ($title[$ct] == '') {
+				$title[$ct] = 'Component ' . time();
 			}
+			$slug[$ct] = isset($slug[$ct]) ? trim($slug[$ct]) : '';
+			if ($slug[$ct] == '') {
+				$slug_tmp = doTransliteration($title[$ct]);
+				// Replace . with - to allow components with numbers in the titles
+				// For example, "Component 1.2" must be component-1-2, not component-12
+				$slug_tmp = str_replace('.', '-', $slug_tmp);
+				$slug_tmp = to7bit($slug_tmp, 'UTF-8');
+				//$slug[$ct] = clean_url($slug_tmp);
+				$slug_tmp = clean_url($slug_tmp);
+				$slug_tmp = trim($slug_tmp, '_-');
+				if ($slug_tmp == '') {
+					$slug_tmp = 'component-' . time();
+				}
+				$slug[$ct] = $slug_tmp;
+			}
+			$coArray[$ct]['id'] = isset($ids[$ct]) ? intval($ids[$ct]) : 0;
+			$coArray[$ct]['slug'] = $slug[$ct];
+			$coArray[$ct]['title'] = safe_slash_html($title[$ct]);
+			$coArray[$ct]['value'] = isset($value[$ct]) ? safe_slash_html($value[$ct]) : '';
 			$ct++;
 		}
 		
@@ -98,30 +108,29 @@ $componentsec = $data->item;
 $count= 0;
 if (count($componentsec) != 0) {
 	foreach ($componentsec as $component) {
-		$table .= '<div class="compdiv" id="section-'.$count.'"><table class="comptable" ><tr><td><b title="'.i18n_r('DOUBLE_CLICK_EDIT').'" class="editable">'. stripslashes($component->title) .'</b></td>';
-		$table .= '<td style="text-align:right;" ><code>&lt;?php get_component(<span class="compslugcode">\''.$component->slug.'\'</span>); ?&gt;</code></td><td class="delete" >';
-		$table .= '<a href="#" title="'.i18n_r('DELETE_COMPONENT').': '. cl($component->title).'?" class="delcomponent" rel="'.$count.'" >&times;</a></td></tr></table>';
-		$table .= '<textarea name="val[]">'. stripslashes($component->value) .'</textarea>';
-		$table .= '<input type="hidden" class="compslug" name="slug[]" value="'. $component->slug .'" />';
-		$table .= '<input type="hidden" class="comptitle" name="title[]" value="'. stripslashes($component->title) .'" />';
-		$table .= '<input type="hidden" name="id[]" value="'. $count .'" />';
+		$table .= '<div class="compdiv" id="section-' . $count . '"><table class="comptable" ><tr><td><b title="' . i18n_r('DOUBLE_CLICK_EDIT').'" class="editable">'. stripslashes($component->title) . '</b></td>';
+		$table .= '<td style="text-align:right;"><code>&lt;?php get_component(<span class="compslugcode">\'' . $component->slug . '\'</span>); ?&gt;</code></td><td class="delete">';
+		$table .= '<a href="#" title="' . i18n_r('DELETE_COMPONENT') . ': '. cl($component->title) . '?" class="delcomponent" rel="' . $count . '">&times;</a></td></tr></table>';
+		$table .= '<textarea name="val[]">' . stripslashes($component->value) . '</textarea>';
+		$table .= '<input type="hidden" class="compslug" name="slug[]" value="' . $component->slug . '" />';
+		$table .= '<input type="hidden" class="comptitle" name="title[]" value="' . stripslashes($component->title) . '" />';
+		$table .= '<input type="hidden" name="id[]" value="' . $count . '" />';
 		exec_action('component-extras');
 		$table .= '</div>';
 		$count++;
 	}
 }
-	# create list to show on sidebar for easy access
-	$listc = ''; $submitclass = '';
-	if($count > 1) {
-		$item = 0;
-		foreach($componentsec as $component) {
-			$listc .= '<a id="divlist-' . $item . '" href="#section-' . $item . '" class="component">' . $component->title . '</a>';
-			$item++;
-		}
-	} elseif ($count == 0) {
-		$submitclass = 'hidden';
-		
+# create list to show on sidebar for easy access
+$listc = ''; $submitclass = '';
+if ($count > 1) {
+	$item = 0;
+	foreach ($componentsec as $component) {
+		$listc .= '<a id="divlist-' . $item . '" href="#section-' . $item . '" class="component">' . $component->title . '</a>';
+		$item++;
 	}
+} elseif ($count == 0) {
+	$submitclass = 'hidden';
+}
 
 if (!getDef('GSNOHIGHLIGHT', true)) {
 	register_script('codemirror', $SITEURL.$GSADMIN.'/template/js/codemirror/lib/codemirror-compressed.js', '0.2.0', FALSE);

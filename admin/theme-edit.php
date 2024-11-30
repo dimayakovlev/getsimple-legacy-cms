@@ -4,7 +4,7 @@
  *
  * Allows you to edit a theme file
  *
- * @package GetSimple
+ * @package GetSimple Legacy
  * @subpackage Theme
  */
 
@@ -213,7 +213,7 @@ window.onload = function() {
 		
 		<form action="<?php myself(); ?>?t=<?php echo $template; ?>&amp;f=<?php echo $template_file; ?>" method="post" >
 			<input id="nonce" name="nonce" type="hidden" value="<?php echo get_nonce("save"); ?>" />
-			<textarea name="content" id="codetext" wrap='off' ><?php echo htmlentities($content, ENT_QUOTES, 'UTF-8'); ?></textarea>
+			<textarea class="text" name="content" id="codetext" wrap='off' ><?php echo htmlentities($content, ENT_QUOTES, 'UTF-8'); ?></textarea>
 			<input type="hidden" value="<?php echo tsl($template) . $template_file; ?>" name="edited_file" />
 			<?php exec_action('theme-edit-extras'); ?>
 			<p id="submit_line" >

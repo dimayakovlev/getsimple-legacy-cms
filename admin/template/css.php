@@ -1841,7 +1841,6 @@ body#index {
 #resetpassword form input.text,
 #index form input.text {
 	width: 255px;
-	font-size: 18px;
 	padding: 5px;
 	margin-top: 2px;
 }

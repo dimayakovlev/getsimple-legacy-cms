@@ -1172,15 +1172,11 @@ function file_mime_type($file) {
  * Checks to see if the you are on the frontend or not
  *
  * @since 3.1
+ * @since 2024.2 Use GSFRONTEND constant
  * @return bool
  */
 function is_frontend() {
-  GLOBAL $base;
-	if(isset($base)) {
-		return true;
-	} else {
-		return false;
-	}
+	return GSFRONTEND;
 }
 
 /**

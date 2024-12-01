@@ -2,9 +2,9 @@
 /**
  * Index
  *
- * Where it all starts	
+ * Where it all starts
  *
- * @package GetSimple
+ * @package GetSimple Legacy
  * @subpackage FrontEnd
  */
 
@@ -14,10 +14,11 @@
 	/* GSCONFIG definitions */
 	if(!defined('GSFRONT')) define('GSFRONT',1);
 	if(!defined('GSBACK'))  define('GSBACK',2);
-	if(!defined('GSBOTH'))  define('GSBOTH',3);	
+	if(!defined('GSBOTH'))  define('GSBOTH',3);
 	if(!defined('GSSTYLEWIDE')) define('GSSTYLEWIDE','wide'); // wide style sheet
 	if(!defined('GSSTYLE_SBFIXED')) define('GSSTYLE_SBFIXED','sbfixed'); // fixed sidebar
 
+	define('GSFRONTEND', true);
 	# Check and load gsconfig
 	if (file_exists('gsconfig.php')) {
 		require_once('gsconfig.php');
@@ -135,5 +136,3 @@ include(GSTHEMESPATH .$TEMPLATE."/".$template_file);
 
 # call posttemplate Hook
 exec_action('index-posttemplate');
-
-?>

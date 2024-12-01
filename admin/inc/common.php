@@ -17,8 +17,10 @@
 // charset utf-8
 header('content-type: text/html; charset=utf-8');
 
+// Set constant for backend
+if (!defined('GSFRONTEND')) define('GSFRONTEND', false);
 // headers for backend
-if(!isset($base)){
+if (GSFRONTEND == false) {
 	// no-cache headers
 	$timestamp = gmdate("D, d M Y H:i:s") . " GMT";
 	header("Expires: " . $timestamp);
@@ -282,13 +284,18 @@ $SESSIONHASH = sha1($SALT . $SITENAME);
 /**
  * $base is if the site is being viewed from the front-end
  */
-if(isset($base)) {
+if (GSFRONTEND == true) {
 	include_once(GSADMININCPATH.'theme_functions.php');
 }
 
+/*
+ * Service Unavailable
+ * @since 2024.2 Use GSFRONTEND constant instead global variable $base
+ * @uses GSFRONTEND
+ * return void
+ */
 function serviceUnavailable(){
-	GLOBAL $base;
-	if(isset($base)){
+	if (GSFRONTEND == true) {
 		header('HTTP/1.1 503 Service Temporarily Unavailable');
 		header('Status: 503 Service Temporarily Unavailable');
 		header('Retry-After: 7200'); // in seconds

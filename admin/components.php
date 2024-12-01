@@ -50,13 +50,16 @@ if (isset($_POST['submitted'])){
 			$slug[$ct] = isset($slug[$ct]) ? trim($slug[$ct]) : '';
 			if ($slug[$ct] == '') {
 				$slug_tmp = doTransliteration($title[$ct]);
-				// Replace . with - to allow components with numbers in the titles
-				// For example, "Component 1.2" must be component-1-2, not component-12
-				$slug_tmp = str_replace('.', '-', $slug_tmp);
-				$slug_tmp = to7bit($slug_tmp, 'UTF-8');
-				//$slug[$ct] = clean_url($slug_tmp);
-				$slug_tmp = clean_url($slug_tmp);
-				$slug_tmp = trim($slug_tmp, '_-');
+				// replace non letter or digits by -, preserve _
+				$slug_tmp = preg_replace('~[^\pL\d_]+~u', '-', $slug_tmp);
+				// remove unwanted characters
+				$slug_tmp = preg_replace('~[^-\w]+~', '', $slug_tmp);
+				// trim
+				$slug_tmp = trim($slug_tmp, '-');
+				// remove duplicate -
+				$slug_tmp = preg_replace('~-+~', '-', $slug_tmp);
+				// lowercase
+				$slug_tmp = strtolower($slug_tmp);
 				if ($slug_tmp == '') {
 					$slug_tmp = 'component-' . time();
 				}

@@ -1414,7 +1414,7 @@ table td.delete a {
 	font-style:normal;
 }
 
-.delete a:hover {
+.delete a:hover, .delete a:focus {
 	background: #D94136 !important;
 	color: #fff !important;
 	text-decoration: none !important;
@@ -1423,6 +1423,7 @@ table td.delete a {
 	display: block;
 	font-size: 12px;
 	font-weight: normal;
+	outline: none;
 }
 
 a.cancel:link, 
@@ -1473,7 +1474,8 @@ a.cancel em {
 	transition: all .15s ease-in-out;
 }
 
-.wrapper .secondarylink a:hover {
+.wrapper .secondarylink a:hover,
+.wrapper .secondarylink a:focus {
 	background: <?php echo $primary_3; ?>;
 	color: #FFF;
 	text-decoration: none;
@@ -1481,6 +1483,7 @@ a.cancel em {
 	padding: 1px;
 	display: block;
 	line-height: 16px;
+	outline: none;
 }
 
 .delete a:link, .delete a:visited, .wrapper .secondarylink a:link, .wrapper .secondarylink a:visited, a.cancel:link, a.updatelink:link{

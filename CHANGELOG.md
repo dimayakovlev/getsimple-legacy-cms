@@ -2,7 +2,7 @@
 
 All notable changes of GetSimple Legacy CMS will be documented in this file.
 
-## [Unreleased]
+## [2024.2] - 2024-12-01
 
 ### Added
 
@@ -17,6 +17,8 @@ All notable changes of GetSimple Legacy CMS will be documented in this file.
 
 ### Changed
 
+- Support PHP version 8.4.1.
+- Minor changes and fixes to graphical user interface elements.
 - Don't display the non-Apache web server check error message on the public admin pages.
 - Use line wrapping in CodeMirror to improve usability when working with long strings of code.
 - The Connect section in the sidebar of the Innovation theme template is only displayed if one or more fields in the Innovation Theme Settings plugin are filled in.

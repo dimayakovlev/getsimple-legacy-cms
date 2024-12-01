@@ -28,7 +28,6 @@ All notable changes of GetSimple Legacy CMS will be documented in this file.
 - Innovation Plugin is not automatically enabled during installation.
 - Improve components user interface localization.
 - Components slugs may begin and end with any number of underscores. Repeated underscores are not replaced by single underscores.
-- Function clean_url() replace dots with hyphens and trim trailing hyphens.
 - Update JQuery to version 1.7.2. This is the last version of JQuery 1.7.
 - Function is_frontend() uses constant GSFRONTEND instead of global variable $base. Using the $base variable to determine if it's frontend or backend is deprecated and cannot guarantee a correct result.
 

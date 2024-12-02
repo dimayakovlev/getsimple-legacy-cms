@@ -31,6 +31,7 @@ if (isset($_POST['submitted'])){
 
 	$value = isset($_POST['val']) && is_array($_POST['val']) ? $_POST['val'] : array();
 	$slug = isset($_POST['slug']) && is_array($_POST['slug']) ? $_POST['slug'] : array();
+	$disabled = isset($_POST['disabled']) && is_array($_POST['disabled']) ? $_POST['disabled'] : array();
 	$title = isset($_POST['title']) && is_array($_POST['title']) ? $_POST['title'] : array();
 	$ids = isset($_POST['id']) && is_array($_POST['id']) ? $_POST['id'] : array();
 
@@ -67,6 +68,7 @@ if (isset($_POST['submitted'])){
 			}
 			$coArray[$ct]['id'] = isset($ids[$ct]) ? intval($ids[$ct]) : 0;
 			$coArray[$ct]['slug'] = $slug[$ct];
+			$coArray[$ct]['disabled'] = isset($disabled[$ct]) && (string) $disabled[$ct] == '1' ? '1' : '';
 			$coArray[$ct]['title'] = safe_slash_html($title[$ct]);
 			$coArray[$ct]['value'] = isset($value[$ct]) ? safe_slash_html($value[$ct]) : '';
 			$ct++;
@@ -81,6 +83,7 @@ if (isset($_POST['submitted'])){
 			$c_note = $components->addChild('title');
 			$c_note->addCData($comp['title']);
 			$components->addChild('slug', $comp['slug']);
+			$components->addChild('disabled', $comp['disabled']);
 			$c_note = $components->addChild('value');
 			$c_note->addCData($comp['value']);
 			$count++;
@@ -111,13 +114,16 @@ $componentsec = $data->item;
 $count= 0;
 if ($componentsec && count($componentsec) != 0) {
 	foreach ($componentsec as $component) {
+		$disabled = isset($component->disabled) && (string) $component->disabled == '1';
 		$table .= '<div class="compdiv" id="section-' . $count . '"><table class="comptable" ><tr><td><b title="' . i18n_r('DOUBLE_CLICK_EDIT').'" class="editable">' . htmlentities((string) $component->title, ENT_QUOTES, 'UTF-8', false) . '</b></td>';
 		$table .= '<td style="text-align:right;"><code>&lt;?php get_component(<span class="compslugcode">\'' . htmlentities((string) $component->slug, ENT_QUOTES, 'UTF-8', false) . '\'</span>); ?&gt;</code></td><td class="delete">';
 		$table .= '<a href="#" title="' . i18n_r('DELETE_COMPONENT') . ': '. htmlentities((string) $component->title, ENT_QUOTES, 'UTF-8', false) . '?" class="delcomponent" rel="' . $count . '">&times;</a></td></tr></table>';
+		$table .= '<p class="inline"><input class="compdisable" type="checkbox" value="1"' . ($disabled ? ' checked' : '') . ' /> &nbsp;<label>' . i18n_r('COMPONENT_DISABLE') . '</label></p>';
 		$table .= '<textarea class="text" name="val[]">' . stripslashes((string) $component->value) . '</textarea>';
 		$table .= '<input type="hidden" class="compslug" name="slug[]" value="' . htmlentities((string) $component->slug, ENT_QUOTES, 'UTF-8', false) . '" />';
 		$table .= '<input type="hidden" class="comptitle" name="title[]" value="' . htmlentities((string) $component->title, ENT_QUOTES, 'UTF-8', false) . '" />';
 		$table .= '<input type="hidden" name="id[]" value="' . $count . '" />';
+		$table .= '<input type="hidden" name="disabled[]" value="' . ($disabled ? '1' : '') . '" />';
 		exec_action('component-extras');
 		$table .= '</div>';
 		$count++;

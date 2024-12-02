@@ -2,6 +2,16 @@
 
 All notable changes of GetSimple Legacy CMS will be documented in this file.
 
+## [Unreleased]
+
+### Added
+
+- Each component can be disabled.
+
+### Changed
+
+- Function get_theme_component() accepts second parameter $force to force component eval. Don't normalize the value of the $id parameter.
+
 ## [2024.2] - 2024-12-01
 
 ### Added

@@ -189,7 +189,7 @@ jQuery(document).ready(function () {
 		$e.preventDefault();
 		loadingAjaxIndicator.show();
 		var id = $("#id").val();
-		$("#divTxt").prepend('<div style="display:none;" class="compdiv" id="section-' + id + '"><table class="comptable"><tr><td><b>' + GS.i18n['COMPONENT_TITLE'] + ':</b> <input type="text" class="text newtitle" name="title[]" value="" /></td><td class="delete"><a href="#" title="' + GS.i18n['DELETE_COMPONENT'] + '?" class="delcomponent" id="del-' + id + '" rel="' + id + '" >&times;</a></td></tr></table><textarea class="text" name="val[]"></textarea><input type="hidden" name="slug[]" value="" /><input type="hidden" name="id[]" value="' + id + '" /><div>');
+		$("#divTxt").prepend('<div style="display:none;" class="compdiv" id="section-' + id + '"><table class="comptable"><tr><td><b>' + GS.i18n['COMPONENT_TITLE'] + ':</b> <input type="text" class="text newtitle" name="title[]" value="" /></td><td class="delete"><a href="#" title="' + GS.i18n['DELETE_COMPONENT'] + '?" class="delcomponent" id="del-' + id + '" rel="' + id + '" >&times;</a></td></tr></table><p class="inline"><input class="compdisable" type="checkbox" value="1" /> &nbsp;<label>' + GS.i18n['COMPONENT_DISABLE'] + '</label></p><textarea class="text" name="val[]"></textarea><input type="hidden" name="slug[]" value="" /><input type="hidden" name="id[]" value="' + id + '" /><input type="hidden" name="disabled[]" value="" /><div>');
 		$("#section-" + id).slideToggle('fast');
 		id = (id - 1) + 2;
 		$("#id").val(id);
@@ -241,6 +241,13 @@ jQuery(document).ready(function () {
 		if (event.which == 13) {
 			event.preventDefault();
 			$(this).parents('.compdiv').find('textarea').focus();
+		}
+	});
+	$("input.compdisable").live('change', function () {
+		if ($(this).is(':checked')) {
+			$(this).parents('.compdiv').find('input[name="disabled[]"]').val('1');
+		} else {
+			$(this).parents('.compdiv').find('input[name="disabled[]"]').val('');
 		}
 	});
 

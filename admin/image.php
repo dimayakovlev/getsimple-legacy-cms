@@ -4,7 +4,7 @@
  *
  * Displays information on the passed image
  *
- * @package GetSimple
+ * @package GetSimple Legacy
  * @subpackage Images
  */
 
@@ -78,7 +78,7 @@ include('template/include-nav.php'); ?>
 					<option value="code-imgthumb-html" ><?php i18n('HTML_THUMB_ORIG');?></option>
 					<?php } ?>
 				</select>
-				<textarea class="copykit" ><?php echo tsl($SITEURL) .'data/uploads/'. $subPath. rawurlencode($src); ?></textarea>
+				<textarea class="copykit text"><?php echo tsl($SITEURL) . 'data/uploads/' . $subPath . rawurlencode($src); ?></textarea>
 				<p style="color:#666;font-size:11px;margin:-10px 0 0 0"><a href="#" class="select-all" ><?php i18n('CLIPBOARD_INSTR');?></a></p>
 			</form>
 			<div class="toggle">

@@ -601,24 +601,21 @@ function get_navigation($currentpage = "",$classPrefix = "") {
 
 /**
  * Check if a user is logged in
- * 
+ *
  * This will return true if user is logged in
  *
  * @since 3.2
+ * @since 2024.2.1 Always return boolean value
  * @uses get_cookie();
  * @uses $USR
  *
  * @return bool
- */	
+ */
 function is_logged_in(){
-  global $USR;
-  if (isset($USR) && $USR == get_cookie('GS_ADMIN_USERNAME')) {
-    return true;
-  }
-}	
-	
+	global $USR;
+	return isset($USR) && $USR == get_cookie('GS_ADMIN_USERNAME');
+}
 
-	
 /**
  * @depreciated as of 2.04
  */

@@ -602,4 +602,13 @@ $i18n = array(
  */
 "SAVE_COMPONENTS_TO_UPDATE_CODE" => 'Save components to update code',
 "COMPONENT_TITLE" => 'Title',
+
+/***********************************************************************************
+ * SINCE Version 2024.2.1
+***********************************************************************************/
+
+/*
+ * for components.php
+ */
+"COMPONENT_DISABLE" => 'Disable component',
 );

@@ -63,6 +63,7 @@ if (get_filename_id() != 'index') exec_action('admin-pre-header');
 		GS.i18n['SAVE_COMPONENTS_TO_UPDATE_CODE'] = '<?php i18n('SAVE_COMPONENTS_TO_UPDATE_CODE'); ?>';
 		GS.i18n['DELETE_COMPONENT'] = '<?php i18n('DELETE_COMPONENT'); ?>';
 		GS.i18n['COMPONENT_TITLE'] = '<?php i18n('COMPONENT_TITLE'); ?>';
+		GS.i18n['COMPONENT_DISABLE'] = '<?php i18n('COMPONENT_DISABLE'); ?>';
 <?php } ?>
 	</script>
 </head>

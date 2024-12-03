@@ -514,7 +514,7 @@ function menu_data($id = null,$xml=false) {
 /**
  * Get Component
  *
- * This will return the component requested. 
+ * This will return the component requested.
  * Components are parsed for PHP within them.
  *
  * @since 1.0
@@ -522,32 +522,35 @@ function menu_data($id = null,$xml=false) {
  * @uses getXML
  * @modified mvlcek 6/12/2011
  *
+ * @uses to7bit
+ * @uses clean_url
+ * @uses $components
+ * @since 2024.2.1 Added $force parameter. Don't normalize id.
+ *
  * @param string $id This is the ID of the component you want to display
  *				True will return value in XML format. False will return an array
- * @return string 
+ * @param bool $force Optional, default is false. If true, will force the component to run
+ * @return void
  */
-function get_component($id) {
-    global $components;
-
-    // normalize id
-    $id = to7bit($id, 'UTF-8');
-	$id = clean_url($id);
-
-    if (!$components) {
-         if (file_exists(GSDATAOTHERPATH.'components.xml')) {
-            $data = getXML(GSDATAOTHERPATH.'components.xml');
-            $components = $data->item;
-        } else {
-            $components = array();
-        }
-    }
-    if (count($components) > 0) {
-        foreach ($components as $component) {
-            if ($id == $component->slug) { 
-                eval("?>" . strip_decode($component->value) . "<?php "); 
-            }
-        }
-    }
+function get_component($id, $force = false) {
+	global $components;
+	$id = (string) $id;
+	if (!$components) {
+		if (file_exists(GSDATAOTHERPATH . 'components.xml')) {
+			$data = getXML(GSDATAOTHERPATH . 'components.xml');
+			$components = $data->item;
+		} else {
+			$components = array();
+		}
+	}
+	if (count($components) > 0) {
+		foreach ($components as $component) {
+			if ($id == (string) $component->slug) {
+				if (!$force && (string) $component->disabled == '1') continue;
+				eval('?>' . strip_decode((string) $component->value) . '<?php ');
+			}
+		}
+	}
 }
 
 /**
@@ -598,24 +601,21 @@ function get_navigation($currentpage = "",$classPrefix = "") {
 
 /**
  * Check if a user is logged in
- * 
+ *
  * This will return true if user is logged in
  *
  * @since 3.2
+ * @since 2024.2.1 Always return boolean value
  * @uses get_cookie();
  * @uses $USR
  *
  * @return bool
- */	
+ */
 function is_logged_in(){
-  global $USR;
-  if (isset($USR) && $USR == get_cookie('GS_ADMIN_USERNAME')) {
-    return true;
-  }
-}	
-	
+	global $USR;
+	return isset($USR) && $USR == get_cookie('GS_ADMIN_USERNAME');
+}
 
-	
 /**
  * @depreciated as of 2.04
  */

@@ -2,6 +2,15 @@
 
 All notable changes of GetSimple Legacy CMS will be documented in this file.
 
+## [Unreleased]
+
+### Added
+
+- New interface for editing components. Added new data fields for components.
+- Component slug can be edited manually.
+- Component can have description. For example, description can be used to explain and give help to user to understand component purpose.
+- Component slug can be edited manually independently from component title.
+
 ## [2024.2.1] - 2024-12-03
 
 ### Added

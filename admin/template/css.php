@@ -2118,3 +2118,65 @@ a.disabled:visited {
 	height: auto;
 	max-height: 660px;
 }
+
+#components .compdiv h4 {
+	font-weight: bold;
+}
+
+#components .compdatatoggle {
+	text-decoration: none;
+	font-weight: bold !important;
+	color: currentColor;
+}
+#components .compdatatoggle:before {
+	content: '\1F782';
+	margin-right: 4px;
+}
+
+#components .compdatatoggle.current:before {
+	content: '\1F783';
+}
+
+#components .compdata {
+	margin: 0 0 20px 0;
+	background: #f9f9f9;
+	border: 1px solid #e8e8e8;
+	padding: 15px 10px 5px 10px;
+	border-radius: 2px;
+	text-shadow: 1px 1px 0 rgba(255,255,255,.3);
+}
+
+#components .compdata p {
+	margin-bottom: 15px;
+}
+
+#components .compdata .rightopt {
+	float: right;
+	width: 48%;
+}
+
+#components .compdata .leftopt {
+	float: left;
+	width: 48%;
+}
+
+#components .compdata .leftopt input[type="text"], 
+#components .compdata .leftopt select, 
+#components .compdata .leftopt textarea,
+#components .compdata .rightopt input[type="text"], 
+#components .compdata .rightopt select, 
+#components .compdata .rightopt textarea {
+	width: 97%;
+	font-size: 11px;
+	padding: 3px;
+	margin: 0 !important;
+}
+#components .compdata .wideopt textarea {
+	box-sizing: border-box;
+	width: 100%;
+	font-size: 11px;
+	padding: 3px;
+	margin: 0 !important;
+	height: 62px;
+	line-height: 15px;
+}

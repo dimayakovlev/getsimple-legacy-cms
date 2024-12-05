@@ -611,4 +611,21 @@ $i18n = array(
  * for components.php
  */
 "COMPONENT_DISABLE" => 'Disable component',
+
+/***********************************************************************************
+ * SINCE Version 2024.3
+***********************************************************************************/
+
+/*
+ * for components.php
+ */
+// "COMPONENT_SLUG_PATTERN_MESSAGE" => 'Can contain Latin characters, numbers, underscores and hyphens. Cannot begin and end with a hyphen, consecutive hyphens are not allowed',
+"COMPONENT_SLUG" => 'Slug',
+"COMPONENT_DESCRIPTION" => 'Description',
+"COMPONENT_NEW" => 'New Component',
+"COMPONENT_ORDER" => 'Order',
+/*
+ * for error_checking.php
+ */
+"ER_COMPONENT_SAVE_ERROR" => 'There was a problem saving components',
 );

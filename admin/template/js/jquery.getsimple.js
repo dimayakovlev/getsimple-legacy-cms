@@ -164,15 +164,15 @@ jQuery(document).ready(function () {
 	// components.php
 	
 	function focusCompEditor(selector){
-		var editor = $(selector + ' textarea');		
+		var editor = $(selector + ' textarea');
 		editor.focus();
 	}
 
 	// auto focus component editors
 	$('#components div.compdivlist a').on('click', function(ev){
 		focusCompEditor($(this).attr('href'));
-		ev.preventDefault();		
-	});	
+		ev.preventDefault();
+	});
 	
 	$(".delconfirmcomp").live("click", function ($e) {
 		$e.preventDefault();
@@ -188,8 +188,8 @@ jQuery(document).ready(function () {
 	$("#addcomponent").live("click", function ($e) {
 		$e.preventDefault();
 		loadingAjaxIndicator.show();
-		var id = $("#id").val();
-		$("#divTxt").prepend('<div style="display:none;" class="compdiv" id="section-' + id + '"><table class="comptable"><tr><td><b>' + GS.i18n['COMPONENT_TITLE'] + ':</b> <input type="text" class="text newtitle" name="title[]" value="" /></td><td class="delete"><a href="#" title="' + GS.i18n['DELETE_COMPONENT'] + '?" class="delcomponent" id="del-' + id + '" rel="' + id + '" >&times;</a></td></tr></table><p class="inline"><input class="compdisable" type="checkbox" value="1" /> &nbsp;<label>' + GS.i18n['COMPONENT_DISABLE'] + '</label></p><textarea class="text" name="val[]"></textarea><input type="hidden" name="slug[]" value="" /><input type="hidden" name="id[]" value="' + id + '" /><input type="hidden" name="disabled[]" value="" /><div>');
+		var id = parseInt($("#id").val()) + 1;
+		$("#divTxt").prepend('<div style="display:none;" class="compdiv" id="section-' + id + '"><table class="comptable"><tr><td><h4>' + GS.i18n['COMPONENT_NEW'] + '</h4></td><td class="delete"><a href="#" title="' + GS.i18n['DELETE_COMPONENT'] + '" class="delcomponent" id="del-' + id + '" rel="' + id + '" >&times;</a></td></tr></table><div class="compdata"><div class="leftopt"><p><label>' + GS.i18n['COMPONENT_TITLE'] + ':</label><input class="text comptitle" type="text" name="components[' + id + '][title]" required></p></div><div class="rightopt"><p><label>' + GS.i18n['COMPONENT_SLUG'] + ':</label><input class="text compslug" type="text" name="components[' + id + '][slug]" value=""></p></div><div class="clear"></div><div class="leftopt"><p class="inline"><input class="compdisable" type="checkbox" value="1" name="components[' + id + '][disabled]" /> &nbsp;<label>' + GS.i18n['COMPONENT_DISABLE'] + '</label></p></div><div class="rightopt"><p><label>' + GS.i18n['COMPONENT_ORDER'] + ':</label><input class="text comporder" type="text" name="components[' + id + '][order]" value="' + id + '"></p></div><div class="clear"></div><div class="wideopt"><p><label>' + GS.i18n['COMPONENT_DESCRIPTION'] + ':</label><textarea class="text compdescription" name="components[' + id + '][description]"></textarea></p></div></div><textarea class="text compvalue" name="components[' + id + '][value]"></textarea><input type="hidden" name="components[' + id + '][id]" value="' + id + '" /><div>');
 		$("#section-" + id).slideToggle('fast');
 		id = (id - 1) + 2;
 		$("#id").val(id);
@@ -199,7 +199,7 @@ jQuery(document).ready(function () {
 	});
 	$('.delcomponent').live("click", function ($e) {
 		$e.preventDefault();
-		var message = $(this).attr("title");
+		var message = $(this).attr("title") + '?';
 		var compid = $(this).attr("rel");
 		var answer = confirm(message);
 		if (answer) {
@@ -215,41 +215,22 @@ jQuery(document).ready(function () {
 		}
  
 	});
-	$("b.editable").dblclick(function () {
-		//var t = $(this).text();
-		t = $(this).parents('.compdiv').find("input.comptitle").val();
-		$(this).parents('.compdiv').find("input.comptitle").hide();
-		$(this).after('<div id="changetitle"><b>' + GS.i18n['COMPONENT_TITLE'] + ':</b> <input class="text newtitle titlesaver" name="title-new" value="" /></div>');
-		$(this).parents('.compdiv').find('[name="title-new"]').val(t);
-		$(this).next('#changetitle').children('input').focus();
-		$(this).parents('.compdiv').find("input.compslug").val('');
-		$(this).hide();
+	$('input.compslug').live('focusout', function(){
+		if ($(this).val() != $(this).data().initial) {
+			$(this).parents('.compdiv').find("code").html(GS.i18n['SAVE_COMPONENTS_TO_UPDATE_CODE']);
+		}
 	});
-	$("input.newtitle").live("keyup", function () {
-		var myval = $(this).val();
-		$(this).parents('.compdiv').find("code").html(GS.i18n['SAVE_COMPONENTS_TO_UPDATE_CODE']);
-		$(this).parents('.compdiv').find("b.editable").text(myval);
-	}).live("focusout", function () {
-		var myval = $(this).val();
-		$(this).parents('.compdiv').find("code").html(GS.i18n['SAVE_COMPONENTS_TO_UPDATE_CODE']);
-		$(this).parents('.compdiv').find("b.editable").text(myval);
-		$(this).parents('.compdiv').find("input.comptitle").val(myval);
-		$(this).parents('.compdiv').find('a.delcomponent').attr('title', GS.i18n['DELETE_COMPONENT'] + '?');
-		$("b.editable").show();
-		$('#changetitle').remove();
-	}).live("keypress", function (event) {
+	$('input.comptitle, input.compslug, input.compdisable').live('keypress', function(event){
 		if (event.which == 13) {
 			event.preventDefault();
-			$(this).parents('.compdiv').find('textarea').focus();
+			$(this).parents('.compdiv').find('textarea.compvalue').focus();
 		}
 	});
-	$("input.compdisable").live('change', function () {
-		if ($(this).is(':checked')) {
-			$(this).parents('.compdiv').find('input[name="disabled[]"]').val('1');
-		} else {
-			$(this).parents('.compdiv').find('input[name="disabled[]"]').val('');
-		}
-	});
+	$('.comptable .compdatatoggle').on('click', function($e){
+		$e.preventDefault();
+		$(this).parents('.compdiv').find('.compdata').slideToggle('fast');
+		$(this).toggleClass('current');
+	})
 
 	// other general functions
 	$(".snav a.current").live("click", function ($e) {

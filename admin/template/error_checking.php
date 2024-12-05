@@ -81,6 +81,9 @@
 		case 'comp-success':
 			echo '<div class="updated"><p>'.i18n_r('ER_COMPONENT_SAVE').'. <a href="components.php?undo&nonce='.get_nonce("undo").'">'.i18n_r('UNDO').'</a></p></div>';
 		break;
+		case 'comp-error':
+			echo '<div class="error"><p><b>'.i18n_r('ERROR').':</b> '.i18n_r('ER_COMPONENT_SAVE_ERROR').'.</p></div>';
+		break;
 		case 'comp-restored':
 			echo '<div class="updated"><p>'.i18n_r('ER_COMPONENT_REST').'. <a href="components.php?undo&nonce='.get_nonce("undo").'">'.i18n_r('UNDO').'</a></p></div>';
 		break;

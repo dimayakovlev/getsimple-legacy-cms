@@ -64,6 +64,10 @@ if (get_filename_id() != 'index') exec_action('admin-pre-header');
 		GS.i18n['DELETE_COMPONENT'] = '<?php i18n('DELETE_COMPONENT'); ?>';
 		GS.i18n['COMPONENT_TITLE'] = '<?php i18n('COMPONENT_TITLE'); ?>';
 		GS.i18n['COMPONENT_DISABLE'] = '<?php i18n('COMPONENT_DISABLE'); ?>';
+		GS.i18n['COMPONENT_NEW'] = '<?php i18n('COMPONENT_NEW'); ?>';
+		GS.i18n['COMPONENT_DESCRIPTION'] = '<?php i18n('COMPONENT_DESCRIPTION'); ?>';
+		GS.i18n['COMPONENT_SLUG'] = '<?php i18n('COMPONENT_SLUG'); ?>';
+		GS.i18n['COMPONENT_ORDER'] = '<?php i18n('COMPONENT_ORDER'); ?>';
 <?php } ?>
 	</script>
 </head>

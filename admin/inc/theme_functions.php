@@ -522,26 +522,26 @@ function menu_data($id = null,$xml=false) {
  * @uses getXML
  * @modified mvlcek 6/12/2011
  *
- * @uses to7bit
- * @uses clean_url
  * @uses $components
  * @since 2024.2.1 Added $force parameter. Don't normalize id.
+ * @since 2024.3 Refactored, don't check if components.xml file exists
  *
  * @param string $id This is the ID of the component you want to display
  *				True will return value in XML format. False will return an array
  * @param bool $force Optional, default is false. If true, will force the component to run
  * @return void
  */
-function get_component($id, $force = false) {
+function get_component($id, $force = false){
 	global $components;
 	$id = (string) $id;
 	if (!$components) {
-		if (file_exists(GSDATAOTHERPATH . 'components.xml')) {
-			$data = getXML(GSDATAOTHERPATH . 'components.xml');
+		$data = getXML(GSDATAOTHERPATH . 'components.xml');
+		if ($data) {
 			$components = $data->item;
-		} else {
-			$components = array();
 		}
+	}
+	if (!$components) {
+		$components = array();
 	}
 	if (count($components) > 0) {
 		foreach ($components as $component) {
@@ -551,6 +551,68 @@ function get_component($id, $force = false) {
 			}
 		}
 	}
+}
+
+/**
+ * Check if a component exists
+ *
+ * @since 2024.3
+ * @uses GSDATAOTHERPATH
+ * @uses getXML
+ * @uses $components
+ *
+ * @param string $id The id of the component to check
+ * @return bool True if component exists, false if not
+ */
+function component_exists($id){
+	global $components;
+	$id = (string) $id;
+	if (!$components) {
+		$data = getXML(GSDATAOTHERPATH . 'components.xml');
+		if ($data) {
+			$components = $data->item;
+		}
+	}
+	if (!$components) {
+		$components = array();
+	}
+	if (count($components) > 0) {
+		foreach ($components as $component) {
+			if ($id == (string) $component->slug) return true;
+		}
+	}
+	return false;
+}
+
+/**
+ * Check if a component is enabled or disabled
+ *
+ * @since 2024.3
+ * @uses GSDATAOTHERPATH
+ * @uses getXML
+ * @uses $components
+ *
+ * @param string $id The id of the component to check
+ * @return bool|null Null if component does not exist, true if enabled, false if disabled
+ */
+function is_component_enabled($id){
+	global $components;
+	$id = (string) $id;
+	if (!$components) {
+		$data = getXML(GSDATAOTHERPATH . 'components.xml');
+		if ($data) {
+			$components = $data->item;
+		}
+	}
+	if (!$components) {
+		$components = array();
+	}
+	if (count($components) > 0) {
+		foreach ($components as $component) {
+			if ($id == (string) $component->slug) return (string) $component->disabled != '1';
+		}
+	}
+	return null;
 }
 
 /**

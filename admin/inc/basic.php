@@ -311,16 +311,15 @@ function get_execution_time($reset=false)
  * Turns the XML file into an object 
  *
  * @since 1.0
+ * @sincd 2024.3 Code refactored. Use simplexml_load_file
  *
  * @param string $file
- * @return object
+ * @return object|bool|null Return object on success, false on error or null if file doesn't exist
  */
-function getXML($file) {
-	$xml = @file_get_contents($file);
-	if($xml){
-		$data = simplexml_load_string($xml, 'SimpleXMLExtended', LIBXML_NOCDATA); 
-		return $data;
-	}	
+function getXML($file){
+	$file = (string) $file;
+	if (file_exists($file) == false) return null;
+	return simplexml_load_file($file, 'SimpleXMLExtended', LIBXML_NOCDATA);
 }
 
 /**

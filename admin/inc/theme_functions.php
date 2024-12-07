@@ -520,11 +520,11 @@ function menu_data($id = null,$xml=false) {
  * @since 1.0
  * @uses GSDATAOTHERPATH
  * @uses getXML
- * @modified mvlcek 6/12/2011
  *
+ * @uses load_components
  * @uses $components
  * @since 2024.2.1 Added $force parameter. Don't normalize id.
- * @since 2024.3 Refactored, don't check if components.xml file exists
+ * @since 2024.3 Refactored, use load_components
  *
  * @param string $id This is the ID of the component you want to display
  *				True will return value in XML format. False will return an array
@@ -534,15 +534,7 @@ function menu_data($id = null,$xml=false) {
 function get_component($id, $force = false){
 	global $components;
 	$id = (string) $id;
-	if (!$components) {
-		$data = getXML(GSDATAOTHERPATH . 'components.xml');
-		if ($data) {
-			$components = $data->item;
-		}
-	}
-	if (!$components) {
-		$components = array();
-	}
+	load_components();
 	if (count($components) > 0) {
 		foreach ($components as $component) {
 			if ($id == (string) $component->slug) {
@@ -556,9 +548,12 @@ function get_component($id, $force = false){
 /**
  * Check if a component exists
  *
+ * This will check if a component with the given id exists in the component list
+ *
  * @since 2024.3
  * @uses GSDATAOTHERPATH
  * @uses getXML
+ * @uses load_components
  * @uses $components
  *
  * @param string $id The id of the component to check
@@ -567,15 +562,7 @@ function get_component($id, $force = false){
 function component_exists($id){
 	global $components;
 	$id = (string) $id;
-	if (!$components) {
-		$data = getXML(GSDATAOTHERPATH . 'components.xml');
-		if ($data) {
-			$components = $data->item;
-		}
-	}
-	if (!$components) {
-		$components = array();
-	}
+	load_components();
 	if (count($components) > 0) {
 		foreach ($components as $component) {
 			if ($id == (string) $component->slug) return true;
@@ -590,6 +577,7 @@ function component_exists($id){
  * @since 2024.3
  * @uses GSDATAOTHERPATH
  * @uses getXML
+ * @uses load_components
  * @uses $components
  *
  * @param string $id The id of the component to check
@@ -598,15 +586,7 @@ function component_exists($id){
 function is_component_enabled($id){
 	global $components;
 	$id = (string) $id;
-	if (!$components) {
-		$data = getXML(GSDATAOTHERPATH . 'components.xml');
-		if ($data) {
-			$components = $data->item;
-		}
-	}
-	if (!$components) {
-		$components = array();
-	}
+	load_components();
 	if (count($components) > 0) {
 		foreach ($components as $component) {
 			if ($id == (string) $component->slug) return (string) $component->disabled != '1';

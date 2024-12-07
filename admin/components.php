@@ -107,11 +107,12 @@ if (isset($_GET['undo'])){
 }
 
 # create components form html
-$data = getXML($path . $file);
-$componentsec = $data->item;
+// $data = getXML($path . $file);
+// @since 2023.3 Use load_components() instead of getXML()
+load_components();
 $count = 0;
-if ($componentsec && count($componentsec) > 0) {
-	foreach ($componentsec as $component) {
+if ($components && count($components) > 0) {
+	foreach ($components as $component) {
 		$count++;
 		$table .= '<div class="compdiv" id="section-' . $count . '"><table class="comptable"><tr><td><h4><a href="#section-' . $count . '" class="compdatatoggle">'. htmlentities((string) $component->title, ENT_QUOTES, 'UTF-8', false) . '</a></h4></td>';
 		$table .= '<td style="text-align:right;"><code>&lt;?php get_component(<span class="compslugcode">\'' . htmlentities((string) $component->slug, ENT_QUOTES, 'UTF-8', false) . '\'</span>); ?&gt;</code></td><td class="delete">';
@@ -134,7 +135,7 @@ if ($componentsec && count($componentsec) > 0) {
 $listc = ''; $submitclass = '';
 if ($count > 1) {
 	$item = 1;
-	foreach ($componentsec as $component) {
+	foreach ($components as $component) {
 		$listc .= '<a id="divlist-' . $item . '" href="#section-' . $item . '" class="component">' . htmlentities((string) $component->title, ENT_QUOTES, 'UTF-8', false) . '</a>';
 		$item++;
 	}

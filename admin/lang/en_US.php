@@ -469,7 +469,7 @@ $i18n = array(
 "DENIED"=> "Denied", //sitemap
 "DEBUG_MODE"=> "DEBUG MODE", //nav-include
 "DOUBLE_CLICK_EDIT"=> "Double Click to Edit", //components
-"THUMB_SAVED"=> "Thumbnail Saved", //image
+"THUMB_SAVED"=> "Thumbnail was successfully created", //image
 "EDIT_COMPONENTS"		=>	"Edit Components", //components
 "REQS_MORE_INFO"=> "For more information on the required modules, visit the <a href=\"%s\" target=\"_blank\" >requirements page</a>.", //install & health-check
 "SYSTEM_UPDATE" => "System Update", // update.php
@@ -628,4 +628,9 @@ $i18n = array(
  * for error_checking.php
  */
 "ER_COMPONENT_SAVE_ERROR" => 'There was a problem saving components',
+/*
+ * for image.php
+ */
+"THUMB_CROP_REGION_SELECT" => 'Please select a crop region to create a thumbnail.',
+"ERROR_CREATE_THUMBNAIL" => 'There was a problem creating a thumbnail',
 );

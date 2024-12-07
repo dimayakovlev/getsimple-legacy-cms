@@ -7,9 +7,9 @@
  * Copyright (c) Arthur McLean
  */
 (function($){$.fn.capslock=function(options){if(options)$.extend($.fn.capslock.defaults,options);this.each(function(){$(this).bind("caps_lock_on",$.fn.capslock.defaults.caps_lock_on);$(this).bind("caps_lock_off",$.fn.capslock.defaults.caps_lock_off);$(this).bind("caps_lock_undetermined",$.fn.capslock.defaults.caps_lock_undetermined);$(this).keypress(function(e){check_caps_lock(e)})});return this};function check_caps_lock(e){var ascii_code=e.which;var letter=String.fromCharCode(ascii_code);var upper=letter.toUpperCase();var lower=letter.toLowerCase();var shift_key=e.shiftKey;if(upper!==lower){if(letter===upper&&!shift_key){$(e.target).trigger("caps_lock_on")}else if(letter===lower&&!shift_key){$(e.target).trigger("caps_lock_off")}else if(letter===lower&&shift_key){$(e.target).trigger("caps_lock_on")}else if(letter===upper&&shift_key){if(navigator.platform.toLowerCase().indexOf("win")!==-1){$(e.target).trigger("caps_lock_off")}else{if(navigator.platform.toLowerCase().indexOf("mac")!==-1&&$.fn.capslock.defaults.mac_shift_hack){$(e.target).trigger("caps_lock_off")}else{$(e.target).trigger("caps_lock_undetermined")}}}else{$(e.target).trigger("caps_lock_undetermined")}}else{$(e.target).trigger("caps_lock_undetermined")}if($.fn.capslock.defaults.debug){if(console){console.log("Ascii code: "+ascii_code);console.log("Letter: "+letter);console.log("Upper Case: "+upper);console.log("Shift key: "+shift_key)}}}$.fn.capslock.defaults={caps_lock_on:function(){},caps_lock_off:function(){},caps_lock_undetermined:function(){},mac_shift_hack:true,debug:false}})(jQuery);
- 
+
 /*
- * GetSimple js file    
+ * GetSimple js file
  */
 function updateCoords(c) {
 	$('#handw').show();
@@ -28,7 +28,7 @@ Debugger.log = function (message) {
 		return;
 	}
 }
- 
+
 /*
  * popit
  * element attention blink
@@ -44,7 +44,7 @@ $.fn.popit = function ($speed) {
 	});
 	return $(this);
 }
- 
+
 /*
  * closeit
  * fadeout close on delay
@@ -56,23 +56,23 @@ $.fn.removeit = function ($delay) {
 	});
 	return $(this);
 }
- 
+
 function notifyOk($msg) {
 	return notify($msg, 'ok');
 }
- 
+
 function notifyWarn($msg) {
 	return notify($msg, 'warning');
 }
- 
+
 function notifyInfo($msg) {
 	return notify($msg, 'info');
 }
- 
+
 function notifyError($msg) {
 	return notify($msg, 'error');
 }
- 
+
 function notify($msg, $type) {
 	if ($type == 'ok' || $type == 'warning' || $type == 'info' || $type == 'error') {
 		var $notify = $('<div class="notify notify_' + $type + '"><p>' + $msg + '</p></div>');
@@ -80,30 +80,24 @@ function notify($msg, $type) {
 		return $notify;
 	}
 }
- 
-function clearNotify() {
+
+function clearNotify(){
 	$('div.wrapper .notify').remove();
 }
- 
+
 basename = function(str){
-	return str.substring(0,str.lastIndexOf('/') ); 		
-} 
- 
+	return str.substring(0,str.lastIndexOf('/'));
+}
+
 
 function i18n(key){
 	return GS.i18n[key];
 }
 
-function checkCoords() {
-	if (parseInt($('#x').val())) return true;
-	alert('Please select a crop region then press submit.');
-	return false;
-};
-		 
 jQuery(document).ready(function () {
- 
+
 	var loadingAjaxIndicator = $('#loader');
- 
+
 	/* Listener for filter dropdown */
 	function attachFilterChangeEvent() {
 		$(document).on('change', "#imageFilter", function () {
@@ -124,11 +118,11 @@ jQuery(document).ready(function () {
 			loadingAjaxIndicator.fadeOut(500);
 		});
 	}
- 
+
 	//upload.php
 	attachFilterChangeEvent();
- 
-	//image.php 
+
+	//image.php
 	var copyKitTextArea = $('textarea.copykit');
 	$("select#img-info").change(function () {
 		var codetype = $(this).val();
@@ -141,8 +135,8 @@ jQuery(document).ready(function () {
 		copyKitTextArea.focus().select();
 		return false;
 	});
- 
- 
+
+
 	//autofocus index.php & resetpassword.php fields on pageload
 	$("#index input#userid").focus();
 	$("#resetpassword input[name='username']").focus();
@@ -157,12 +151,12 @@ jQuery(document).ready(function () {
 			$(this).removeClass('capslock');
 		}
 	};
- 
+
 	$("input[type='password']").capslock(options);
- 
- 
+
+
 	// components.php
-	
+
 	function focusCompEditor(selector){
 		var editor = $(selector + ' textarea');
 		editor.focus();
@@ -173,7 +167,7 @@ jQuery(document).ready(function () {
 		focusCompEditor($(this).attr('href'));
 		ev.preventDefault();
 	});
-	
+
 	$(".delconfirmcomp").live("click", function ($e) {
 		$e.preventDefault();
 		loadingAjaxIndicator.show();
@@ -213,7 +207,7 @@ jQuery(document).ready(function () {
 			});
 			loadingAjaxIndicator.fadeOut(1000);
 		}
- 
+
 	});
 	$('input.compslug').live('focusout', function(){
 		if ($(this).val() != $(this).data().initial) {
@@ -293,10 +287,10 @@ jQuery(document).ready(function () {
 		loadingAjaxIndicator.fadeIn();
 		$("#waiting").fadeIn(1000).fadeOut(1000).fadeIn(1000).fadeOut(1000).fadeIn(1000).fadeOut(1000).fadeIn(1000);
 	});
- 
- 
+
+
 	/* Notifications */
- 
+
 	/*
 	notifyError('This is an ERROR notification');
 	notifyOk('This is an OK notification');
@@ -305,7 +299,7 @@ jQuery(document).ready(function () {
 	notify('message','msgtype');
 	notifyError('This notification blinks and autocloses').popit(ms speed).closeit(ms delay);   
 	*/
- 
+
 	function popAlertMsg() {
 		/* legacy, see jquery extend popit() and closeit() */
 		$(".updated").fadeOut(500).fadeIn(500);
@@ -313,9 +307,9 @@ jQuery(document).ready(function () {
  
 		$(".notify").popit(); // allows legacy use
 	}
- 
+
 	popAlertMsg();
- 
+
 	if (jQuery().fancybox) {
 		$('a[rel*=facybox]').fancybox({
 			type: 'ajax',
@@ -329,11 +323,11 @@ jQuery(document).ready(function () {
 			scrolling: 'no'
 		}).on('click',function(e){e.preventDefault();});
 	}
- 
+
 	//plugins.php
 	$(".toggleEnable").live("click", function ($e) {
 		$e.preventDefault();
- 
+
 		var loadingAjaxIndicator = $('#loader');
 		document.body.style.cursor = "wait";
 		loadingAjaxIndicator.show();
@@ -346,7 +340,7 @@ jQuery(document).ready(function () {
 		mytd.html('');
 		mytd.addClass('ajaxwait ajaxwait_dark ajaxwait_tint_dark');
 		$('.toggleEnable').addClass('disabled');
- 
+
 		$.ajax({
 			type: "GET",
 			dataType: "html",
@@ -354,10 +348,10 @@ jQuery(document).ready(function () {
 			success: function (data, textStatus, jqXHR) {
 				// Store the response as specified by the jqXHR object
 				responseText = jqXHR.responseText;
- 
+
 				// remove scripts to prevent assets from loading when we create temp dom
 				rscript = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi;
- 
+
 				// create temp doms to reliably find elements
 				$('#header').html($("<div>").append(responseText.replace(rscript, "")).find('#header > *'));
 				$('#sidebar').html($("<div>").append(responseText.replace(rscript, "")).find('#sidebar > *'));
@@ -380,7 +374,7 @@ jQuery(document).ready(function () {
  
 		});
 	});
- 
+
 	// edit.php
 	function updateMetaDescriptionCounter() {
 		var remaining = 155 - jQuery('#post-metad').val().length;
@@ -400,7 +394,7 @@ jQuery(document).ready(function () {
 		$("#metadata_window").slideToggle('fast');
 		$(this).toggleClass('current');
 	});
- 
+
 	var privateLabel = $("#post-private-wrap label");
 	$("#post-private").change(function () {
 		if ($(this).val() == "Y") {
@@ -420,7 +414,7 @@ jQuery(document).ready(function () {
 	if ($("#post-menu-enable").is(":checked")) {} else {
 		$("#menu-items").css("display", "none");
 	}
- 
+
 	var edit_line = $('#submit_line span').html();
 	$('#js_submit_line').html(edit_line);
 	$("#js_submit_line input.submit").live("click", function () {
@@ -431,15 +425,15 @@ jQuery(document).ready(function () {
 		$('input[name=redirectto]').val('pages.php');
 		$("#submit_line input.submit").trigger('click');
 	});
- 
- 
+
+
 	// pages.php
 	$("#show-characters").live("click", function () {
 		$(this).hasClass('current') ? $(".showstatus").hide() : $(".showstatus").show() ;
 		$(this).toggleClass('current');
 	});
- 
- 
+
+
 	// log.php
 	if (jQuery().reverseOrder) {
 		$('ol.more li').reverseOrder();
@@ -454,8 +448,8 @@ jQuery(document).ready(function () {
 		li.parent().children().show();
 		li.remove();
 	});
- 
- 	// theme.php
+
+	// theme.php
 	$("#theme_select").on('change',function (e) {
 		var theme_new = $(this).val();
 		var theme_url_old = $("#theme_preview").attr('src');
@@ -516,8 +510,8 @@ jQuery(document).ready(function () {
 		filterSearchInput.find('#q').val('');
 		filterSearchInput.slideUp();
 	});
- 
- 
+
+
 	//create new folder in upload.php
 	$('#createfolder').live("click", function ($e) {
 		$e.preventDefault();
@@ -531,7 +525,7 @@ jQuery(document).ready(function () {
 		$("#new-folder").find("form").hide();
 		$('#createfolder').show();
 	});
- 
+
 	// upload.php ajax folder creation
 	$('#new-folder form').submit(function () {
 		loadingAjaxIndicator.show();
@@ -557,7 +551,7 @@ jQuery(document).ready(function () {
 		});
 		return false;
 	});
- 
+
 	function scrollsidebar(){
 		var elem = $('body.sbfixed #sidebar');
 
@@ -577,8 +571,8 @@ jQuery(document).ready(function () {
 	}
 
 	scrollsidebar();
- 	
- 	// catch all redirects for session timeout on HTTP 401 unauthorized
+
+	// catch all redirects for session timeout on HTTP 401 unauthorized
 	$( document ).ajaxError(function( event, xhr, settings ) {
 		// notifyInfo("ajaxComplete: " + xhr.status);
 		if(xhr.status == 401){

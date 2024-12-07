@@ -14,6 +14,14 @@ All notable changes of GetSimple Legacy CMS will be documented in this file.
 - New theme function is_component_enabled() checks if component is not disabled. Function returns boolean true if component is enabled, false if component is disabled or null if the component is not found.
 - Use new load_components() function to load components data from the components.xml file into the $components global variable.
 
+### Changed
+
+- Improve creating image thumbnail user interface localization.
+
+### Fixed
+
+- Fixed inability to create thumbnail when cropping region started from left edge of image.
+
 ## [2024.2.1] - 2024-12-03
 
 ### Added

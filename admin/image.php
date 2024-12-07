@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Images
  *
@@ -21,28 +21,36 @@ $subPath = (isset($_GET['path'])) ? $_GET['path'] : "";
 if ($subPath != '') $subPath = tsl($subPath);
 
 $src = strippath($_GET['i']);
-$thumb_folder = GSTHUMBNAILPATH.$subPath;
+$thumb_folder = GSTHUMBNAILPATH . $subPath;
 $src_folder = '../data/uploads/';
-$thumb_folder_rel = '../data/thumbs/'.$subPath;
-if (!filepath_is_safe($src_folder . $subPath . $src,GSDATAUPLOADPATH)) redirect("upload.php");
+$thumb_folder_rel = '../data/thumbs/' . $subPath;
+if (!filepath_is_safe($src_folder . $subPath . $src, GSDATAUPLOADPATH)) redirect('upload.php');
 
 // handle jcrop thumbnail creation
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-	require_once('inc/imagemanipulation.php');
-	$objImage = new ImageManipulation($src_folder . $subPath .$src);
-	if ( $objImage->imageok ) {
-		$objImage->setCrop($_POST['x'], $_POST['y'], $_POST['w'], $_POST['h']);
-		//$objImage->show();
-		$objImage->save($thumb_folder . 'thumbnail.' .$src);
-		$success = i18n_r('THUMB_SAVED');
+	$thumb_x = isset($_POST['x']) ? intval($_POST['x']) : 0;
+	$thumb_y = isset($_POST['y']) ? intval($_POST['y']) : 0;
+	$thumb_w = isset($_POST['w']) ? intval($_POST['w']) : 0;
+	$thumb_h = isset($_POST['h']) ? intval($_POST['h']) : 0;
+	if ($thumb_w > 0 && $thumb_h > 0) {
+		require_once('inc/imagemanipulation.php');
+		$objImage = new ImageManipulation($src_folder . $subPath . $src);
+		if ($objImage->imageok) {
+			$objImage->setCrop($thumb_x, $thumb_y, $thumb_w, $thumb_h);
+			//$objImage->show();
+			$objImage->save($thumb_folder . 'thumbnail.' . $src);
+			$success = i18n_r('THUMB_SAVED');
+		} else {
+			$error = i18n_r('ERROR_CREATE_THUMBNAIL');
+		}
 	} else {
-		i18n('ERROR');
+		$error = i18n_r('ERROR_CREATE_THUMBNAIL');
 	}
 }
 
 $thumb_exists = $thwidth = $thheight = $thtype = $athttr = '';
 
-list($imgwidth, $imgheight, $imgtype, $imgattr) = getimagesize($src_folder .$subPath. $src);
+list($imgwidth, $imgheight, $imgtype, $imgattr) = getimagesize($src_folder . $subPath . $src);
 
 if (file_exists($thumb_folder . 'thumbnail.' . $src)) {
 	list($thwidth, $thheight, $thtype, $athttr) = getimagesize($thumb_folder . 'thumbnail.'.$src);
@@ -50,32 +58,32 @@ if (file_exists($thumb_folder . 'thumbnail.' . $src)) {
 }else{
 	// if thumb is missing recreate it
 	require_once('inc/imagemanipulation.php');
-	if(genStdThumb($subPath,$src)){
+	if (genStdThumb($subPath,$src)) {
 		list($thwidth, $thheight, $thtype, $athttr) = getimagesize($thumb_folder . 'thumbnail.'.$src);
 		$thumb_exists = ' &nbsp; | &nbsp; <a href="'.$thumb_folder_rel . 'thumbnail.'. rawurlencode($src) .'" rel="facybox_i" >'.i18n_r('CURRENT_THUMBNAIL').'</a> <code>'.$thwidth.'x'.$thheight.'</code>';
 	}
 }
 
-get_template('header', cl($SITENAME).' &raquo; '.i18n_r('FILE_MANAGEMENT').' &raquo; '.i18n_r('IMAGES')); 
-	
+get_template('header', cl($SITENAME) . ' &raquo; ' . i18n_r('FILE_MANAGEMENT') . ' &raquo; ' . i18n_r('IMAGES'));
+
 include('template/include-nav.php'); ?>
 
 <div class="bodycontent clearfix">
 	<div id="maincontent">
-			
+
 		<div class="main">
 		<h3><?php i18n('IMG_CONTROl_PANEL');?></h3>
-	
-			<?php echo '<p><a href="'.$src_folder . $subPath .rawurlencode($src).'" rel="facybox_i" >'.i18n_r('ORIGINAL_IMG').'</a> <code>'.$imgwidth.'x'.$imgheight .'</code>'. $thumb_exists .'</p>'; ?>
+
+			<?php echo '<p><a href="' . $src_folder . $subPath . rawurlencode($src) . '" rel="facybox_i" >' . i18n_r('ORIGINAL_IMG') . '</a> <code>' . $imgwidth . 'x' . $imgheight . '</code>' . $thumb_exists . '</p>'; ?>
 
 			<form>
-				<select class="text" id="img-info" style="width:50%" >
-					<option selected value="code-img-link" ><?php i18n('LINK_ORIG_IMG');?></option>
-					<option value="code-img-html" ><?php i18n('HTML_ORIG_IMG');?></option>
-					<?php if(!empty($thumb_exists)) { ?>
-					<option value="code-thumb-html" ><?php i18n('HTML_THUMBNAIL');?></option>
-					<option value="code-thumb-link" ><?php i18n('LINK_THUMBNAIL');?></option>
-					<option value="code-imgthumb-html" ><?php i18n('HTML_THUMB_ORIG');?></option>
+				<select class="text" id="img-info" style="width:50%">
+					<option selected value="code-img-link"><?php i18n('LINK_ORIG_IMG');?></option>
+					<option value="code-img-html"><?php i18n('HTML_ORIG_IMG');?></option>
+					<?php if (!empty($thumb_exists)) { ?>
+					<option value="code-thumb-html"><?php i18n('HTML_THUMBNAIL');?></option>
+					<option value="code-thumb-link"><?php i18n('LINK_THUMBNAIL');?></option>
+					<option value="code-imgthumb-html"><?php i18n('HTML_THUMB_ORIG');?></option>
 					<?php } ?>
 				</select>
 				<textarea class="copykit text"><?php echo tsl($SITEURL) . 'data/uploads/' . $subPath . rawurlencode($src); ?></textarea>
@@ -87,7 +95,7 @@ include('template/include-nav.php'); ?>
 				<?php if(!empty($thumb_exists)) { ?>
 				<p id="code-thumb-html">&lt;img src="<?php echo tsl($SITEURL) .'data/thumbs/'.$subPath.'thumbnail.'. rawurlencode($src); ?>" class="gs_image gs_thumb" height="<?php echo $thheight; ?>" width="<?php echo $thwidth; ?>" alt=""></p>
 				<p id="code-thumb-link"><?php echo tsl($SITEURL) .'data/thumbs/'.$subPath.'thumbnail.'.rawurlencode($src); ?></p>
-				<p id="code-imgthumb-html">&lt;a href="<?php echo tsl($SITEURL) .'data/uploads/'. $subPath. rawurlencode($src); ?>" class="gs_image_link" >&lt;img src="<?php echo tsl($SITEURL) .'data/thumbs/'.$subPath.'thumbnail.'.rawurlencode($src); ?>" class="gs_thumb" height="<?php echo $thheight; ?>" width="<?php echo $thwidth; ?>" alt="" />&lt;/a></p>
+				<p id="code-imgthumb-html">&lt;a href="<?php echo tsl($SITEURL) .'data/uploads/'. $subPath. rawurlencode($src); ?>" class="gs_image_link" >&lt;img src="<?php echo tsl($SITEURL) .'data/thumbs/'.$subPath.'thumbnail.'.rawurlencode($src); ?>" class="gs_thumb" height="<?php echo $thheight; ?>" width="<?php echo $thwidth; ?>" alt="">&lt;/a></p>
 				<?php } ?>
 			</div>
 	</div>
@@ -96,37 +104,35 @@ include('template/include-nav.php'); ?>
 $jcrop = !empty($thumb_exists);
 if($jcrop){ ?>
 	<div id="jcrop_open" class="main">
-	    <img src="<?php echo $src_folder . $subPath.rawurlencode($src); ?>" id="cropbox" />
-			<div id="handw" class="toggle" ><?php i18n('SELECT_DIMENTIONS'); ?><br /><span id="picw"></span> x <span id="pich"></span></div>
-	    <!-- This is the form that our event handler fills -->
-	    <form id="jcropform" action="<?php myself(); ?>?i=<?php echo rawurlencode($src); ?>&amp;path=<?php echo $subPath; ?>" method="post" onsubmit="return checkCoords();">
-	      <input type="hidden" id="x" name="x" />
-	      <input type="hidden" id="y" name="y" />
-	      <input type="hidden" id="w" name="w" />
-	      <input type="hidden" id="h" name="h" />
-	      <input type="submit" class="submit" value="<?php i18n('CREATE_THUMBNAIL');?>" /> &nbsp; <span style="color:#666;font-size:11px;"><?php i18n('CROP_INSTR_NEW');?></span>
-
-	    </form>
+		<img src="<?php echo $src_folder . $subPath.rawurlencode($src); ?>" id="cropbox">
+		<div id="handw" class="toggle"><?php i18n('SELECT_DIMENTIONS'); ?><br /><span id="picw"></span> x <span id="pich"></span></div>
+		<!-- This is the form that our event handler fills -->
+		<form id="jcropform" action="<?php myself(); ?>?i=<?php echo rawurlencode($src); ?>&amp;path=<?php echo $subPath; ?>" method="post">
+			<input type="hidden" id="x" name="x">
+			<input type="hidden" id="y" name="y">
+			<input type="hidden" id="w" name="w">
+			<input type="hidden" id="h" name="h">
+			<input type="submit" class="submit" value="<?php i18n('CREATE_THUMBNAIL');?>" /> &nbsp; <span style="color:#666;font-size:11px;"><?php i18n('CROP_INSTR_NEW');?></span>
+		</form>
 	</div>
-	
+
 <?php } ?>
 	</div>
-	
-	<div id="sidebar" >
+
+	<div id="sidebar">
 		<?php include('template/sidebar-files.php'); ?>
-	</div>	
+	</div>
 
 	<script>
-	  jQuery(document).ready(function() { 
-	    		
+		jQuery(document).ready(function(){
 			$(window).load(function(){
-				var api = $.Jcrop('#cropbox',{
-			    onChange: updateCoords,
-			    onSelect: updateCoords,
-			    boxWidth: 585, 
-			    boxHeight: 500
-			  }); 
-			  var isCtrl = false;
+				var api = $.Jcrop('#cropbox', {
+					onChange: updateCoords,
+					onSelect: updateCoords,
+					boxWidth: 648,
+					boxHeight: 500
+				});
+				var isCtrl = false;
 				$(document).keyup(function (e) {
 					api.setOptions({ aspectRatio: 0 });
 					api.focus();
@@ -139,9 +145,13 @@ if($jcrop){ ?>
 					}
 				});
 			});
-		
+			$('#jcropform').on('submit', function(){
+				if ((parseInt($('#w').val()) > 0) && (parseInt($('#h').val()) > 0)) return true;
+				alert('<?php i18n('THUMB_CROP_REGION_SELECT') ?>');
+				return false;
+			});
 		});
 	</script>
-	
+
 	</div>
 <?php get_template('footer'); ?>

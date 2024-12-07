@@ -1447,3 +1447,27 @@ function doTransliteration($str){
 function getTransliteration(){
 	return (array) i18n_r('TRANSLITERATION');
 }
+
+/**
+ * Loads components data
+ * 
+ * Loads components data from the components.xml file into the $components global variable. On error, the function sets $components to an empty array
+ *
+ * @since 2024.3
+ * @uses getXML
+ * @uses GSDATAOTHERPATH
+ * @uses $components
+ * @param bool $force Optional, default is false. If true, will reload components even if already loaded
+ * @return bool True if components loaded successfully, false if xml parse error, null if components.xml not found
+ */
+function load_components($force = false){
+	global $components;
+	if ($components && $force == false) return true; // Components already loaded
+	$data = getXML(GSDATAOTHERPATH . 'components.xml');
+	if (!$data) {
+		$components = array();
+		return $data; // Return null if components.xml not found or false if xml parse error
+	}
+	$components = $data->item;
+	return true;
+}

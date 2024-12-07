@@ -12,6 +12,7 @@ All notable changes of GetSimple Legacy CMS will be documented in this file.
 - Component slug can be edited manually independently from component title.
 - New theme function component_exists() checks if component exists. Function returns boolean true if component exists or false if component does not exist.
 - New theme function is_component_enabled() checks if component is not disabled. Function returns boolean true if component is enabled, false if component is disabled or null if the component is not found.
+- Use new load_components() function to load components data from the components.xml file into the $components global variable.
 
 ## [2024.2.1] - 2024-12-03
 

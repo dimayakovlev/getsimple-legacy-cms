@@ -1447,5 +1447,3 @@ function doTransliteration($str){
 function getTransliteration(){
 	return (array) i18n_r('TRANSLITERATION');
 }
-
-?>

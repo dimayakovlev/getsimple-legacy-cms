@@ -2161,9 +2161,11 @@ a.disabled:visited {
 }
 
 #components .compdata .leftopt input[type="text"], 
+#components .compdata .leftopt input[type="number"], 
 #components .compdata .leftopt select, 
 #components .compdata .leftopt textarea,
 #components .compdata .rightopt input[type="text"], 
+#components .compdata .rightopt input[type="number"], 
 #components .compdata .rightopt select, 
 #components .compdata .rightopt textarea {
 	width: 97%;

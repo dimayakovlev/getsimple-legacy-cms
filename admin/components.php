@@ -68,7 +68,7 @@ if (isset($_POST['submitted'])) {
 		$components_tmp[] = $component;
 	}
 	if (count($components_tmp) > 0) {
-		$components_tmp = subval_sort($components_tmp, 'order'); // In original sort by title
+		$components_tmp = subval_sort(subval_sort($components_tmp, 'title'), 'order');
 		$xml = new SimpleXMLExtended('<?xml version="1.0" encoding="UTF-8"?><components></components>');
 		foreach ($components_tmp as $component) {
 			$item = $xml->addChild('item');
@@ -121,7 +121,7 @@ if ($components && count($components) > 0) {
 		$table .= '<div class="leftopt"><p><label>' . i18n_r('COMPONENT_TITLE') . ':</label><input class="text comptitle" type="text" name="components[' . $count . '][title]" value="' . htmlentities((string) $component->title, ENT_QUOTES, 'UTF-8', false) . '" required></p></div>';
 		$table .= '<div class="rightopt"><p><label>' . i18n_r('COMPONENT_SLUG') . ':</label><input class="text compslug" type="text" name="components[' . $count . '][slug]" value="' . htmlentities((string) $component->slug, ENT_QUOTES, 'UTF-8', false) . '" data-initial="' . htmlentities((string) $component->slug, ENT_QUOTES, 'UTF-8', false) . '"></p></div><div class="clear"></div>';
 		$table .= '<div class="leftopt"><p class="inline"><input class="compdisable" type="checkbox" value="1"' . (isset($component->disabled) && (string) $component->disabled == '1' ? ' checked' : '') . ' name="components[' . $count . '][disabled]" /> &nbsp;<label>' . i18n_r('COMPONENT_DISABLE') . '</label></p></div>
-		<div class="rightopt"><p><label>' . i18n_r('COMPONENT_ORDER') . ':</label><input class="text comporder" type="text" name="components[' . $count . '][order]" value="' . (isset($component->order) ? intval((string) $component->order) : '0') . '"></p></div>
+		<div class="rightopt"><p><label>' . i18n_r('COMPONENT_ORDER') . ':</label><input class="text comporder" type="number" min="1" name="components[' . $count . '][order]" value="' . (isset($component->order) ? intval((string) $component->order) : '0') . '"></p></div>
 		<div class="clear"></div>';
 		$table .= '<div class="wideopt"><p><label>'. i18n_r('COMPONENT_DESCRIPTION') . ':</label><textarea class="text compdescription" name="components[' . $count . '][description]">' . htmlentities((string) $component->description, ENT_QUOTES, 'UTF-8', false) . '</textarea></p></div>';
 		$table .= '</div>';

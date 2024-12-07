@@ -252,7 +252,7 @@ function var_out($var, $filter = 'special'){
 	$var = (string) $var;
 	if ($var == '') return '';
 	$filter = strtolower((string) $filter);
-	if ($filter == 'full') return htmlspecialchars($var, ENT_QUOTES);
+	if ($filter == 'full') return htmlspecialchars($var, ENT_QUOTES, 'UTF-8', false);
 	if ($filter == 'string') {
 		if (version_compare(PHP_VERSION, '8.1.0', '>=')) {
 			#return htmlspecialchars($var);

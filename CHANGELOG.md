@@ -13,6 +13,7 @@ All notable changes of GetSimple Legacy CMS will be documented in this file.
 - New theme function component_exists() checks if component exists. Function returns boolean true if component exists or false if component does not exist.
 - New theme function is_component_enabled() checks if component is not disabled. Function returns boolean true if component is enabled, false if component is disabled or null if the component is not found.
 - Use new load_components() function to load components data from the components.xml file into the $components global variable.
+- The breadcrumbs navigation on the Image Control Panel (image.php) page makes easier to navigate through the directories within uploads.
 
 ### Changed
 

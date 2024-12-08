@@ -408,8 +408,7 @@ h3.floated {
 h5,
 div.h5 {
 	margin: 10px 0 10px 0;
-	font-size: 14px;
-	line-height: 28px;
+	line-height: 24px;
 	display: block;
 	padding: 3px 10px;
 	background: #EEEEEE;

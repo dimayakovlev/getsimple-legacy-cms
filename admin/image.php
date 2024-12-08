@@ -73,7 +73,17 @@ include('template/include-nav.php'); ?>
 
 		<div class="main">
 		<h3><?php i18n('IMG_CONTROl_PANEL');?></h3>
-
+<?php
+	echo '<div class="h5 clearfix"><div class="crumbs">/ <a href="upload.php">uploads</a> / ';
+	$urlPath = '';
+	foreach (explode('/', $subPath) as $pathPart) {
+		if ($pathPart != '') {
+			$urlPath .= $pathPart . '/';
+			echo '<a href="upload.php?path=' . $urlPath . '">' . $pathPart . '</a> / ';
+		}
+	}
+	echo $src . '</div></div>';
+?>
 			<?php echo '<p><a href="' . $src_folder . $subPath . rawurlencode($src) . '" rel="facybox_i" >' . i18n_r('ORIGINAL_IMG') . '</a> <code>' . $imgwidth . 'x' . $imgheight . '</code>' . $thumb_exists . '</p>'; ?>
 
 			<form>

@@ -17,6 +17,7 @@ All notable changes of GetSimple Legacy CMS will be documented in this file.
 ### Changed
 
 - Improve creating image thumbnail user interface localization.
+- The naming scheme for uploaded copies has changed: add the postfix `-copy` to the name of the first copy, and add a number starting with 1 for the next copies.
 
 ### Fixed
 

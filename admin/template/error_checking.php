@@ -21,7 +21,7 @@
 	}
 
 	if ((!defined('GSNOAPACHECHECK') || GSNOAPACHECHECK == false) && !isAuthPage() && !server_is_apache()) {
-		echo '<div class="error">' . i18n_r('WARNING') . ': <a href="health-check.php">' . i18n_r('SERVER_SETUP') . ' non-Apache</a></div>';
+		echo '<div class="notify notify_error">' . i18n_r('WARNING') . ': <a href="health-check.php">' . i18n_r('SERVER_SETUP') . ' non-Apache</a></div>';
 	}
 
 	if(!isset($update)) $update = '';

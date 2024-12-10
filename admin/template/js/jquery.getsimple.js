@@ -103,7 +103,12 @@ jQuery(document).ready(function () {
 		$(document).on('change', "#imageFilter", function () {
 			Debugger.log('attachFilterChangeEvent');
 			loadingAjaxIndicator.show();
-			var filterx = $(this).val();
+			var filterx = $(this).val(),
+				trx = $('#imageTable').find('tr.' + filterx),
+				counter = trx.length;
+			if (filterx != 'All') {
+				counter = counter + $("#imageTable").find("tr.folder").length;
+			}
 			$("#imageTable").find("tr").hide();
 			if (filterx == 'Images') {
 				$("#imageTable").find("tr .imgthumb").show();
@@ -111,8 +116,9 @@ jQuery(document).ready(function () {
 				$("#imageTable").find("tr .imgthumb").hide();
 			}
 			$("#filetypetoggle").html('&nbsp;&nbsp;/&nbsp;&nbsp;' + filterx);
-			$("#imageTable").find("tr." + filterx).show();
+			trx.show();
 			$("#imageTable").find("tr.folder").show();
+			$("#pg_counter").text(counter);
 			$("#imageTable").find("tr:first-child").show();
 			$("#imageTable").find("tr.deletedrow").hide();
 			loadingAjaxIndicator.fadeOut(500);
@@ -542,9 +548,8 @@ jQuery(document).ready(function () {
 					$("#new-folder").find("#foldername").val('');
 					$("#new-folder").find("form").hide();
 					$('#createfolder').show();
-					counter = parseInt($("#pg_counter").text());
-					$("#pg_counter").html(counter++);
 					$("tr." + escape(newfolder) + " td").css("background-color", "#F9F8B6");
+					$("#pg_counter").text($("tr.All").length);
 					loadingAjaxIndicator.fadeOut();
 				});
 			}

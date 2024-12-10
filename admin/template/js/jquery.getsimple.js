@@ -11,15 +11,7 @@
 /*
  * GetSimple js file
  */
-function updateCoords(c) {
-	$('#handw').show();
-	$('#x').val(c.x);
-	$('#y').val(c.y);
-	$('#w').val(c.w);
-	$('#h').val(c.h);
-	$('#pich').html(c.h);
-	$('#picw').html(c.w);
-};
+
 var Debugger = function () {}
 Debugger.log = function (message) {
 	try {

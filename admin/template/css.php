@@ -861,11 +861,10 @@ form input.capslock {
 textarea#codetext {
 	background: #f4f4f4;
 	padding: 4px;
-	width: 635px;
+	box-sizing: border-box;
+	width: 100%;
 	color: #444;
-	//border:1px solid #666;
 	height: 660px;
-	//width: 99%;
 	font-family: Consolas, Monaco, "Courier New", Courier, monospace;
 	font-size: 12px;
 	line-height: 18px;

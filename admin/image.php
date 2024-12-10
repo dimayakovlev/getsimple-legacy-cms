@@ -82,7 +82,7 @@ include('template/include-nav.php'); ?>
 			echo '<a href="upload.php?path=' . $urlPath . '">' . $pathPart . '</a> / ';
 		}
 	}
-	echo $src . '</div></div>';
+	echo '<span class="current">' . $src . '</span></div></div>';
 ?>
 			<?php echo '<p><a href="' . $src_folder . $subPath . rawurlencode($src) . '" rel="facybox_i" >' . i18n_r('ORIGINAL_IMG') . '</a> <code>' . $imgwidth . 'x' . $imgheight . '</code>' . $thumb_exists . '</p>'; ?>
 

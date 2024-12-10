@@ -207,22 +207,25 @@ get_template('header', cl($SITENAME) . ' &raquo; ' . i18n_r('FILE_MANAGEMENT'));
 			}
 			echo '</select><div class="clear" ></div></div>';
 
-	$pathParts = explode('/', $subPath);
+	$pathParts = explode('/', rtrim($subPath, '/'));
+	$curPart = end($pathParts);
 	$urlPath = '';
 
 	echo '<div class="h5 clearfix"><div class="crumbs">/ <a href="upload.php">uploads</a> / ';
-
 	foreach ($pathParts as $pathPart) {
 		if ($pathPart != '') {
 			$urlPath .= $pathPart . '/';
-			
-			echo '<a href="?path=' . $urlPath . '">' . $pathPart . '</a> / ';
+			if ($pathPart != $curPart) {
+				echo '<a href="?path=' . $urlPath . '">' . $pathPart . '</a> / ';
+			} else {
+				echo '<span class="current">' . $pathPart .'</span> / ';
+			}
 		}
 	}
-	echo '</div> <div id="new-folder"><a href="#" id="createfolder">' . i18n_r('CREATE_FOLDER') . '</a><form action="upload.php">&nbsp;<input type="hidden" name="path" value="' . $subPath . '"><input type="hidden" name="nonce" value="' . get_nonce("createfolder") . '"><input type="text" class="text" name="newfolder" id="foldername"> <input type="submit" class="submit" value="' . i18n_r('CREATE_FOLDER') . '" />&nbsp; <a href="#" class="cancel">' . i18n_r('CANCEL') . '</a></form></div></div>';
+	echo '</div> <div id="new-folder"><a href="#" id="createfolder">' . i18n_r('CREATE_FOLDER') . '</a><form action="upload.php">&nbsp;<input type="hidden" name="path" value="' . $subPath . '"><input type="hidden" name="nonce" value="' . get_nonce("createfolder") . '"><input type="text" class="text" name="newfolder" id="foldername"> <input type="submit" class="submit" value="' . i18n_r('CREATE_FOLDER') . '">&nbsp; <a href="#" class="cancel">' . i18n_r('CANCEL') . '</a></form></div></div>';
 
 	echo '<table class="highlight" id="imageTable">';
-	echo '<tr><th class="imgthumb" ></th><th>' . i18n_r('FILE_NAME') . '</th>';
+	echo '<tr><th class="imgthumb"></th><th>' . i18n_r('FILE_NAME') . '</th>';
 	echo '<th style="text-align:right;">' . i18n_r('FILE_SIZE') . '</th>';
 	if (isDebug()) {
 		echo '<th style="text-align:right;">' . i18n_r('PERMS') . '</th>';
@@ -277,7 +280,7 @@ get_template('header', cl($SITENAME) . ' &raquo; ' . i18n_r('FILE_MANAGEMENT'));
 					if ($upload['type'] == i18n_r('IMAGES') . ' Images') {
 						$gallery = 'rel=" facybox_i"';
 						$pathlink = 'image.php?i=' . rawurlencode($upload['name']) . '&amp;path=' . $subPath;
-						$thumbLink = $urlPath.'thumbsm.'.$upload['name'];
+						$thumbLink = $urlPath . 'thumbsm.' . $upload['name'];
 						$thumbLinkEncoded = $urlPath . 'thumbsm.' . rawurlencode($upload['name']);
 						if (file_exists(GSTHUMBNAILPATH.$thumbLink)) {
 							$imgSrc = '<img src="../data/thumbs/' . $thumbLinkEncoded . '">';

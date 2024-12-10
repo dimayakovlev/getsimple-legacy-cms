@@ -277,7 +277,7 @@ $i18n = array(
 */
 "PAGE_BACKUPS"			=>	"Page Backups",
 "ASK_DELETE_ALL"		=>	"<em>D</em>elete All",
-"DELETE_ALL_BAK"		=>	"Delete all backups?",
+"DELETE_ALL_BAK"		=>	"Delete all backups",
 "TOTAL_BACKUPS"			=>	"total backups",
 
 /* 

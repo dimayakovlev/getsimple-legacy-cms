@@ -230,7 +230,7 @@ jQuery(document).ready(function () {
 	});
 	$(".confirmation").live("click", function ($e) {
 		loadingAjaxIndicator.show();
-		var message = $(this).attr("title");
+		var message = $(this).attr("title") + '?';
 		var answer = confirm(message);
 		if (!answer) {
 			loadingAjaxIndicator.fadeOut(500);

@@ -23,6 +23,7 @@ All notable changes of GetSimple Legacy CMS will be documented in this file.
 ### Fixed
 
 - Fixed inability to create thumbnail when cropping region started from left edge of image.
+- Item counter shows correct number of items for uploaded files with filtering enabled.
 
 ## [2024.2.1] - 2024-12-03
 

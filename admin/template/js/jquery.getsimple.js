@@ -12,6 +12,16 @@
  * GetSimple js file
  */
 
+/**
+ * Returns the given string with a trailing question mark removed, if present.
+ * @since 2024.3
+ * @param {string} str
+ * @returns {string}
+ */
+function removeTrailingQuestionMark(str) {
+	return str.endsWith('?') ? str.slice(0, -1) : str;
+}
+
 var Debugger = function () {}
 Debugger.log = function (message) {
 	try {
@@ -191,7 +201,7 @@ jQuery(document).ready(function () {
 	});
 	$('.delcomponent').live("click", function ($e) {
 		$e.preventDefault();
-		var message = $(this).attr("title") + '?';
+		var message = removeTrailingQuestionMark($(this).attr("title")) + '?';
 		var compid = $(this).attr("rel");
 		var answer = confirm(message);
 		if (answer) {
@@ -230,7 +240,7 @@ jQuery(document).ready(function () {
 	});
 	$(".confirmation").live("click", function ($e) {
 		loadingAjaxIndicator.show();
-		var message = $(this).attr("title") + '?';
+		var message = removeTrailingQuestionMark($(this).attr("title")) + '?';
 		var answer = confirm(message);
 		if (!answer) {
 			loadingAjaxIndicator.fadeOut(500);
@@ -239,7 +249,7 @@ jQuery(document).ready(function () {
 		loadingAjaxIndicator.fadeOut(500);
 	});
 	$(".delconfirm").live("click", function () {
-		var message = $(this).attr("title") + '?';
+		var message = removeTrailingQuestionMark($(this).attr("title")) + '?';
 		var dlink = $(this).attr("href");
 		var mytr = $(this).parents("tr");
 		mytr.css("font-style", "italic");

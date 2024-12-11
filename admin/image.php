@@ -84,12 +84,13 @@ include('template/include-nav.php'); ?>
 	}
 	echo '<span class="current">' . $src . '</span></div></div>';
 ?>
-			<?php echo '<p><a href="' . $src_folder . $subPath . rawurlencode($src) . '" rel="facybox_i" >' . i18n_r('ORIGINAL_IMG') . '</a> <code>' . $imgwidth . 'x' . $imgheight . '</code>' . $thumb_exists . '</p>'; ?>
+			<?php echo '<p><a href="' . $src_folder . $subPath . rawurlencode($src) . '" rel="facybox_i">' . i18n_r('ORIGINAL_IMG') . '</a> <code>' . $imgwidth . 'x' . $imgheight . '</code>' . $thumb_exists . '</p>'; ?>
 
 			<form>
 				<select class="text" id="img-info" style="width:50%">
 					<option selected value="code-img-link"><?php i18n('LINK_ORIG_IMG');?></option>
 					<option value="code-img-html"><?php i18n('HTML_ORIG_IMG');?></option>
+					<option value="code-img-figure"><?php i18n('FIGURE_ORIG_IMG');?></option>
 					<?php if (!empty($thumb_exists)) { ?>
 					<option value="code-thumb-html"><?php i18n('HTML_THUMBNAIL');?></option>
 					<option value="code-thumb-link"><?php i18n('LINK_THUMBNAIL');?></option>
@@ -97,22 +98,23 @@ include('template/include-nav.php'); ?>
 					<?php } ?>
 				</select>
 				<textarea class="copykit text"><?php echo tsl($SITEURL) . 'data/uploads/' . $subPath . rawurlencode($src); ?></textarea>
-				<p style="color:#666;font-size:11px;margin:-10px 0 0 0"><a href="#" class="select-all" ><?php i18n('CLIPBOARD_INSTR');?></a></p>
+				<p style="font-size:11px;margin:-10px 0 0 0"><a href="#" class="select-all"><?php i18n('CLIPBOARD_INSTR');?></a></p>
 			</form>
 			<div class="toggle">
-				<p id="code-img-html">&lt;img src="<?php echo tsl($SITEURL) .'data/uploads/'. $subPath. rawurlencode($src); ?>" class="gs_image" height="<?php echo $imgheight; ?>" width="<?php echo $imgwidth; ?>" alt=""></p>
-				<p id="code-img-link"><?php echo tsl($SITEURL) .'data/uploads/'. $subPath. rawurlencode($src); ?></p>
-				<?php if(!empty($thumb_exists)) { ?>
-				<p id="code-thumb-html">&lt;img src="<?php echo tsl($SITEURL) .'data/thumbs/'.$subPath.'thumbnail.'. rawurlencode($src); ?>" class="gs_image gs_thumb" height="<?php echo $thheight; ?>" width="<?php echo $thwidth; ?>" alt=""></p>
-				<p id="code-thumb-link"><?php echo tsl($SITEURL) .'data/thumbs/'.$subPath.'thumbnail.'.rawurlencode($src); ?></p>
-				<p id="code-imgthumb-html">&lt;a href="<?php echo tsl($SITEURL) .'data/uploads/'. $subPath. rawurlencode($src); ?>" class="gs_image_link" >&lt;img src="<?php echo tsl($SITEURL) .'data/thumbs/'.$subPath.'thumbnail.'.rawurlencode($src); ?>" class="gs_thumb" height="<?php echo $thheight; ?>" width="<?php echo $thwidth; ?>" alt="">&lt;/a></p>
+				<p id="code-img-html">&lt;img src="<?php echo tsl($SITEURL) . 'data/uploads/' . $subPath . rawurlencode($src); ?>" loading="lazy" class="gs_image" height="<?php echo $imgheight; ?>" width="<?php echo $imgwidth; ?>" alt=""></p>
+				<p id="code-img-link"><?php echo tsl($SITEURL) . 'data/uploads/' . $subPath . rawurlencode($src); ?></p>
+				<p id="code-img-figure">&lt;figure>&lt;img src="<?php echo tsl($SITEURL) . 'data/uploads/' . $subPath. rawurlencode($src); ?>" loading="lazy" class="gs_image" height="<?php echo $imgheight; ?>" width="<?php echo $imgwidth; ?>" alt="">&lt;figcaption>&lt;/figcaption>&lt;/figure></p>
+				<?php if (!empty($thumb_exists)) { ?>
+				<p id="code-thumb-html">&lt;img src="<?php echo tsl($SITEURL) . 'data/thumbs/' . $subPath . 'thumbnail.' . rawurlencode($src); ?>" loading="lazy" class="gs_image gs_thumb" height="<?php echo $thheight; ?>" width="<?php echo $thwidth; ?>" alt=""></p>
+				<p id="code-thumb-link"><?php echo tsl($SITEURL) .'data/thumbs/' . $subPath . 'thumbnail.' . rawurlencode($src); ?></p>
+				<p id="code-imgthumb-html">&lt;a href="<?php echo tsl($SITEURL) . 'data/uploads/' . $subPath . rawurlencode($src); ?>" class="gs_image_link">&lt;img src="<?php echo tsl($SITEURL) . 'data/thumbs/' . $subPath . 'thumbnail.' . rawurlencode($src); ?>" loading="lazy" class="gs_thumb" height="<?php echo $thheight; ?>" width="<?php echo $thwidth; ?>" alt="">&lt;/a></p>
 				<?php } ?>
 			</div>
 	</div>
 
 <?php
 $jcrop = !empty($thumb_exists);
-if($jcrop){ ?>
+if ($jcrop) { ?>
 	<div id="jcrop_open" class="main">
 		<img src="<?php echo $src_folder . $subPath.rawurlencode($src); ?>" id="cropbox">
 		<div id="handw" class="toggle"><?php i18n('SELECT_DIMENTIONS'); ?><br /><span id="picw"></span> x <span id="pich"></span></div>
@@ -122,7 +124,7 @@ if($jcrop){ ?>
 			<input type="hidden" id="y" name="y">
 			<input type="hidden" id="w" name="w">
 			<input type="hidden" id="h" name="h">
-			<input type="submit" class="submit" value="<?php i18n('CREATE_THUMBNAIL');?>" /> &nbsp; <span style="color:#666;font-size:11px;"><?php i18n('CROP_INSTR_NEW');?></span>
+			<input type="submit" class="submit" value="<?php i18n('CREATE_THUMBNAIL');?>"> &nbsp; <span style="color:#666;font-size:11px;"><?php i18n('CROP_INSTR_NEW');?></span>
 		</form>
 	</div>
 

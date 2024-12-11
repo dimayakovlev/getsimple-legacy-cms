@@ -87,27 +87,39 @@ include('template/include-nav.php'); ?>
 			<?php echo '<p><a href="' . $src_folder . $subPath . rawurlencode($src) . '" rel="facybox_i">' . i18n_r('ORIGINAL_IMG') . '</a> <code>' . $imgwidth . 'x' . $imgheight . '</code>' . $thumb_exists . '</p>'; ?>
 
 			<form>
-				<select class="text" id="img-info" style="width:50%">
-					<option selected value="code-img-link"><?php i18n('LINK_ORIG_IMG');?></option>
-					<option value="code-img-html"><?php i18n('HTML_ORIG_IMG');?></option>
-					<option value="code-img-figure"><?php i18n('FIGURE_ORIG_IMG');?></option>
-					<?php if (!empty($thumb_exists)) { ?>
-					<option value="code-thumb-html"><?php i18n('HTML_THUMBNAIL');?></option>
-					<option value="code-thumb-link"><?php i18n('LINK_THUMBNAIL');?></option>
-					<option value="code-imgthumb-html"><?php i18n('HTML_THUMB_ORIG');?></option>
-					<?php } ?>
-				</select>
-				<textarea class="copykit text"><?php echo tsl($SITEURL) . 'data/uploads/' . $subPath . rawurlencode($src); ?></textarea>
+				<div class="leftsec">
+					<select class="text" id="img-info">
+						<option selected value="code-img-link"><?php i18n('LINK_ORIG_IMG');?></option>
+						<option value="code-img-html"><?php i18n('HTML_ORIG_IMG');?></option>
+						<option value="code-img-figure"><?php i18n('FIGURE_ORIG_IMG');?></option>
+						<?php if (!empty($thumb_exists)) { ?>
+						<option value="code-thumb-html"><?php i18n('HTML_THUMBNAIL');?></option>
+						<option value="code-thumb-link"><?php i18n('LINK_THUMBNAIL');?></option>
+						<option value="code-imgthumb-html"><?php i18n('HTML_THUMB_ORIG');?></option>
+						<?php } ?>
+					</select>
+				</div>
+				<div class="rightsec">
+					<div class="inline"><input name="relative-url" id="relative-url" type="checkbox" value="1" checked> &nbsp;<label for="relative-url"><?php i18n('USE_RELATIVE_URLS');?></label></div>
+				</div>
+				<div class="clear"></div>
+				<textarea class="copykit text">/data/uploads/<?php echo $subPath . rawurlencode($src); ?></textarea>
 				<p style="font-size:11px;margin:-10px 0 0 0"><a href="#" class="select-all"><?php i18n('CLIPBOARD_INSTR');?></a></p>
 			</form>
 			<div class="toggle">
 				<p id="code-img-html">&lt;img src="<?php echo tsl($SITEURL) . 'data/uploads/' . $subPath . rawurlencode($src); ?>" loading="lazy" class="gs_image" height="<?php echo $imgheight; ?>" width="<?php echo $imgwidth; ?>" alt=""></p>
 				<p id="code-img-link"><?php echo tsl($SITEURL) . 'data/uploads/' . $subPath . rawurlencode($src); ?></p>
-				<p id="code-img-figure">&lt;figure>&lt;img src="<?php echo tsl($SITEURL) . 'data/uploads/' . $subPath. rawurlencode($src); ?>" loading="lazy" class="gs_image" height="<?php echo $imgheight; ?>" width="<?php echo $imgwidth; ?>" alt="">&lt;figcaption>&lt;/figcaption>&lt;/figure></p>
+				<p id="code-img-figure">&lt;figure>&lt;img src="<?php echo tsl($SITEURL) . 'data/uploads/' . $subPath . rawurlencode($src); ?>" loading="lazy" class="gs_image" height="<?php echo $imgheight; ?>" width="<?php echo $imgwidth; ?>" alt="">&lt;figcaption>&lt;/figcaption>&lt;/figure></p>
+				<p id="code-img-html-relative-url">&lt;img src="/data/uploads/<?php echo $subPath . rawurlencode($src); ?>" loading="lazy" class="gs_image" height="<?php echo $imgheight; ?>" width="<?php echo $imgwidth; ?>" alt=""></p>
+				<p id="code-img-link-relative-url">/data/uploads/<?php echo $subPath . rawurlencode($src); ?></p>
+				<p id="code-img-figure-relative-url">&lt;figure>&lt;img src="/data/uploads/<?php echo $subPath . rawurlencode($src); ?>" loading="lazy" class="gs_image" height="<?php echo $imgheight; ?>" width="<?php echo $imgwidth; ?>" alt="">&lt;figcaption>&lt;/figcaption>&lt;/figure></p>
 				<?php if (!empty($thumb_exists)) { ?>
 				<p id="code-thumb-html">&lt;img src="<?php echo tsl($SITEURL) . 'data/thumbs/' . $subPath . 'thumbnail.' . rawurlencode($src); ?>" loading="lazy" class="gs_image gs_thumb" height="<?php echo $thheight; ?>" width="<?php echo $thwidth; ?>" alt=""></p>
-				<p id="code-thumb-link"><?php echo tsl($SITEURL) .'data/thumbs/' . $subPath . 'thumbnail.' . rawurlencode($src); ?></p>
+				<p id="code-thumb-link"><?php echo tsl($SITEURL) . 'data/thumbs/' . $subPath . 'thumbnail.' . rawurlencode($src); ?></p>
 				<p id="code-imgthumb-html">&lt;a href="<?php echo tsl($SITEURL) . 'data/uploads/' . $subPath . rawurlencode($src); ?>" class="gs_image_link">&lt;img src="<?php echo tsl($SITEURL) . 'data/thumbs/' . $subPath . 'thumbnail.' . rawurlencode($src); ?>" loading="lazy" class="gs_thumb" height="<?php echo $thheight; ?>" width="<?php echo $thwidth; ?>" alt="">&lt;/a></p>
+				<p id="code-thumb-html-relative-url">&lt;img src="/data/thumbs/<?php echo $subPath . 'thumbnail.' . rawurlencode($src); ?>" loading="lazy" class="gs_image gs_thumb" height="<?php echo $thheight; ?>" width="<?php echo $thwidth; ?>" alt=""></p>
+				<p id="code-thumb-link-relative-url">/data/thumbs/<?php echo $subPath . 'thumbnail.' . rawurlencode($src); ?></p>
+				<p id="code-imgthumb-html-relative-url">&lt;a href="/data/uploads/<?php echo $subPath . rawurlencode($src); ?>" class="gs_image_link">&lt;img src="/data/thumbs/<?php echo $subPath . 'thumbnail.' . rawurlencode($src); ?>" loading="lazy" class="gs_thumb" height="<?php echo $thheight; ?>" width="<?php echo $thwidth; ?>" alt="">&lt;/a></p>
 				<?php } ?>
 			</div>
 	</div>

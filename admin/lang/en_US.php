@@ -633,4 +633,5 @@ $i18n = array(
  */
 "THUMB_CROP_REGION_SELECT" => 'Please select a crop region to create a thumbnail.',
 "ERROR_CREATE_THUMBNAIL" => 'There was a problem creating a thumbnail',
+"FIGURE_ORIG_IMG" => "Original Image with Caption",
 );

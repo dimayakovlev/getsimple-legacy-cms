@@ -134,11 +134,17 @@ jQuery(document).ready(function () {
 	var copyKitTextArea = $('textarea.copykit');
 	$("select#img-info").change(function () {
 		var codetype = $(this).val();
+		if ($('#relative-url').is(':checked')) {
+			codetype = codetype + '-relative-url';
+		}
 		var code = $('p#' + codetype).html();
 		var originalBG = $('textarea.copykit').css('background-color');
 		var fadeColor = "#FFFFD1";
 		copyKitTextArea.fadeOut(500).fadeIn(500).html(code);
 	});
+	$('#relative-url').change(function () {
+		$('select#img-info').change();
+	})
 	$(".select-all").live("click", function () {
 		copyKitTextArea.focus().select();
 		return false;

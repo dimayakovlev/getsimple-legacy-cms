@@ -19,6 +19,7 @@
  * @returns {string}
  */
 function removeTrailingQuestionMark(str) {
+	if (!str) return '';
 	return str.endsWith('?') ? str.slice(0, -1) : str;
 }
 
@@ -246,7 +247,8 @@ jQuery(document).ready(function () {
 	});
 	$(".confirmation").live("click", function ($e) {
 		loadingAjaxIndicator.show();
-		var message = removeTrailingQuestionMark($(this).attr("title")) + '?';
+		var message = $(this).data("message") || $(this).attr("title");
+		message = removeTrailingQuestionMark(message) + '?';
 		var answer = confirm(message);
 		if (!answer) {
 			loadingAjaxIndicator.fadeOut(500);

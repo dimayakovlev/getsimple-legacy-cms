@@ -69,6 +69,23 @@ if (isset($_POST['submitted'])) {
 	}
 	if (count($components_tmp) > 0) {
 		$components_tmp = subval_sort(subval_sort($components_tmp, 'title'), 'order');
+		// make components slugs unique
+		$components_slugs = array_column($components_tmp, 'slug');
+		$components_slugs_tmp = array();
+		foreach ($components_slugs as $key => $component_slug) {
+			if (in_array($component_slug, $components_slugs_tmp)) {
+				$component_slug_new = $component_slug;
+				$count = 1;
+				while (in_array($component_slug_new, $components_slugs_tmp) || in_array($component_slug_new, $components_slugs)) {
+					$component_slug_new = $component_slug . '-' . $count;
+					$count++;
+				}
+				$components_slugs_tmp[$key] = $component_slug_new;
+				$components_tmp[$key]['slug'] = $component_slug_new;
+			} else {
+				$components_slugs_tmp[$key] = $component_slug;
+			}
+		};
 		$xml = new SimpleXMLExtended('<?xml version="1.0" encoding="UTF-8"?><components></components>');
 		foreach ($components_tmp as $component) {
 			$item = $xml->addChild('item');

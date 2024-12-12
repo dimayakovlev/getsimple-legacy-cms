@@ -17,7 +17,7 @@ include('inc/common.php');
 // Variable Settings
 login_cookie_check();
 
-$subPath = (isset($_GET['path'])) ? $_GET['path'] : "";
+$subPath = (isset($_GET['path'])) ? $_GET['path'] : '';
 if ($subPath != '') $subPath = tsl($subPath);
 
 $src = strippath($_GET['i']);
@@ -53,14 +53,15 @@ $thumb_exists = $thwidth = $thheight = $thtype = $athttr = '';
 list($imgwidth, $imgheight, $imgtype, $imgattr) = getimagesize($src_folder . $subPath . $src);
 
 if (file_exists($thumb_folder . 'thumbnail.' . $src)) {
-	list($thwidth, $thheight, $thtype, $athttr) = getimagesize($thumb_folder . 'thumbnail.'.$src);
-	$thumb_exists = ' &nbsp; | &nbsp; <a href="'.$thumb_folder_rel . 'thumbnail.'. rawurlencode($src) .'" rel="facybox_i" >'.i18n_r('CURRENT_THUMBNAIL').'</a> <code>'.$thwidth.'x'.$thheight.'</code>';
-}else{
+	list($thwidth, $thheight, $thtype, $athttr) = getimagesize($thumb_folder . 'thumbnail.' . $src);
+	$thumb_exists = ' &nbsp; | &nbsp; <a href="' . $thumb_folder_rel . 'thumbnail.'. rawurlencode($src) . '" rel="facybox_i">' . i18n_r('CURRENT_THUMBNAIL') . '</a> <code>' . $thwidth . 'x' . $thheight . '</code>';
+} else {
 	// if thumb is missing recreate it
 	require_once('inc/imagemanipulation.php');
-	if (genStdThumb($subPath,$src)) {
+	if (genStdThumb($subPath, $src)) {
 		list($thwidth, $thheight, $thtype, $athttr) = getimagesize($thumb_folder . 'thumbnail.'.$src);
-		$thumb_exists = ' &nbsp; | &nbsp; <a href="'.$thumb_folder_rel . 'thumbnail.'. rawurlencode($src) .'" rel="facybox_i" >'.i18n_r('CURRENT_THUMBNAIL').'</a> <code>'.$thwidth.'x'.$thheight.'</code>';
+		$success = i18n_r('THUMB_SAVED');
+		$thumb_exists = ' &nbsp; | &nbsp; <a href="' . $thumb_folder_rel . 'thumbnail.' . rawurlencode($src) . '" rel="facybox_i">' . i18n_r('CURRENT_THUMBNAIL') . '</a> <code>' . $thwidth . 'x' . $thheight . '</code>';
 	}
 }
 
@@ -83,9 +84,8 @@ include('template/include-nav.php'); ?>
 		}
 	}
 	echo '<span class="current">' . $src . '</span></div></div>';
-?>
-			<?php echo '<p><a href="' . $src_folder . $subPath . rawurlencode($src) . '" rel="facybox_i">' . i18n_r('ORIGINAL_IMG') . '</a> <code>' . $imgwidth . 'x' . $imgheight . '</code>' . $thumb_exists . '</p>'; ?>
-
+?><p>
+			<?php echo '<a href="' . $src_folder . $subPath . rawurlencode($src) . '" rel="facybox_i">' . i18n_r('ORIGINAL_IMG') . '</a> <code>' . $imgwidth . 'x' . $imgheight . '</code>' . $thumb_exists; ?>
 			<form>
 				<div class="leftsec">
 					<select class="text" id="img-info">
@@ -104,7 +104,7 @@ include('template/include-nav.php'); ?>
 				</div>
 				<div class="clear"></div>
 				<textarea class="copykit text">/data/uploads/<?php echo $subPath . rawurlencode($src); ?></textarea>
-				<p style="font-size:11px;margin:-10px 0 0 0"><a href="#" class="select-all"><?php i18n('CLIPBOARD_INSTR');?></a></p>
+				<p><a href="#" class="select-all"><?php i18n('CLIPBOARD_INSTR');?></a></p>
 			</form>
 			<div class="toggle">
 				<p id="code-img-html">&lt;img src="<?php echo tsl($SITEURL) . 'data/uploads/' . $subPath . rawurlencode($src); ?>" loading="lazy" class="gs_image" height="<?php echo $imgheight; ?>" width="<?php echo $imgwidth; ?>" alt=""></p>
@@ -113,7 +113,7 @@ include('template/include-nav.php'); ?>
 				<p id="code-img-html-relative-url">&lt;img src="/data/uploads/<?php echo $subPath . rawurlencode($src); ?>" loading="lazy" class="gs_image" height="<?php echo $imgheight; ?>" width="<?php echo $imgwidth; ?>" alt=""></p>
 				<p id="code-img-link-relative-url">/data/uploads/<?php echo $subPath . rawurlencode($src); ?></p>
 				<p id="code-img-figure-relative-url">&lt;figure>&lt;img src="/data/uploads/<?php echo $subPath . rawurlencode($src); ?>" loading="lazy" class="gs_image" height="<?php echo $imgheight; ?>" width="<?php echo $imgwidth; ?>" alt="">&lt;figcaption>&lt;/figcaption>&lt;/figure></p>
-				<?php if (!empty($thumb_exists)) { ?>
+				<?php if ($thumb_exists != '') { ?>
 				<p id="code-thumb-html">&lt;img src="<?php echo tsl($SITEURL) . 'data/thumbs/' . $subPath . 'thumbnail.' . rawurlencode($src); ?>" loading="lazy" class="gs_image gs_thumb" height="<?php echo $thheight; ?>" width="<?php echo $thwidth; ?>" alt=""></p>
 				<p id="code-thumb-link"><?php echo tsl($SITEURL) . 'data/thumbs/' . $subPath . 'thumbnail.' . rawurlencode($src); ?></p>
 				<p id="code-imgthumb-html">&lt;a href="<?php echo tsl($SITEURL) . 'data/uploads/' . $subPath . rawurlencode($src); ?>" class="gs_image_link">&lt;img src="<?php echo tsl($SITEURL) . 'data/thumbs/' . $subPath . 'thumbnail.' . rawurlencode($src); ?>" loading="lazy" class="gs_thumb" height="<?php echo $thheight; ?>" width="<?php echo $thwidth; ?>" alt="">&lt;/a></p>
@@ -125,8 +125,7 @@ include('template/include-nav.php'); ?>
 	</div>
 
 <?php
-$jcrop = !empty($thumb_exists);
-if ($jcrop) { ?>
+if ($thumb_exists != '') { ?>
 	<div id="jcrop_open" class="main">
 		<img src="<?php echo $src_folder . $subPath.rawurlencode($src); ?>" id="cropbox">
 		<div id="handw" class="toggle"><?php i18n('SELECT_DIMENTIONS'); ?><br /><span id="picw"></span> x <span id="pich"></span></div>
@@ -136,7 +135,7 @@ if ($jcrop) { ?>
 			<input type="hidden" id="y" name="y">
 			<input type="hidden" id="w" name="w">
 			<input type="hidden" id="h" name="h">
-			<input type="submit" class="submit" value="<?php i18n('CREATE_THUMBNAIL');?>"> &nbsp; <span style="color:#666;font-size:11px;"><?php i18n('CROP_INSTR_NEW');?></span>
+			<p id="submit_line"><input type="submit" class="submit" value="<?php i18n('CREATE_THUMBNAIL');?>"> &nbsp;&nbsp;<?php i18n('OR'); ?>&nbsp;&nbsp; <a href="deletefile.php?thumbnail=<?php echo rawurlencode($src); ?>&path=<?php echo $subPath; ?>&nonce=<?php echo get_nonce('delete', 'deletefile.php'); ?>" class="cancel confirmation" data-message="<?php i18n('RESET_THUMBNAIL_TITLE'); ?>"><?php i18n('RESET_THUMBNAIL');?></a></span></p>
 		</form>
 	</div>
 

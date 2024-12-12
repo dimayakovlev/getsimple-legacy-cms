@@ -3,7 +3,7 @@
 /*
  * CSS php dynamic
  * DO NOT TIDY!
- * @uses color variables $primary0 - $primary6, $secondary_0-$secondary_1 	
+ * @uses color variables $primary0 - $primary6, $secondary_0-$secondary_1
  *
  */
 
@@ -1720,6 +1720,11 @@ textarea.copykit {
 	height: 70px;
 	margin-bottom: 10px;
 }
+#image .copykit + p {
+	font-size: 11px;
+	margin-top: -11px;
+	margin-bottom: 0;
+}
 
 #handw {
 	z-index: 1;
@@ -1738,8 +1743,8 @@ textarea.copykit {
 	font-weight: bold;
 }
 
-#jcropform .submit {
-	margin: 20px 0 0 0;
+#jcropform #submit_line {
+	margin-top: 40px;
 }
 
 #jcrop_open {

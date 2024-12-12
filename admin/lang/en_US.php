@@ -635,4 +635,6 @@ $i18n = array(
 "ERROR_CREATE_THUMBNAIL" => 'There was a problem creating a thumbnail',
 "FIGURE_ORIG_IMG" => "Original Image with Caption",
 "USE_RELATIVE_URLS" => "Use Relative URLs",
+"RESET_THUMBNAIL" => "Reset Thumbnail",
+"RESET_THUMBNAIL_TITLE" => "Create a thumbnail using default parameters",
 );

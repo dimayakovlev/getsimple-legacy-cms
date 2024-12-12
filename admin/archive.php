@@ -2,9 +2,9 @@
 /**
  * Archive
  *
- * Displays and starts the website archives 	
+ * Displays and starts the website archives
  *
- * @package GetSimple
+ * @package GetSimple Legacy
  * @subpackage Backups
  */
 
@@ -78,7 +78,7 @@ get_template('header', cl($SITENAME).' &raquo; '.i18n_r('BAK_MANAGEMENT').' &raq
 						echo '<tr>
 								<td><a title="'.i18n_r('DOWNLOAD').' '. $name .'" href="download.php?file='. $path . $file .'&amp;nonce='.get_nonce("archive", "download.php").'">'.$name .'</a></td>
 								<td style="width:70px;text-align:right;" ><span>'.$size.'</span></td>
-								<td class="delete" ><a class="delconfirm" title="'.i18n_r('DELETE_ARCHIVE').': '. $name .'?" href="deletefile.php?zip='. $file .'&amp;nonce='.get_nonce("delete", "deletefile.php").'">&times;</a></td>
+								<td class="delete" ><a class="delconfirm" title="'.i18n_r('DELETE_ARCHIVE').': '. $name .'" href="deletefile.php?zip='. $file .'&amp;nonce='.get_nonce("delete", "deletefile.php").'">&times;</a></td>
 							  </tr>';
 						$count++;
 					}

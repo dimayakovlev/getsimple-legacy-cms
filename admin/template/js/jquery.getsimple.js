@@ -11,15 +11,18 @@
 /*
  * GetSimple js file
  */
-function updateCoords(c) {
-	$('#handw').show();
-	$('#x').val(c.x);
-	$('#y').val(c.y);
-	$('#w').val(c.w);
-	$('#h').val(c.h);
-	$('#pich').html(c.h);
-	$('#picw').html(c.w);
-};
+
+/**
+ * Returns the given string with a trailing question mark removed, if present.
+ * @since 2024.3
+ * @param {string} str
+ * @returns {string}
+ */
+function removeTrailingQuestionMark(str) {
+	if (!str) return '';
+	return str.endsWith('?') ? str.slice(0, -1) : str;
+}
+
 var Debugger = function () {}
 Debugger.log = function (message) {
 	try {
@@ -103,7 +106,12 @@ jQuery(document).ready(function () {
 		$(document).on('change', "#imageFilter", function () {
 			Debugger.log('attachFilterChangeEvent');
 			loadingAjaxIndicator.show();
-			var filterx = $(this).val();
+			var filterx = $(this).val(),
+				trx = $('#imageTable').find('tr.' + filterx),
+				counter = trx.length;
+			if (filterx != 'All') {
+				counter = counter + $("#imageTable").find("tr.folder").length;
+			}
 			$("#imageTable").find("tr").hide();
 			if (filterx == 'Images') {
 				$("#imageTable").find("tr .imgthumb").show();
@@ -111,8 +119,9 @@ jQuery(document).ready(function () {
 				$("#imageTable").find("tr .imgthumb").hide();
 			}
 			$("#filetypetoggle").html('&nbsp;&nbsp;/&nbsp;&nbsp;' + filterx);
-			$("#imageTable").find("tr." + filterx).show();
+			trx.show();
 			$("#imageTable").find("tr.folder").show();
+			$("#pg_counter").text(counter);
 			$("#imageTable").find("tr:first-child").show();
 			$("#imageTable").find("tr.deletedrow").hide();
 			loadingAjaxIndicator.fadeOut(500);
@@ -126,11 +135,17 @@ jQuery(document).ready(function () {
 	var copyKitTextArea = $('textarea.copykit');
 	$("select#img-info").change(function () {
 		var codetype = $(this).val();
+		if ($('#relative-url').is(':checked')) {
+			codetype = codetype + '-relative-url';
+		}
 		var code = $('p#' + codetype).html();
 		var originalBG = $('textarea.copykit').css('background-color');
 		var fadeColor = "#FFFFD1";
 		copyKitTextArea.fadeOut(500).fadeIn(500).html(code);
 	});
+	$('#relative-url').change(function () {
+		$('select#img-info').change();
+	})
 	$(".select-all").live("click", function () {
 		copyKitTextArea.focus().select();
 		return false;
@@ -193,7 +208,7 @@ jQuery(document).ready(function () {
 	});
 	$('.delcomponent').live("click", function ($e) {
 		$e.preventDefault();
-		var message = $(this).attr("title") + '?';
+		var message = removeTrailingQuestionMark($(this).attr("title")) + '?';
 		var compid = $(this).attr("rel");
 		var answer = confirm(message);
 		if (answer) {
@@ -232,7 +247,8 @@ jQuery(document).ready(function () {
 	});
 	$(".confirmation").live("click", function ($e) {
 		loadingAjaxIndicator.show();
-		var message = $(this).attr("title");
+		var message = $(this).data("message") || $(this).attr("title");
+		message = removeTrailingQuestionMark(message) + '?';
 		var answer = confirm(message);
 		if (!answer) {
 			loadingAjaxIndicator.fadeOut(500);
@@ -241,7 +257,7 @@ jQuery(document).ready(function () {
 		loadingAjaxIndicator.fadeOut(500);
 	});
 	$(".delconfirm").live("click", function () {
-		var message = $(this).attr("title");
+		var message = removeTrailingQuestionMark($(this).attr("title")) + '?';
 		var dlink = $(this).attr("href");
 		var mytr = $(this).parents("tr");
 		mytr.css("font-style", "italic");
@@ -542,9 +558,8 @@ jQuery(document).ready(function () {
 					$("#new-folder").find("#foldername").val('');
 					$("#new-folder").find("form").hide();
 					$('#createfolder').show();
-					counter = parseInt($("#pg_counter").text());
-					$("#pg_counter").html(counter++);
 					$("tr." + escape(newfolder) + " td").css("background-color", "#F9F8B6");
+					$("#pg_counter").text($("tr.All").length);
 					loadingAjaxIndicator.fadeOut();
 				});
 			}

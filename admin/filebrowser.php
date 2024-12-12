@@ -78,9 +78,9 @@ $LANG_header = preg_replace('/(?:(?<=([a-z]{2}))).*/', '', $LANG);
 	<div class="main" style="border:none;">
 		<h3><?php echo i18n('UPLOADED_FILES'); ?><span id="filetypetoggle">&nbsp;&nbsp;/&nbsp;&nbsp;<?php echo ($type == 'images' ? i18n('IMAGES') : i18n('SHOW_ALL') ); ?></span></h3>
 <?php
-	$count="0";
-	$dircount="0";
-	$counter = "0";
+	$count = 0;
+	$dircount = 0;
+	$counter = 0;
 	$totalsize = 0;
 	$filesArray = array();
 	$dirsArray = array();
@@ -112,17 +112,22 @@ $LANG_header = preg_replace('/(?:(?<=([a-z]{2}))).*/', '', $LANG);
 		$dirsSorted = subval_sort($dirsArray,'name');
 	}
 
-	$pathParts=explode("/",$subPath);
-	$urlPath="";
+	$pathParts = explode('/', rtrim($subPath, '/'));
+	$curPart = end($pathParts);
+	$urlPath = '';
 
 	echo '<div class="h5">/ <a href="?CKEditorFuncNum='.$CKEditorFuncNum.'&amp;type='.$type.'">uploads</a> / ';
-	foreach ($pathParts as $pathPart){
-		if ($pathPart!=''){
-			$urlPath.=$pathPart."/";
-			echo '<a href="?path='.$urlPath.'&amp;CKEditorFuncNum='.$CKEditorFuncNum.'&amp;type='.$type.'&amp;func='.$func.'">'.$pathPart.'</a> / ';
+	foreach ($pathParts as $pathPart) {
+		if ($pathPart  !='') {
+			$urlPath .= $pathPart . '/';
+			if ($pathPart != $curPart) {
+				echo '<a href="?path=' . $urlPath . '&amp;CKEditorFuncNum=' . $CKEditorFuncNum . '&amp;type=' . $type . '&amp;func='.$func.'">' . $pathPart . '</a> / ';
+			} else {
+				echo '<span class="current">' . $pathPart .'</span> / ';
+			}
 		}
 	}
-	echo "</div>";
+	echo '</div>';
 
 	echo '<table class="highlight" id="imageTable">';
 
@@ -176,7 +181,7 @@ $LANG_header = preg_replace('/(?:(?<=([a-z]{2}))).*/', '', $LANG);
 				else { continue; }
 			}
 
-			$counter++;	
+			$counter++;
 
 			echo '<tr class="All '.$upload['type'].'" >';
 			echo ($thumb=='' ? '<td style="display: none"></td>' : $thumb);

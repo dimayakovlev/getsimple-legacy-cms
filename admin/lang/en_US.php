@@ -96,7 +96,7 @@ $i18n = array(
 "LABEL_PAGEBODY"		=>	"Page Body",
 "CANCEL"						=>	"Cancel",
 "BACKUP_AVAILABLE"	=>	"Backup Available",
-"MAX_FILE_SIZE"			=>	"Max file size",
+"MAX_FILE_SIZE"			=>	"Maximum file size",
 "LAST_SAVED"				=>	"Page last saved by %s on",
 "FILE_UPLOAD"				=>	"File Upload",
 "OR"								=>	"or",
@@ -255,7 +255,7 @@ $i18n = array(
 "NOT_INSTALLED"			=>	"Not Installed",
 "WARNING"						=>	"Warning",
 "DATA_FILE_CHECK"		=>	"Data File Integrity Check",
-"DIR_PERMISSIONS"		=>	"Directory Permissions",
+"DIR_PERMISSIONS"		=>	"File & Directory Permissions",
 "EXISTANCE"					=>	"%s Existence",
 "MISSING_FILE"			=>	"Missing file",
 "BAD_FILE"					=>	"Bad file",
@@ -277,7 +277,7 @@ $i18n = array(
 */
 "PAGE_BACKUPS"			=>	"Page Backups",
 "ASK_DELETE_ALL"		=>	"<em>D</em>elete All",
-"DELETE_ALL_BAK"		=>	"Delete all backups?",
+"DELETE_ALL_BAK"		=>	"Delete all backups",
 "TOTAL_BACKUPS"			=>	"total backups",
 
 /* 
@@ -633,4 +633,8 @@ $i18n = array(
  */
 "THUMB_CROP_REGION_SELECT" => 'Please select a crop region to create a thumbnail.',
 "ERROR_CREATE_THUMBNAIL" => 'There was a problem creating a thumbnail',
+"FIGURE_ORIG_IMG" => "Original Image with Caption",
+"USE_RELATIVE_URLS" => "Use Relative URLs",
+"RESET_THUMBNAIL" => "Reset Thumbnail",
+"RESET_THUMBNAIL_TITLE" => "Create a thumbnail using default parameters",
 );

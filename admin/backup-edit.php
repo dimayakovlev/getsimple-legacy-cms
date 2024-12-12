@@ -4,7 +4,7 @@
  *
  * View the current backup of a given page
  *
- * @package GetSimple
+ * @package GetSimple Legacy
  * @subpackage Backups
  */
  
@@ -101,7 +101,7 @@ get_template('header', cl($SITENAME).' &raquo; '. i18n_r('BAK_MANAGEMENT').' &ra
 			 <a href="backup-edit.php?p=restore&amp;id=<?php echo var_out($id); ?>&amp;nonce=<?php echo get_nonce("restore", "backup-edit.php"); ?>" 
 			 	accesskey="<?php echo find_accesskey(i18n_r('ASK_RESTORE'));?>" ><?php i18n('ASK_RESTORE');?></a> 
 			 <a href="backup-edit.php?p=delete&amp;id=<?php echo var_out($id); ?>&amp;nonce=<?php echo get_nonce("delete", "backup-edit.php"); ?>" 
-			 	title="<?php i18n('DELETEPAGE_TITLE'); ?>: <?php echo var_out($title); ?>?" 
+			 	title="<?php i18n('DELETEPAGE_TITLE'); ?>: <?php echo var_out($title); ?>" 
 			 	id="delback" 
 			 	accesskey="<?php echo find_accesskey(i18n_r('ASK_DELETE'));?>" 
 			 	class="delconfirm noajax" ><?php i18n('ASK_DELETE');?></a>
@@ -124,8 +124,8 @@ get_template('header', cl($SITENAME).' &raquo; '. i18n_r('BAK_MANAGEMENT').' &ra
 		<tr><td class="title" ><?php i18n('PRIORITY');?>:</td><td><?php echo $menuOrder; ?></td></tr>
 		<tr><td class="title" ><?php i18n('ADD_TO_MENU');?></td><td><?php echo $menuStatus; ?></td></tr>
 		</table>
-		
-		<textarea class="text" id="codetext" wrap='off' style="background:#f4f4f4;padding:4px;width:635px;color:#444;border:1px solid #666;" readonly><?php echo strip_decode($content); ?></textarea>
+
+		<textarea class="text" id="codetext" wrap='off' readonly><?php echo strip_decode($content); ?></textarea>
 
 		</div>
 		

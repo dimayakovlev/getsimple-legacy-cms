@@ -3,7 +3,7 @@
 /*
  * CSS php dynamic
  * DO NOT TIDY!
- * @uses color variables $primary0 - $primary6, $secondary_0-$secondary_1 	
+ * @uses color variables $primary0 - $primary6, $secondary_0-$secondary_1
  *
  */
 
@@ -408,8 +408,7 @@ h3.floated {
 h5,
 div.h5 {
 	margin: 10px 0 10px 0;
-	font-size: 14px;
-	line-height: 28px;
+	line-height: 24px;
 	display: block;
 	padding: 3px 10px;
 	background: #EEEEEE;
@@ -860,15 +859,18 @@ form input.capslock {
 }
 
 textarea#codetext {
+	background: #f4f4f4;
+	padding: 4px;
+	box-sizing: border-box;
+	width: 100%;
+	color: #444;
 	height: 660px;
-	width: 99%;
 	font-family: Consolas, Monaco, "Courier New", Courier, monospace;
 	font-size: 12px;
 	line-height: 18px;
 	overflow: scroll;
 	overflow-y: scroll;
 	overflow-x: scroll;
-	 
 }
 
 #menu-items span {
@@ -1705,7 +1707,7 @@ table.simple td.title {
 textarea.copykit {
 	font-family: Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace;
 	font-size: 12px;
-	outline: none
+	outline: none;
 	color: #666;
 	border: 1px solid #aaa;
 	line-height: 17px;
@@ -1717,6 +1719,11 @@ textarea.copykit {
 	width: 98%;
 	height: 70px;
 	margin-bottom: 10px;
+}
+#image .copykit + p {
+	font-size: 11px;
+	margin-top: -11px;
+	margin-bottom: 0;
 }
 
 #handw {
@@ -1736,8 +1743,8 @@ textarea.copykit {
 	font-weight: bold;
 }
 
-#jcropform .submit {
-	margin: 20px 0 0 0;
+#jcropform #submit_line {
+	margin-top: 40px;
 }
 
 #jcrop_open {

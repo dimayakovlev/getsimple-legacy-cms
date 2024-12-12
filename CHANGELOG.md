@@ -13,14 +13,21 @@ All notable changes of GetSimple Legacy CMS will be documented in this file.
 - New theme function component_exists() checks if component exists. Function returns boolean true if component exists or false if component does not exist.
 - New theme function is_component_enabled() checks if component is not disabled. Function returns boolean true if component is enabled, false if component is disabled or null if the component is not found.
 - Use new load_components() function to load components data from the components.xml file into the $components global variable.
+- The breadcrumbs navigation on the Image Control Panel (image.php) page makes easier to navigate through the directories within uploads.
+- The "Original image with Caption" option is available from dropdown list on the "Image Control Panel" page. It displays a code snippet for the <figure> HTML element that contains the original image and an empty <figcaption> element.
+- Code snippets for images use relative URLs by default.
+- The "Image Control Panel" allows the user to reset existed image thumbnail. New thumbnail will be created using default parameters.
 
 ### Changed
 
 - Improve creating image thumbnail user interface localization.
+- The naming scheme for uploaded copies has changed: add the postfix `-copy` to the name of the first copy, and add a number starting with 1 for the next copies.
 
 ### Fixed
 
 - Fixed inability to create thumbnail when cropping region started from left edge of image.
+- Item counter shows correct number of items for uploaded files with filtering enabled.
+- Fixed handling of error notifications in ajax responses when non-Apache notification is displayed.
 
 ## [2024.2.1] - 2024-12-03
 

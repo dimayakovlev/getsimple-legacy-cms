@@ -47,7 +47,8 @@ if (get_filename_id() != 'index') exec_action('admin-pre-header');
 	<?php } ?>
 <?php
 	# Plugin hook to allow insertion of stuff into the header
-	if (!isAuthPage()) exec_action('header');
+	if (!isAuthPage()) {
+		exec_action('header');
 ?>
 	<script type="text/javascript">
 		// init gs namespace and i18n
@@ -66,9 +67,15 @@ if (get_filename_id() != 'index') exec_action('admin-pre-header');
 		GS.i18n['COMPONENT_ORDER'] = '<?php i18n('COMPONENT_ORDER'); ?>';
 <?php } ?>
 	</script>
+	<?php } ?>
 </head>
 
 <body <?php filename_id(); echo ' ' . $bodyclass; ?>>
+<?php
+	if (!isAuthPage()) { ?>
 	<div class="header" id="header">
 		<div class="wrapper clearfix">
-<?php exec_action('header-body'); ?>
+<?php
+		exec_action('header-body');
+	}
+?>

@@ -6,8 +6,8 @@
  */
 
 ?>
-		<div id="footer">
 <?php if (!isAuthPage()) { ?>
+		<div id="footer">
 			<div class="wrapper clearfix">
 <?php } ?>
 <?php
@@ -20,10 +20,10 @@
 <?php
 		get_scripts_backend(true);
 		exec_action('footer');
-	}
 ?>
 		</div><!-- end #footer -->
 <?php
+	}
 	if (!isAuthPage() && isDebug()) {
 		global $GS_debug;
 		echo '<div><h2>' . i18n_r('DEBUG_CONSOLE') . '</h2><div id="gsdebug"><pre>';

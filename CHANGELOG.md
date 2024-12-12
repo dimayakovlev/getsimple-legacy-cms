@@ -16,6 +16,7 @@ All notable changes of GetSimple Legacy CMS will be documented in this file.
 - The breadcrumbs navigation on the Image Control Panel (image.php) page makes easier to navigate through the directories within uploads.
 - The "Original image with Caption" option is available from dropdown list on the "Image Control Panel" page. It displays a code snippet for the <figure> HTML element that contains the original image and an empty <figcaption> element.
 - Code snippets for images use relative URLs by default.
+- The "Image Control Panel" allows the user to reset existed image thumbnail. New thumbnail will be created using default parameters.
 
 ### Changed
 

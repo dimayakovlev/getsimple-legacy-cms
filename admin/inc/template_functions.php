@@ -130,7 +130,7 @@ function delete_zip($id) {
  * @param string $path Path to uploaded file folder
  * @return string
  */
-function delete_upload($id, $path = "") { 
+function delete_upload($id, $path = ""){
 	$filepath = GSDATAUPLOADPATH . $path;
 	$file =  $filepath . $id;
 
@@ -143,10 +143,33 @@ function delete_upload($id, $path = "") {
 			unlink(GSTHUMBNAILPATH.$path."thumbsm.". $id);
 		}
 		if($status) return 'success';
-	}	
+	}
 
 	return 'error';
-} 
+}
+
+/**
+ * Delete Thumbnail for Uploaded Image
+ *
+ *@since 2024.3
+ *@uses GSTHUMBNAILPATH
+ *@uses GSDATAUPLOADPATH
+ *
+ * @param string $id Uploaded filename to delete corresponding thumbnail
+ * @param string $path Path to uploaded file folder
+ * @return string
+ */
+function delete_thumbnail($id, $path = ''){
+	$filepath = GSDATAUPLOADPATH . $path;
+	$file =  $filepath . $id;
+	$status = false;
+	if (path_is_safe($filepath, GSDATAUPLOADPATH) && filepath_is_safe($file, $filepath)) {
+		if (file_exists(GSTHUMBNAILPATH . $path . 'thumbnail.' . $id)) {
+			$status = unlink(GSTHUMBNAILPATH . $path . 'thumbnail.' . $id);
+		}
+	}
+	return $status ? 'success' : 'error';
+}
 
 /**
  * Delete Cache Files

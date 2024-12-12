@@ -70,3 +70,11 @@ if (isset($_GET['folder'])) {
 		redirect("upload.php?upd=del-success&id=". $folder . "&path=".$path);
 	}
 } 
+
+// are we deleting a thumbnail?
+if (isset($_GET['thumbnail'])) {
+	$path = (isset($_GET['path'])) ? $_GET['path'] : '';
+	$file = $_GET['thumbnail'];
+	$status = delete_thumbnail($file, $path);
+	redirect('image.php?i=' . $file . '&path=' . $path);
+}

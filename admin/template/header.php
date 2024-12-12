@@ -25,7 +25,7 @@ if (get_filename_id() != 'index') exec_action('admin-pre-header');
 	<meta charset="UTF-8">
 	<title><?php echo $title ?></title>
 	<?php if (!isAuthPage()) { ?><meta name="generator" content="<?php echo GSNAME; ?> <?php echo GSVERSION; ?>">
-	<link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+	<link rel="shortcut icon" href="favicon.png" type="image/png">
 	<link rel="author" href="humans.txt">
 	<link rel="apple-touch-icon" href="apple-touch-icon.png">
 	<?php } ?>

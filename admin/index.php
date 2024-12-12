@@ -19,9 +19,8 @@ ob_start();
 ob_end_flush();
 
 ?>
-
-</div>
-</div>
+<!-- </div>
+</div> -->
 <div class="wrapper">
 <?php include('template/error_checking.php'); ?>
 <div class="bodycontent clearfix">

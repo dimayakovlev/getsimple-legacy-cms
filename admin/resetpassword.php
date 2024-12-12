@@ -84,8 +84,8 @@ if (isset($_POST['submitted'])) {
 get_template('header', cl($SITENAME) . ' &raquo; ' . i18n_r('RESET_PASSWORD')); 
 
 ?>
-</div>
-</div>
+<!-- </div>
+</div> -->
 <div class="wrapper clearfix">
 
 	<?php include('template/error_checking.php'); ?>

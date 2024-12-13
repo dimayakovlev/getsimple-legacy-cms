@@ -1,8 +1,9 @@
-<?php if(!defined('IN_GS')){ die('you cannot load this page directly.'); }
+<?php if (!defined('IN_GS')) { die('you cannot load this page directly.'); }
 /**
  * Plugin Functions
  *
  * @since 2024.2 Use JQuery 1.7.2
+ * @since 2024.3 Register backend related assets only for backend. Don't add unnecessary assets to public backend pages.
  * @package GetSimple Legacy
  * @subpackage Plugin-Functions
  */
@@ -17,89 +18,91 @@ $GS_styles        = array();  // used for queing Styles
 // constants
 // asseturl is scheme-less ://url if GSASSETSCHEMES is not true
 $ASSETURL = getDef('GSASSETSCHEMES',true) !==true ? str_replace(parse_url($SITEURL, PHP_URL_SCHEME).':', '', $SITEURL) : $SITEURL;
+if (!is_frontend()) {
+	if (!defined('GSFRONT')) define('GSFRONT',1);
+	if (!defined('GSBACK'))  define('GSBACK',2);
+	if (!defined('GSBOTH'))  define('GSBOTH',3);
 
-if (!defined('GSFRONT')) define('GSFRONT',1);
-if (!defined('GSBACK'))  define('GSBACK',2);
-if (!defined('GSBOTH'))  define('GSBOTH',3);
+	$GS_script_assets = array(); // defines asset scripts
+	$GS_style_assets  = array();  // defines asset styles
 
-$GS_script_assets = array(); // defines asset scripts
-$GS_style_assets  = array();  // defines asset styles
+	$GS_asset_objects = array(); // holds asset js object names
+	$GS_asset_objects['jquery']    = 'jQuery';
+	$GS_asset_objects['jquery-ui'] = 'jQuery.ui';
 
-$GS_asset_objects = array(); // holds asset js object names
-$GS_asset_objects['jquery']    = 'jQuery';
-$GS_asset_objects['jquery-ui'] = 'jQuery.ui'; 
+	// jquery
+	$jquery_ver    = '1.7.2';
+	$jquery_ui_ver = '1.8.17';
 
-// jquery
-$jquery_ver    = '1.7.2';
-$jquery_ui_ver = '1.8.17';
+	$GS_script_assets['jquery']['cdn']['url']      = '//ajax.googleapis.com/ajax/libs/jquery/'.$jquery_ver.'/jquery.min.js';
+	$GS_script_assets['jquery']['cdn']['ver']      = $jquery_ver;
 
-$GS_script_assets['jquery']['cdn']['url']      = '//ajax.googleapis.com/ajax/libs/jquery/'.$jquery_ver.'/jquery.min.js';
-$GS_script_assets['jquery']['cdn']['ver']      = $jquery_ver;
+	$GS_script_assets['jquery']['local']['url']    = $ASSETURL.$GSADMIN.'/template/js/jquery-' . $jquery_ver . '.min.js';
+	$GS_script_assets['jquery']['local']['ver']    = $jquery_ver;
 
-$GS_script_assets['jquery']['local']['url']    = $ASSETURL.$GSADMIN.'/template/js/jquery-' . $jquery_ver . '.min.js';
-$GS_script_assets['jquery']['local']['ver']    = $jquery_ver;
+	// jquery-ui
+	$GS_script_assets['jquery-ui']['cdn']['url']   = '//ajax.googleapis.com/ajax/libs/jqueryui/'.$jquery_ui_ver.'/jquery-ui.min.js';
+	$GS_script_assets['jquery-ui']['cdn']['ver']   = $jquery_ui_ver;
 
-// jquery-ui
-$GS_script_assets['jquery-ui']['cdn']['url']   = '//ajax.googleapis.com/ajax/libs/jqueryui/'.$jquery_ui_ver.'/jquery-ui.min.js';
-$GS_script_assets['jquery-ui']['cdn']['ver']   = $jquery_ui_ver;
+	$GS_script_assets['jquery-ui']['local']['url'] = $ASSETURL.$GSADMIN.'/template/js/jquery-ui.min.js';
+	$GS_script_assets['jquery-ui']['local']['ver'] = $jquery_ui_ver;
 
-$GS_script_assets['jquery-ui']['local']['url'] = $ASSETURL.$GSADMIN.'/template/js/jquery-ui.min.js';
-$GS_script_assets['jquery-ui']['local']['ver'] = $jquery_ui_ver;
+	// misc
+	$GS_script_assets['fancybox']['local']['url']  = $ASSETURL.$GSADMIN.'/template/js/fancybox/jquery.fancybox.pack.js';
+	$GS_script_assets['fancybox']['local']['ver']  = '2.0.4';
 
-// misc
-$GS_script_assets['fancybox']['local']['url']  = $ASSETURL.$GSADMIN.'/template/js/fancybox/jquery.fancybox.pack.js';
-$GS_script_assets['fancybox']['local']['ver']  = '2.0.4';
+	$GS_style_assets['fancybox']['local']['url']   =  $ASSETURL.$GSADMIN.'/template/js/fancybox/jquery.fancybox.css';
+	$GS_style_assets['fancybox']['local']['ver']   = '2.0.4';
 
-$GS_style_assets['fancybox']['local']['url']   =  $ASSETURL.$GSADMIN.'/template/js/fancybox/jquery.fancybox.css';
-$GS_style_assets['fancybox']['local']['ver']   = '2.0.4';
+	// scrolltofixed
+	$GS_script_assets['scrolltofixed']['local']['url']   =  $ASSETURL.$GSADMIN.'/template/js/jquery-scrolltofixed.js';
+	$GS_script_assets['scrolltofixed']['local']['ver']   = '0.0.1';
 
-// scrolltofixed
-$GS_script_assets['scrolltofixed']['local']['url']   =  $ASSETURL.$GSADMIN.'/template/js/jquery-scrolltofixed.js';
-$GS_script_assets['scrolltofixed']['local']['ver']   = '0.0.1';
+	/**
+	 * Register shared javascript/css scripts for loading into the header
+	 */
+	if (!getDef('GSNOCDN',true)) {
+		register_script('jquery', $GS_script_assets['jquery']['cdn']['url'], $GS_script_assets['jquery']['cdn']['ver'], FALSE);
+		register_script('jquery-ui',$GS_script_assets['jquery-ui']['cdn']['url'],$GS_script_assets['jquery-ui']['cdn']['ver'],FALSE);
+	} else {
+		register_script('jquery', $GS_script_assets['jquery']['local']['url'], $GS_script_assets['jquery']['local']['ver'], FALSE);
+		register_script('jquery-ui',$GS_script_assets['jquery-ui']['local']['url'],$GS_script_assets['jquery-ui']['local']['ver'],FALSE);
+	}
+	register_script('fancybox', $GS_script_assets['fancybox']['local']['url'], $GS_script_assets['fancybox']['local']['ver'],FALSE);
+	register_style('fancybox-css', $GS_style_assets['fancybox']['local']['url'], $GS_style_assets['fancybox']['local']['ver'], 'screen');
 
-/**
- * Register shared javascript/css scripts for loading into the header
- */
-if (!getDef('GSNOCDN',true)){
-	register_script('jquery', $GS_script_assets['jquery']['cdn']['url'], $GS_script_assets['jquery']['cdn']['ver'], FALSE);
-	register_script('jquery-ui',$GS_script_assets['jquery-ui']['cdn']['url'],$GS_script_assets['jquery-ui']['cdn']['ver'],FALSE);
-} else {
-	register_script('jquery', $GS_script_assets['jquery']['local']['url'], $GS_script_assets['jquery']['local']['ver'], FALSE);
-	register_script('jquery-ui',$GS_script_assets['jquery-ui']['local']['url'],$GS_script_assets['jquery-ui']['local']['ver'],FALSE);
+	register_script('scrolltofixed', $GS_script_assets['scrolltofixed']['local']['url'], $GS_script_assets['scrolltofixed']['local']['ver'],FALSE);
+
+	/**
+	 * Queue our scripts and styles for the backend
+	 */
+	queue_script('jquery', GSBACK);
+
+	if (!isAuthPage()) {
+		queue_script('jquery-ui', GSBACK);
+		queue_script('fancybox', GSBACK);
+		queue_style('fancybox-css',GSBACK);
+	}
 }
-register_script('fancybox', $GS_script_assets['fancybox']['local']['url'], $GS_script_assets['fancybox']['local']['ver'],FALSE);
-register_style('fancybox-css', $GS_style_assets['fancybox']['local']['url'], $GS_style_assets['fancybox']['local']['ver'], 'screen');
-
-register_script('scrolltofixed', $GS_script_assets['scrolltofixed']['local']['url'], $GS_script_assets['scrolltofixed']['local']['ver'],FALSE);
-
-/**
- * Queue our scripts and styles for the backend
- */
-queue_script('jquery', GSBACK);
-queue_script('jquery-ui', GSBACK);
-queue_script('fancybox', GSBACK);
-
-queue_style('fancybox-css',GSBACK);
-
 /**
  * Include any plugins, depending on where the referring 
  * file that calls it we need to set the correct paths. 
 */
 if (file_exists(GSPLUGINPATH)){
 	$pluginfiles = getFiles(GSPLUGINPATH);
-} 
+}
 
-$pluginsLoaded=false;
+$pluginsLoaded = false;
 
 
-// Check if data\other\plugins.xml exists 
-if (!file_exists(GSDATAOTHERPATH."plugins.xml")){
-   create_pluginsxml();
-} 
+// Check if data\other\plugins.xml exists
+if (!file_exists(GSDATAOTHERPATH . 'plugins.xml')){
+	create_pluginsxml();
+}
 
-read_pluginsxml();        // get the live plugins into $live_plugins array
+read_pluginsxml(); // get the live plugins into $live_plugins array
 
-if(!is_frontend()) create_pluginsxml();      // check that plugins have not been removed or added to the directory
+if (!is_frontend()) create_pluginsxml(); // check that plugins have not been removed or added to the directory
 
 // load each of the plugins
 foreach ($live_plugins as $file=>$en) {
@@ -123,25 +126,25 @@ foreach ($live_plugins as $file=>$en) {
  * @param $name
  * @param $active bool default=null, sets plugin active | inactive else toggle
  */
-function change_plugin($name,$active=null){
-  global $live_plugins;   
-	 if (isset($live_plugins[$name])){
-	
-	  // set plugin active | inactive
-	  if(isset($active) and is_bool($active)) {
-		$live_plugins[$name] = $active ? 'true' : 'false';	  		
+function change_plugin($name, $active = null){
+	global $live_plugins;
+	if (isset($live_plugins[$name])) {
+
+	// set plugin active | inactive
+		if(isset($active) and is_bool($active)) {
+			$live_plugins[$name] = $active ? 'true' : 'false';
+			create_pluginsxml(true);
+			return;
+		}
+
+		// else we toggle
+		if ($live_plugins[$name] == "true"){
+			$live_plugins[$name] = "false";
+		} else {
+			$live_plugins[$name] = "true";
+		}
+
 		create_pluginsxml(true);
-		return;
-	  }
-
-	  // else we toggle
-	  if ($live_plugins[$name]=="true"){
-		$live_plugins[$name]="false";
-	  } else {
-		$live_plugins[$name]="true";
-	  }
-
-	  create_pluginsxml(true);
 	}
 }
 
@@ -156,16 +159,16 @@ function change_plugin($name,$active=null){
  *
  */
 function read_pluginsxml(){
-  global $live_plugins;   
-   
-  $data = getXML(GSDATAOTHERPATH . "plugins.xml");
-  if($data){
-  	$componentsec = $data->item;
-	  if (count($componentsec) != 0) {
+	global $live_plugins;
+
+	$data = getXML(GSDATAOTHERPATH . 'plugins.xml');
+	if ($data){
+		$componentsec = $data->item;
+		if (count($componentsec) != 0) {
 			foreach ($componentsec as $component) {
-			  $live_plugins[trim((string)$component->plugin)]=trim((string)$component->enabled);
+				$live_plugins[trim((string) $component->plugin)] = trim((string) $component->enabled);
 			}
-	  }
+		}
 	}
 }
 
@@ -531,16 +534,16 @@ function get_scripts_backend($footer=FALSE){
 
 	# debugLog($GS_scripts);
 	foreach ($GS_scripts as $script){
-		if ($script['where'] & GSBACK ){	
+		if ($script['where'] & GSBACK){
 			if (!$footer){
-				if ($script['load']==TRUE && $script['in_footer']==FALSE ){
-					 echo "\t<script src=\"".$script['src'].'?v='.$script['ver']."\"></script>\n";
-					 cdn_fallback($script);		 
+				if ($script['load']==TRUE && $script['in_footer']==FALSE){
+					echo "\t<script src=\"".$script['src'].'?v='.$script['ver']."\"></script>\n";
+					cdn_fallback($script);
 				}
 			} else {
-				if ($script['load']==TRUE && $script['in_footer']==TRUE ){
-					 echo "\t<script src=\"".$script['src'].'?v='.$script['ver']."\"></script>\n";
-					 cdn_fallback($script);		 					 
+				if ($script['load']==TRUE && $script['in_footer']==TRUE){
+					echo "\t<script src=\"".$script['src'].'?v='.$script['ver']."\"></script>\n";
+					cdn_fallback($script);
 				}
 			}
 		}
@@ -550,17 +553,20 @@ function get_scripts_backend($footer=FALSE){
 /**
  * Add javascript for cdn fallback to local
  * get_scripts_backend helper
+ * @uses is_frontend()
+ * @since 2023.3 Use is_frontend()
  * @param  array $script gsscript array
  */
 function cdn_fallback($script){
-	GLOBAL $GS_script_assets, $GS_asset_objects;	
+	GLOBAL $GS_script_assets, $GS_asset_objects;
+	if (is_frontend()) return;
 	if (getDef('GSNOCDN',true)) return; // if nocdn skip
-	if($script['name'] == 'jquery' || $script['name'] == 'jquery-ui'){
+	if ($script['name'] == 'jquery' || $script['name'] == 'jquery-ui') {
 		echo "\t<script>";
 		echo "window.".$GS_asset_objects[$script['name']]." || ";
 		echo "document.write('<!-- CDN FALLING BACK --><script src=\"".$GS_script_assets[$script['name']]['local']['url'].'?v='.$GS_script_assets[$script['name']]['local']['ver']."\"><\/script>');";
 		echo "</script>\n";
-	}					
+	}
 }
 
 /**
@@ -661,4 +667,3 @@ function get_styles_backend(){
 		}
 	}
 }
-?>

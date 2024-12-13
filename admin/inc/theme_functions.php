@@ -583,7 +583,7 @@ function component_exists($id){
  * @param string $id The id of the component to check
  * @return bool|null Null if component does not exist, true if enabled, false if disabled
  */
-function is_component_enabled($id){
+function component_enabled($id){
 	global $components;
 	$id = (string) $id;
 	load_components();

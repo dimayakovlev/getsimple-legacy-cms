@@ -2193,3 +2193,13 @@ a.disabled:visited {
 	height: 62px;
 	line-height: 15px;
 }
+
+#theme_select {
+	width: 250px;
+}
+
+#theme_preview {
+	border: 1px solid #333;
+	max-width: 100%;
+	height: auto;
+}

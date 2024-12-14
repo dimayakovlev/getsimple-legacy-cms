@@ -469,16 +469,16 @@ jQuery(document).ready(function () {
 		var theme_new = $(this).val();
 		var theme_url_old = $("#theme_preview").attr('src');
 		// we dont have a global paths in js so work theme path out
-		var theme_path = basename(basename(basename(theme_url_old)));	
-		var theme_url_new = theme_path+'/'+theme_new+'/images/screenshot.png';
-		$("#theme_preview").attr('src',theme_url_new);
-		$("#theme_preview").css('visibility','visible');
-		$('#theme_no_img').css('visibility','hidden');		
+		var theme_path = basename(basename(basename(theme_url_old)));
+		var theme_url_new = theme_path + '/' + theme_new + '/images/screenshot.png';
+		$("#theme_preview").attr('src', theme_url_new);
+		$("#theme_preview").css('display', 'block');
+		$('#theme_no_img').css('display', 'none');
 	});
 
 	$("#theme_preview").on('error',function ($e) {
-		$(this).css('visibility','hidden');
-		$('#theme_no_img').css('visibility','visible');
+		$(this).css('display', 'none');
+		$('#theme_no_img').css('display', 'inline');
 	});
 
 	// theme-edit.php

@@ -2130,6 +2130,10 @@ a.disabled:visited {
 	font-weight: bold;
 }
 
+#components .compdiv.disabled h4 {
+	color: #cc0000;
+}
+
 #components .compdatatoggle {
 	text-decoration: none;
 	font-weight: bold !important;

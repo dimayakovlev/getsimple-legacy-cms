@@ -131,13 +131,14 @@ $count = 0;
 if ($components && count($components) > 0) {
 	foreach ($components as $component) {
 		$count++;
-		$table .= '<div class="compdiv" id="section-' . $count . '"><table class="comptable"><tr><td><h4><a href="#section-' . $count . '" class="compdatatoggle">'. htmlentities((string) $component->title, ENT_QUOTES, 'UTF-8', false) . '</a></h4></td>';
+		$component_disabled = (isset($component->disabled) && (string) $component->disabled == '1');
+		$table .= '<div class="compdiv' . ($component_disabled ? ' disabled' : '') . '" data-slug="' . htmlentities((string) $component->slug, ENT_QUOTES, 'UTF-8') . '" id="section-' . $count . '"><table class="comptable"><tr><td><h4><a href="#section-' . $count . '" class="compdatatoggle">'. htmlentities((string) $component->title, ENT_QUOTES, 'UTF-8', false) . '</a></h4></td>';
 		$table .= '<td style="text-align:right;"><code>&lt;?php get_component(<span class="compslugcode">\'' . htmlentities((string) $component->slug, ENT_QUOTES, 'UTF-8', false) . '\'</span>); ?&gt;</code></td><td class="delete">';
 		$table .= '<a href="#" title="' . i18n_r('DELETE_COMPONENT') . ': '. htmlentities((string) $component->title, ENT_QUOTES, 'UTF-8', false) . '" class="delcomponent" rel="' . $count . '">&times;</a></td></tr></table>';
 		$table .= '<div class="compdata" style="display: none;">';
 		$table .= '<div class="leftopt"><p><label>' . i18n_r('COMPONENT_TITLE') . ':</label><input class="text comptitle" type="text" name="components[' . $count . '][title]" value="' . htmlentities((string) $component->title, ENT_QUOTES, 'UTF-8', false) . '" required></p></div>';
 		$table .= '<div class="rightopt"><p><label>' . i18n_r('COMPONENT_SLUG') . ':</label><input class="text compslug" type="text" name="components[' . $count . '][slug]" value="' . htmlentities((string) $component->slug, ENT_QUOTES, 'UTF-8', false) . '" data-initial="' . htmlentities((string) $component->slug, ENT_QUOTES, 'UTF-8', false) . '"></p></div><div class="clear"></div>';
-		$table .= '<div class="leftopt"><p class="inline"><input class="compdisable" type="checkbox" value="1"' . (isset($component->disabled) && (string) $component->disabled == '1' ? ' checked' : '') . ' name="components[' . $count . '][disabled]" /> &nbsp;<label>' . i18n_r('COMPONENT_DISABLE') . '</label></p></div>
+		$table .= '<div class="leftopt"><p class="inline"><input class="compdisable" type="checkbox" value="1"' . ($component_disabled ? ' checked' : '') . ' name="components[' . $count . '][disabled]" /> &nbsp;<label>' . i18n_r('COMPONENT_DISABLE') . '</label></p></div>
 		<div class="rightopt"><p><label>' . i18n_r('COMPONENT_ORDER') . ':</label><input class="text comporder" type="number" min="1" name="components[' . $count . '][order]" value="' . (isset($component->order) ? intval((string) $component->order) : '0') . '"></p></div>
 		<div class="clear"></div>';
 		$table .= '<div class="wideopt"><p><label>'. i18n_r('COMPONENT_DESCRIPTION') . ':</label><textarea class="text compdescription" name="components[' . $count . '][description]">' . htmlentities((string) $component->description, ENT_QUOTES, 'UTF-8', false) . '</textarea></p></div>';

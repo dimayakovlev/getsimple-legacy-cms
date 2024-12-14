@@ -67,6 +67,7 @@ if (isset($_POST['submitted'])) {
 		$component['value'] = isset($component['value']) ? safe_slash_html($component['value']) : '';
 		$components_tmp[] = $component;
 	}
+	$xml = new SimpleXMLExtended('<?xml version="1.0" encoding="UTF-8"?><components></components>');
 	if (count($components_tmp) > 0) {
 		$components_tmp = subval_sort(subval_sort($components_tmp, 'title'), 'order');
 		// make components slugs unique
@@ -86,7 +87,6 @@ if (isset($_POST['submitted'])) {
 				$components_slugs_tmp[$key] = $component_slug;
 			}
 		};
-		$xml = new SimpleXMLExtended('<?xml version="1.0" encoding="UTF-8"?><components></components>');
 		foreach ($components_tmp as $component) {
 			$item = $xml->addChild('item');
 			$item->addChild('title')->addCData($component['title']);
@@ -244,12 +244,12 @@ window.onload = function() {
 	</div>
 
 	<form class="manyinputs" action="<?php myself(); ?>" method="post" accept-charset="utf-8">
-		<input type="hidden" id="id" value="<?php echo $count; ?>" />
-		<input type="hidden" id="nonce" name="nonce" value="<?php echo get_nonce("modify_components"); ?>" />
+		<input type="hidden" id="id" value="<?php echo $count; ?>">
+		<input type="hidden" id="nonce" name="nonce" value="<?php echo get_nonce('modify_components'); ?>">
 		<div id="divTxt"></div>
 		<?php echo $table; ?>
 		<p id="submit_line" class="<?php echo $submitclass; ?>">
-			<span><input type="submit" class="submit" name="submitted" id="button" value="<?php i18n('SAVE_COMPONENTS');?>" /></span> &nbsp;&nbsp;<?php i18n('OR'); ?>&nbsp;&nbsp; <a class="cancel" href="components.php?cancel"><?php i18n('CANCEL'); ?></a>
+			<span><input type="submit" class="submit" name="submitted" id="button" value="<?php i18n('SAVE_COMPONENTS');?>"></span> &nbsp;&nbsp;<?php i18n('OR'); ?>&nbsp;&nbsp; <a class="cancel" href="components.php?cancel"><?php i18n('CANCEL'); ?></a>
 		</p>
 	</form>
 	</div>
@@ -257,7 +257,7 @@ window.onload = function() {
 
 	<div id="sidebar">
 		<?php include('template/sidebar-theme.php'); ?>
-		<?php if ($listc != '') { echo '<div class="compdivlist">'.$listc .'</div>'; } ?>
+		<?php if ($listc != '') { echo '<div class="compdivlist">' . $listc . '</div>'; } ?>
 	</div>
 
 </div>

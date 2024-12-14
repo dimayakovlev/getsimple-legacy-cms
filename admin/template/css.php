@@ -1068,7 +1068,7 @@ table.cleantable tr td {
 	font-size: 11px;
 }
 
-#pagechangednotify {
+#pagechangednotify, #changednotify {
 	margin: 0px;
 	padding: 15px 0 0 13px;
 	color: #CC0000;

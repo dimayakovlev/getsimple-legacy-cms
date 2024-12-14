@@ -637,4 +637,7 @@ $i18n = array(
 "USE_RELATIVE_URLS" => "Use Relative URLs",
 "RESET_THUMBNAIL" => "Reset Thumbnail",
 "RESET_THUMBNAIL_TITLE" => "Create a thumbnail using default parameters",
+
+/* common string */
+"UNSAVED_CHANGES" => 'There are unsaved changes',
 );

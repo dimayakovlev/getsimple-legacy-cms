@@ -263,12 +263,32 @@ window.onload = function() {
 			<span><input type="submit" class="submit" name="submitted" id="button" value="<?php i18n('SAVE_COMPONENTS');?>"></span> &nbsp;&nbsp;<?php i18n('OR'); ?>&nbsp;&nbsp; <a class="cancel" href="components.php?cancel"><?php i18n('CANCEL'); ?></a>
 		</p>
 	</form>
+	<script>
+		formisdirty = false;
+		window.onbeforeunload = function(){
+			if (formisdirty == true) {
+				return "<?php i18n('UNSAVED_INFORMATION'); ?>";
+			}
+		}
+		$('form input, form textarea, form checkbox').live('keyup change paste input', function(){
+			if (!formisdirty) {
+				formisdirty = true;
+				$('#changednotify').show();
+				$('#changednotify').text("<?php i18n('UNSAVED_CHANGES')?>");
+				$('input[type=submit]').css('border-color', '#CC0000');
+			}
+		});
+		$('form').submit(function(){
+			formisdirty = false;
+		});
+	</script>
 	</div>
 	</div>
 
 	<div id="sidebar">
 		<?php include('template/sidebar-theme.php'); ?>
 		<?php if ($listc != '') { echo '<div class="compdivlist">' . $listc . '</div>'; } ?>
+		<p id="changednotify"></p>
 	</div>
 
 </div>

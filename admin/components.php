@@ -33,7 +33,7 @@ if (isset($_POST['submitted'])) {
 	if (isset($_POST['components']) && !is_array($_POST['components'])) {
 		redirect('components.php?upd=comp-error');
 	}
-	$components_tmp = array();
+	$components_tmp = $components_new = array();
 	foreach ($_POST['components'] as $key => $component) {
 		$component_title = isset($component['title']) ? safe_slash_html(trim($component['title'])) : '';
 		if ($component_title == '') {
@@ -65,11 +65,21 @@ if (isset($_POST['submitted'])) {
 		$component['disabled'] = isset($component['disabled']) && (string) $component['disabled'] == '1' ? 1 : null;
 		$component['description'] = isset($component['description']) ? safe_slash_html($component['description']) : '';
 		$component['value'] = isset($component['value']) ? safe_slash_html($component['value']) : '';
-		$components_tmp[] = $component;
+		if (isset($component['new']) && $component['new'] == '1') {
+			$components_new[] = $component;
+		} else {
+			$components_tmp[] = $component;
+		}
 	}
 	$xml = new SimpleXMLExtended('<?xml version="1.0" encoding="UTF-8"?><components></components>');
-	if (count($components_tmp) > 0) {
+	if ($components_tmp) {
 		$components_tmp = subval_sort(subval_sort($components_tmp, 'title'), 'order');
+	}
+	if ($components_new) {
+		$components_new = subval_sort(subval_sort($components_new, 'title'), 'order');
+	}
+	$components_tmp = array_merge($components_tmp, $components_new);
+	if ($components_tmp) {
 		// make components slugs unique
 		$components_slugs = array_column($components_tmp, 'slug');
 		$components_slugs_tmp = array();
@@ -87,6 +97,7 @@ if (isset($_POST['submitted'])) {
 				$components_slugs_tmp[$key] = $component_slug;
 			}
 		};
+		$components_tmp = subval_sort(subval_sort($components_tmp, 'title'), 'order');
 		foreach ($components_tmp as $component) {
 			$item = $xml->addChild('item');
 			$item->addChild('title')->addCData($component['title']);

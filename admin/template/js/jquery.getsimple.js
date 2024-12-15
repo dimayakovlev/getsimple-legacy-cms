@@ -465,20 +465,20 @@ jQuery(document).ready(function () {
 	});
 
 	// theme.php
-	$("#theme_select").on('change',function (e) {
+	$("#theme_select").on('change', function(e){
 		var theme_new = $(this).val();
 		var theme_url_old = $("#theme_preview").attr('src');
 		// we dont have a global paths in js so work theme path out
 		var theme_path = basename(basename(basename(theme_url_old)));
 		var theme_url_new = theme_path + '/' + theme_new + '/images/screenshot.png';
 		$("#theme_preview").attr('src', theme_url_new);
-		$("#theme_preview").css('display', 'block');
-		$('#theme_no_img').css('display', 'none');
+		$("#theme_preview").show();
+		$('#theme_no_img').hide();
 	});
 
-	$("#theme_preview").on('error',function ($e) {
-		$(this).css('display', 'none');
-		$('#theme_no_img').css('display', 'inline');
+	$("#theme_preview").on('error', function($e){
+		$(this).hide();
+		$('#theme_no_img').show();
 	});
 
 	// theme-edit.php

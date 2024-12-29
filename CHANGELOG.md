@@ -2,6 +2,14 @@
 
 All notable changes of GetSimple Legacy CMS will be documented in this file.
 
+## [Unreleased]
+
+### Changed
+
+- The default transliteration table is case-sensitive.
+- The default transliteration table for Russian language based on the ГОСТ 7.79—2000. But grave accent symbols are removed.
+- Symbols from Belarusian, Ukrainian and Macedonian alphabets are added to the default transliteration table.
+
 ## [2024.3] - 2024.12.21
 
 ### Added

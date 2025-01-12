@@ -4,6 +4,11 @@ All notable changes of GetSimple Legacy CMS will be documented in this file.
 
 ## [Unreleased]
 
+### Added
+
+- Use PHP Intl extension to improve transliteration.
+- Use new constant `GSTRANSLITERATIONMODE` to set transliteration mode with Intl usage. Define the constant in the gsconfig.php file with value: `1` - transliterate to ASCII with a simple Transliterator rule `:: Any-Latin ; :: Latin-ASCII ;`; `2` - transliterate to ASCII with a custom Transliterator rule started with the rule based on the transliteration table defined in a loaded language file. If the constant is not defined or defined with a different value, the legacy transliteration method is used.
+
 ### Changed
 
 - The default transliteration table is case-sensitive and extended with symbols from the Belarusian, Ukrainian and Macedonian alphabets.

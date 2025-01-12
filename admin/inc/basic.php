@@ -1427,11 +1427,27 @@ function strip_content($str, $pattern = '/[({]%.*?%[})]/'){
 /**
  * perform transliteration conversion on string
  * @since  3.3.11
- * @param  str $str string to convert
- * @return str      str after transliteration replacement array ran on it
+ * @since 2025.1 Use Transliterator, GSTRANSLITERATIONMODE
+ * @param str $str String to convert
+ * @return str String after transliteration
  */
 function doTransliteration($str){
 	$str = (string) $str;
+	if ($str == '') return '';
+	$mode = getDef('GSTRANSLITERATIONMODE');
+	if (($mode == 1 || $mode == 2) && function_exists('transliterator_create_from_rules')) {
+		$rule = '';
+		if ($mode == 2) {
+			$translit = getTransliteration();
+			if (!empty($translit)) {
+				$rule = implode('; ', array_map(function($k, $v) { return $k . ' > ' . $v; }, array_keys($translit), $translit)) . '; ';
+			}
+		}
+		$transliterator = transliterator_create_from_rules($rule . ':: Any-Latin ; :: Latin-ASCII ;', Transliterator::FORWARD);
+		if ($transliterator !== null) {
+			return transliterator_transliterate($transliterator, $str);
+		}
+	}
 	$translit = getTransliteration();
 	if (!empty($translit)) {
 		$str = str_replace(array_keys($translit), array_values($translit), $str);

@@ -1312,13 +1312,14 @@ function isDebug(){
 }
 
 /**
- * check gs version is Beta
+ * Check if GS Legacy version is a Beta release
  *
- * @since  3.3.0
+ * @since 3.3.0
+ * @since 2025.1 Return boolean value
  * @return boolean true if beta release
  */
 function isBeta(){
-	return strPos(get_site_version(false),"b");
+	return strpos(get_site_version(false), 'b') !== false;
 }
 
 /**

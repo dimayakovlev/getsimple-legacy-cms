@@ -2,7 +2,7 @@
 
 All notable changes of GetSimple Legacy CMS will be documented in this file.
 
-## [Unreleased]
+## [2025.1] - 2025.01.22
 
 ### Added
 

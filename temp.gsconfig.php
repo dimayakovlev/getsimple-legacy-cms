@@ -128,3 +128,9 @@ define('GSSUPPRESSERRORS', true);
 
 # GS can format its xml files before saving them if you require human readable source for them
 # define('GSFORMATXML', true);
+
+# @since 2025.1 GS Legacy can use PHP Intl extension to transliterate text.
+# This is a more advanced and recommended way to transliterate text for slugs, ids, file names and others from different languages to ASCII.
+# Set to 1 or to 2 to enable the advanced transliteration mode.
+# define('GSTRANSLITERATIONMODE', 1); # transliterate to ASCII with a simple Transliterator rule ':: Any-Latin ; :: Latin-ASCII ;'
+# define('GSTRANSLITERATIONMODE', 2); # transliterate to ASCII with a custom Transliterator rule started with the rule based on the transliteration table defined in a loaded language file

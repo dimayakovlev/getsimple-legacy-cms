@@ -60,6 +60,11 @@ get_template('header', cl($SITENAME) . ' &raquo; ' . i18n_r('SUPPORT') . ' &raqu
 					} else{
 						echo '<tr><td>GD Library</td><td><span class="WARNmsg" >'.i18n_r('NOT_INSTALLED').' - '.i18n_r('WARNING').'</span></td></tr>';
 					}
+					if (in_arrayi('intl', $php_modules)) {
+						echo '<tr><td>Intl Extension</td><td><span class="OKmsg">' . i18n_r('INSTALLED') . ' - '.i18n_r('OK') . '</span></td></tr>';
+					} else{
+						echo '<tr><td>Intl Extension</td><td><span class="WARNmsg">' . i18n_r('NOT_INSTALLED') . ' - ' . i18n_r('WARNING') . '</span></td></tr>';
+					}
 					if  (in_arrayi('zip', $php_modules) ) {
 						echo '<tr><td>ZipArchive</td><td><span class="OKmsg" >'.i18n_r('INSTALLED').' - '.i18n_r('OK').'</span></td></tr>';
 					} else{

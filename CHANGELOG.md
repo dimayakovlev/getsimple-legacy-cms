@@ -2,6 +2,12 @@
 
 All notable changes of GetSimple Legacy CMS will be documented in this file.
 
+## [Unreleased]
+
+### Fixed
+
+- Disable Apache option `MultiViews` to prevent index page sub-pages from being replaced by the index page when using fancy URLs.
+
 ## [2025.1] - 2025.01.22
 
 ### Added

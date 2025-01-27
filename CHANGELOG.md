@@ -4,6 +4,10 @@ All notable changes of GetSimple Legacy CMS will be documented in this file.
 
 ## [Unreleased]
 
+### Added
+
+- New filter `get_transliteration`. Filter is executed on call of function `getTransliteration()` and allows to change transliteration table array.
+
 ### Fixed
 
 - Disable Apache option `MultiViews` to prevent index page sub-pages from being replaced by the index page when using fancy URLs.

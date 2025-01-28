@@ -12,6 +12,7 @@ All notable changes of GetSimple Legacy CMS will be documented in this file.
 
 - Disable Apache option `MultiViews` to prevent index page sub-pages from being replaced by the index page when using fancy URLs.
 - Change signature of function `getXML()`. The function takes the second parameter `$cdata` of boolean type. If it is `true` (by default) the function preserve CDATA in the returned `SimpleXMLExtended` object.
+- Show confirmation message before clearing failed logins log file.
 
 ## [2025.1] - 2025.01.22
 

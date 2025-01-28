@@ -2,11 +2,15 @@
 
 All notable changes of GetSimple Legacy CMS will be documented in this file.
 
-## [Unreleased]
+## [2025.1.1] - 2025.01.28
 
 ### Added
 
 - New filter `get_transliteration`. Filter is executed on call of function `getTransliteration()` and allows to change transliteration table array.
+
+### Changed
+
+- Extend default transliteration table.
 
 ### Fixed
 

@@ -568,6 +568,18 @@ $i18n = array(
   "Ґ"=>"G","ґ"=>"g","Є"=>"Ie","є"=>"ie","Ї"=>"I","ї"=>"i",
   // Macedonian
   "Ѓ"=>"Gj","ѓ"=>"gj","Ѕ"=>"Dz","ѕ"=>"dz","Љ"=>"Lj","љ"=>"lj","Њ"=>"Nj","њ"=>"nj","Ќ"=>"Kj","ќ"=>"kj","Џ"=>"Dj","џ"=>"dj",
+  // Bulgarian
+  // https://github.com/unicode-org/cldr/blob/main/common/transforms/Bulgarian-Latin-BGN.xml
+  "Ѫ"=>"U","ѫ"=>"u","Ѣ"=>"Ye","ѣ"=>"ye",
+  // Kazakh Cyrillic
+  // https://github.com/unicode-org/cldr/blob/main/common/transforms/Kazakh-Latin-BGN.xml
+  "Ә"=>"A","ә"=>"a","Ғ"=>"Gh","ғ"=>"gh","Қ"=>"Q","қ"=>"q","Ң"=>"Ng","ң"=>"ng","Ө"=>"O","ө"=>"o","Ұ"=>"U","ұ"=>"u","Ү"=>"U","ү"=>"u","Һ"=>"H","һ"=>"h",
+  // Uzbek
+  // https://github.com/unicode-org/cldr/blob/main/common/transforms/Uzbek-Latin-BGN.xml
+  "Ҳ"=>"H","ҳ"=>"h",
+  // Turkmen
+  // https://github.com/unicode-org/cldr/blob/main/common/transforms/Turkmen-Latin-BGN.xml
+  "Җ"=>"J","җ"=>"j",
 ),
 
 "X" => "not translated",

@@ -43,7 +43,7 @@ class API_Request {
 		if($this->auth()) {
 			$id = (string)$this->xml->data->slug;
 			if (file_exists(GSDATAPAGESPATH.$id.'.xml')) {
-				$page = getXML(GSDATAPAGESPATH.$id.'.xml');
+				$page = getXML(GSDATAPAGESPATH.$id.'.xml', false);
 				$page->content = strip_decode($page->content);
 				$page->metak = strip_decode($page->metak);
 				$page->metad = strip_decode($page->metad);
@@ -64,7 +64,7 @@ class API_Request {
 	 */
 	public function settings_read() {
 		if($this->auth()) {
-			$settings = getXML(GSDATAOTHERPATH.'website.xml');
+			$settings = getXML(GSDATAOTHERPATH.'website.xml', false);
 			$wrapper = array('status' => 'success', 'message' => 'settings_read ok', 'response' => $settings);
 			return json_encode($wrapper);
 		}
@@ -107,7 +107,7 @@ class API_Request {
 			$id = (string)$this->xml->data->slug;
 			$thisfile = GSDATAPAGESPATH.$id.'.xml';
 			if (file_exists($thisfile)) {
-				$page = getXML($thisfile);
+				$page = getXML($thisfile, false);
 				$page->content = safe_slash_html($this->xml->data->content);
 				$page->title = safe_slash_html($this->xml->data->title);
 				$page->pubDate = date('r');

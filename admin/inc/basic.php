@@ -311,14 +311,17 @@ function get_execution_time($reset=false)
  * Turns the XML file into an object 
  *
  * @since 1.0
- * @sincd 2024.3 Code refactored. Use simplexml_load_file
+ * @since 2024.3 Code refactored. Use simplexml_load_file
+ * @since 2025.1.1 Preserve CDATA if parameter $cdata is true (default)
  *
  * @param string $file
+ * @param bool $cdata If true (default), preserve CDATA. If false, do not preserve CDATA.
  * @return object|bool|null Return object on success, false on error or null if file doesn't exist
  */
-function getXML($file){
+function getXML($file, $cdata = true){
 	$file = (string) $file;
 	if (file_exists($file) == false) return null;
+	if ($cdata == true) return simplexml_load_file($file, 'SimpleXMLExtended');
 	return simplexml_load_file($file, 'SimpleXMLExtended', LIBXML_NOCDATA);
 }
 
@@ -1459,10 +1462,11 @@ function doTransliteration($str){
 /**
  * Get transliteration set as defined in i18n
  * @since 3.3.11
+ * @since 2025.1.1 Use exec_filter() to execute filter transliterationtable
  * @return array
  */
 function getTransliteration(){
-	return (array) i18n_r('TRANSLITERATION');
+	return (array) exec_filter('get_transliteration', (array) i18n_r('TRANSLITERATION'));
 }
 
 /**

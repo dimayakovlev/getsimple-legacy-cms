@@ -2,6 +2,12 @@
 
 All notable changes of GetSimple Legacy CMS will be documented in this file.
 
+## [Unreleased]
+
+### Added
+
+- Display log file as text on the page `/admin/log.php`. Add GET parameter `view=text` to URL.
+
 ## [2025.1.1] - 2025.01.28
 
 ### Added

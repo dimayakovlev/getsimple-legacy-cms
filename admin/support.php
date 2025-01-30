@@ -40,7 +40,8 @@ get_template('header', cl($SITENAME).' &raquo; '.i18n_r('SUPPORT') );
 			
 			<h3><?php i18n('SUPPORT');?></h3>
 			<ul>
-				<li><p><a href="log.php?log=failedlogins.log"><?php i18n('VIEW_FAILED_LOGIN');?></a></p></li>
+				<li><a href="log.php?log=failedlogins.log"><?php i18n('VIEW_FAILED_LOGIN');?></a></li>
+				<li><a href="log.php?log=errorlog.txt&view=text"><?php i18n('VIEW_PHP_ERROR_LOG');?></a></li>
 				<?php exec_action('support-extras'); ?>
 			</ul>
 

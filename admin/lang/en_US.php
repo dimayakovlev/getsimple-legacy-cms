@@ -637,4 +637,12 @@ $i18n = array(
 
 /* common string */
 "UNSAVED_CHANGES" => 'There are unsaved changes',
+
+/***********************************************************************************
+ * SINCE Version 2024.3
+***********************************************************************************/
+/*
+ * for log.php
+ */
+"VIEW_PHP_ERROR_LOG" => 'View PHP Errors',
 );

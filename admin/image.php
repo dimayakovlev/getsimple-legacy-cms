@@ -25,6 +25,7 @@ $thumb_folder = GSTHUMBNAILPATH . $subPath;
 $src_folder = '../data/uploads/';
 $thumb_folder_rel = '../data/thumbs/' . $subPath;
 if (!filepath_is_safe($src_folder . $subPath . $src, GSDATAUPLOADPATH)) redirect('upload.php');
+$is_gd = in_arrayi('gd', get_loaded_extensions());
 
 // handle jcrop thumbnail creation
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -125,7 +126,7 @@ include('template/include-nav.php'); ?>
 	</div>
 
 <?php
-if ($thumb_exists != '') { ?>
+if ($thumb_exists != '' && $is_gd == true) { ?>
 	<div id="jcrop_open" class="main">
 		<img src="<?php echo $src_folder . $subPath.rawurlencode($src); ?>" id="cropbox">
 		<div id="handw" class="toggle"><?php i18n('SELECT_DIMENTIONS'); ?><br /><span id="picw"></span> x <span id="pich"></span></div>
@@ -138,14 +139,6 @@ if ($thumb_exists != '') { ?>
 			<p id="submit_line"><input type="submit" class="submit" value="<?php i18n('CREATE_THUMBNAIL');?>"> &nbsp;&nbsp;<?php i18n('OR'); ?>&nbsp;&nbsp; <a href="deletefile.php?thumbnail=<?php echo rawurlencode($src); ?>&path=<?php echo $subPath; ?>&nonce=<?php echo get_nonce('delete', 'deletefile.php'); ?>" class="cancel confirmation" data-message="<?php i18n('RESET_THUMBNAIL_TITLE'); ?>"><?php i18n('RESET_THUMBNAIL');?></a></span></p>
 		</form>
 	</div>
-
-<?php } ?>
-	</div>
-
-	<div id="sidebar">
-		<?php include('template/sidebar-files.php'); ?>
-	</div>
-
 	<script>
 		function updateCoords(c){
 			$('#handw').show();
@@ -184,6 +177,12 @@ if ($thumb_exists != '') { ?>
 			});
 		});
 	</script>
+<?php } ?>
+	</div>
+
+	<div id="sidebar">
+		<?php include('template/sidebar-files.php'); ?>
+	</div>
 
 	</div>
 <?php get_template('footer'); ?>

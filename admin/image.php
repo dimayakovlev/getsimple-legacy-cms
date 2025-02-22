@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$thumb_y = isset($_POST['y']) ? intval($_POST['y']) : 0;
 	$thumb_w = isset($_POST['w']) ? intval($_POST['w']) : 0;
 	$thumb_h = isset($_POST['h']) ? intval($_POST['h']) : 0;
-	if ($thumb_w > 0 && $thumb_h > 0) {
+	if ($is_gd == true && $thumb_w > 0 && $thumb_h > 0) {
 		require_once('inc/imagemanipulation.php');
 		$objImage = new ImageManipulation($src_folder . $subPath . $src);
 		if ($objImage->imageok) {
@@ -56,7 +56,7 @@ list($imgwidth, $imgheight, $imgtype, $imgattr) = getimagesize($src_folder . $su
 if (file_exists($thumb_folder . 'thumbnail.' . $src)) {
 	list($thwidth, $thheight, $thtype, $athttr) = getimagesize($thumb_folder . 'thumbnail.' . $src);
 	$thumb_exists = ' &nbsp; | &nbsp; <a href="' . $thumb_folder_rel . 'thumbnail.'. rawurlencode($src) . '" rel="facybox_i">' . i18n_r('CURRENT_THUMBNAIL') . '</a> <code>' . $thwidth . 'x' . $thheight . '</code>';
-} else {
+} elseif ($is_gd == true) {
 	// if thumb is missing recreate it
 	require_once('inc/imagemanipulation.php');
 	if (genStdThumb($subPath, $src)) {

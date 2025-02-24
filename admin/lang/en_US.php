@@ -645,4 +645,12 @@ $i18n = array(
  * for log.php
  */
 "VIEW_PHP_ERROR_LOG" => 'View PHP Errors',
+
+/***********************************************************************************
+ * SINCE Version 2025.2
+***********************************************************************************/
+/*
+ * for settings.php
+ */
+"LABEL_WEBSITE_DESCRIPTION"	=>	"Website Description",
 );

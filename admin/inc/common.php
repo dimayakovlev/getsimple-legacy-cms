@@ -163,18 +163,19 @@ $load['plugin'] = (isset($load['plugin'])) ? $load['plugin'] : '';
  */
  
 /** grab website data */
-$thisfilew = GSDATAOTHERPATH .'website.xml';
+$thisfilew = GSDATAOTHERPATH . 'website.xml';
 if (file_exists($thisfilew)) {
 	$dataw = getXML($thisfilew);
-	$SITENAME = stripslashes($dataw->SITENAME);
-	$SITEURL = $dataw->SITEURL;
-	$TEMPLATE = $dataw->TEMPLATE;
-	$PRETTYURLS = $dataw->PRETTYURLS;
-	$PERMALINK = $dataw->PERMALINK;
+	$SITENAME = stripslashes((string) $dataw->SITENAME);
+	$SITEDESCRIPTION = stripslashes((string) $dataw->SITEDESCRIPTION);
+	$SITEURL = (string) $dataw->SITEURL;
+	$TEMPLATE = (string) $dataw->TEMPLATE;
+	$PRETTYURLS = (string) $dataw->PRETTYURLS;
+	$PERMALINK = (string) $dataw->PERMALINK;
 } else {
 	$SITENAME = '';
 	$SITEURL = '';
-} 
+}
 
 
 /** grab user data */

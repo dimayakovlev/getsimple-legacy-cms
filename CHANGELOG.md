@@ -8,6 +8,7 @@ All notable changes of GetSimple Legacy CMS will be documented in this file.
 
 - Display log file as text on the page `/admin/log.php`. Add GET parameter `view=text` to URL.
 - Display content of the PHP errors log file. Use URL `/admin/log.php?log=errorlog.txt&view=text`.
+- Added the field *Website Description* to store the site description on the *Website Settings* page.
 
 ## [2025.1.1] - 2025.01.28
 

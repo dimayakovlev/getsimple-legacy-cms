@@ -72,20 +72,23 @@ if(isset($_POST['submitted'])) {
 	}
 
 	# website-specific fields
-	if(isset($_POST['sitename'])) { 
-		$SITENAME = htmlentities($_POST['sitename'], ENT_QUOTES, 'UTF-8'); 
+	if (isset($_POST['sitename'])) {
+		$SITENAME = htmlentities($_POST['sitename'], ENT_QUOTES, 'UTF-8');
 	}
-	if(isset($_POST['siteurl'])) { 
-		$SITEURL = tsl($_POST['siteurl']); 
+	if (isset($_POST['sitedescription'])) {
+		$SITEDESCRIPTION = $_POST['sitedescription'];
 	}
-	if(isset($_POST['permalink'])) { 
-		$PERMALINK = trim($_POST['permalink']); 
+	if (isset($_POST['siteurl'])) {
+		$SITEURL = tsl($_POST['siteurl']);
 	}
-	if(isset($_POST['template'])) { 
-		$TEMPLATE = $_POST['template']; 
+	if (isset($_POST['permalink'])) {
+		$PERMALINK = trim($_POST['permalink']);
 	}
-	if(isset($_POST['prettyurls'])) {
-	  $PRETTYURLS = $_POST['prettyurls'];
+	if (isset($_POST['template'])) {
+		$TEMPLATE = $_POST['template'];
+	}
+	if (isset($_POST['prettyurls'])) {
+		$PRETTYURLS = $_POST['prettyurls'];
 	} else {
 		$PRETTYURLS = '';
 	}
@@ -150,6 +153,8 @@ if(isset($_POST['submitted'])) {
 		$xmls = new SimpleXMLExtended('<?xml version="1.0" encoding="UTF-8"?><item></item>');
 		$note = $xmls->addChild('SITENAME');
 		$note->addCData($SITENAME);
+		$note=$xmls->addChild('SITEDESCRIPTION');
+		$note->addCData($SITEDESCRIPTION);
 		$note = $xmls->addChild('SITEURL');
 		$note->addCData($SITEURL);
 		$note = $xmls->addChild('TEMPLATE');
@@ -203,25 +208,26 @@ get_template('header', cl($SITENAME).' &raquo; '.i18n_r('GENERAL_SETTINGS'));
 <div class="bodycontent clearfix">
 	
 	<div id="maincontent">
-		<form class="largeform" action="<?php myself(); ?>" method="post" accept-charset="utf-8" >
-		<input id="nonce" name="nonce" type="hidden" value="<?php echo get_nonce("save_settings"); ?>" />
+		<form class="largeform" action="<?php myself(); ?>" method="post" accept-charset="utf-8">
+		<input id="nonce" name="nonce" type="hidden" value="<?php echo get_nonce("save_settings"); ?>">
 
 		<div class="main">
 		<h3><?php i18n('WEBSITE_SETTINGS');?></h3>
-		
+
 		<div class="leftsec">
-			<p><label for="sitenameinput" ><?php i18n('LABEL_WEBSITE');?>:</label><input class="text" id="sitenameinput" name="sitename" type="text" value="<?php if(isset($SITENAME1)) { echo stripslashes($SITENAME1); } else { echo stripslashes($SITENAME); } ?>" /></p>
+			<p><label for="sitenameinput"><?php i18n('LABEL_WEBSITE');?>:</label><input class="text" id="sitenameinput" name="sitename" type="text" value="<?php if(isset($SITENAME1)) { echo stripslashes($SITENAME1); } else { echo stripslashes($SITENAME); } ?>"></p>
 		</div>
 		<div class="rightsec">
-			<p><label for="siteurl" ><?php i18n('LABEL_BASEURL');?>:</label><input class="text" id="siteurl" name="siteurl" type="url" value="<?php if(isset($SITEURL1)) { echo $SITEURL1; } else { echo $SITEURL; } ?>" /></p>
-			<?php if ($fullpath != $SITEURL) { echo '<p style="margin:-15px 0 20px 0;color:#D94136;font-size:11px;" >'.i18n_r('LABEL_SUGGESTION').': &nbsp; <code>'.$fullpath.'</code></p>'; } ?>
+			<p><label for="siteurl"><?php i18n('LABEL_BASEURL');?>:</label><input class="text" id="siteurl" name="siteurl" type="url" value="<?php if (isset($SITEURL1)) { echo $SITEURL1; } else { echo $SITEURL; } ?>"></p><?php if ($fullpath != $SITEURL) { echo '<p style="margin:-15px 0 20px 0;color:#D94136;font-size:11px;">' . i18n_r('LABEL_SUGGESTION') . ': &nbsp; <code>' . $fullpath . '</code></p>'; } ?>
 		</div>
 		<div class="clear"></div>
 
-		<p class="inline" ><input name="prettyurls" id="prettyurls" type="checkbox" value="1" <?php echo $prettychck; ?>  /> &nbsp;<label for="prettyurls" ><?php i18n('USE_FANCY_URLS');?></label></p>
+		<div class="widesec"><p><label for="sitedescription"><?php i18n('LABEL_WEBSITE_DESCRIPTION'); ?>:</label><textarea class="text" name="sitedescription" id="sitedescription"><?php if (isset($SITEDESCRIPTION)) { echo var_out($SITEDESCRIPTION); } ?></textarea></p></div>
+
+		<p class="inline"><input name="prettyurls" id="prettyurls" type="checkbox" value="1" <?php echo $prettychck; ?>> &nbsp;<label for="prettyurls"><?php i18n('USE_FANCY_URLS');?></label></p>
 
 		<div class="leftsec">
-			<p><label for="permalink"  class="clearfix"><?php i18n('PERMALINK');?>:</label><input class="text" name="permalink" id="permalink" type="text" placeholder="%parent%/%slug%/" value="<?php if(isset($PERMALINK)) { echo var_out($PERMALINK); } ?>" /></p>
+			<p><label for="permalink" class="clearfix"><?php i18n('PERMALINK'); ?>:</label><input class="text" name="permalink" id="permalink" type="text" placeholder="%parent%/%slug%/" value="<?php if (isset($PERMALINK)) { echo var_out($PERMALINK); } ?>"></p>
 		<a id="flushcache" class="button" href="?flushcache"><?php i18n('FLUSHCACHE'); ?></a>
 		</div>
 		<div class="clear"></div>

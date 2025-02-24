@@ -2203,3 +2203,7 @@ a.disabled:visited {
 	max-width: 100%;
 	height: auto;
 }
+
+#settings #sitedescription {
+	height: 62px;
+}

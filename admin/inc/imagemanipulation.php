@@ -5,18 +5,22 @@
  * @param string $path path to image
  * @param string $name file name
  * @uses GD
+ * @uses GSIMAGEWIDTH
  */
 
-function genStdThumb($path,$name){
+function genStdThumb($path, $name){
 
 	//gd check
 	$php_modules = get_loaded_extensions();
-	if(!in_arrayi('gd', $php_modules)) return;
+	if (!in_arrayi('gd', $php_modules)) return;
 
-	if (!defined('GSIMAGEWIDTH')) {
-		$width = 200; //New width of image
-	} else {
+	// set width of the thumbnail
+	$width = 0;
+	if (defined('GSIMAGEWIDTH')) {
 		$width = intval(GSIMAGEWIDTH);
+	}
+	if ($width <= 0) {
+		$width = 200; //default width of the thumbnail
 	}
 
 	$ext = lowercase(pathinfo($name, PATHINFO_EXTENSION));

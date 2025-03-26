@@ -653,4 +653,5 @@ $i18n = array(
  * for settings.php
  */
 "LABEL_WEBSITE_DESCRIPTION"	=>	"Website Description",
+"CLICK_TO_USE_URL" => "Click to use this URL",
 );

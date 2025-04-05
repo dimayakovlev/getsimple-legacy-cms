@@ -185,6 +185,7 @@ if (isset($_COOKIE['GS_ADMIN_USERNAME'])) {
 		$datau = getXML(GSUSERSPATH  . $cookie_user_id.'.xml');
 		$USR = stripslashes($datau->USR);
 		$HTMLEDITOR = $datau->HTMLEDITOR;
+		$CODEEDITOR = $datau->CODEEDITOR;
 		$TIMEZONE = $datau->TIMEZONE;
 		$LANG = $datau->LANG;
 	} else {

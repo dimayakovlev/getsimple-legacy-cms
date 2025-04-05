@@ -26,7 +26,7 @@ $NAME			= $data->NAME;
 $lang_array = getFiles(GSLANGPATH);
 
 # initialize these all as null
-$pwd1 = $error = $success = $pwd2 = $editorchck = $prettychck = null;
+$pwd1 = $error = $success = $pwd2 = $htmleditorchck = $codeeditorchck = $prettychck = null;
 
 # if the flush cache command was invoked
 if (isset($_GET['flushcache'])) { 
@@ -109,10 +109,15 @@ if(isset($_POST['submitted'])) {
 	if(isset($_POST['lang'])) { 
 		$LANG = var_out($_POST['lang']); 
 	}
-	if(isset($_POST['show_htmleditor'])) {
-	  $HTMLEDITOR = var_out($_POST['show_htmleditor']); 
+	if (isset($_POST['show_htmleditor'])) {
+		$HTMLEDITOR = var_out($_POST['show_htmleditor']);
 	} else {
 		$HTMLEDITOR = '';
+	}
+	if (isset($_POST['show_codeeditor'])) {
+		$CODEEDITOR = var_out($_POST['show_codeeditor']);
+	} else {
+		$CODEEDITOR = '';
 	}
 
 	# check to see if passwords are changing
@@ -139,6 +144,7 @@ if(isset($_POST['submitted'])) {
 		$xml->addChild('PWD', $PASSWD);
 		$xml->addChild('EMAIL', var_out($EMAIL,'email'));
 		$xml->addChild('HTMLEDITOR', $HTMLEDITOR);
+		$xml->addChild('CODEEDITOR', $CODEEDITOR);
 		$xml->addChild('TIMEZONE', $TIMEZONE);
 		$xml->addChild('LANG', $LANG);
 		
@@ -180,11 +186,12 @@ if(isset($_POST['submitted'])) {
 }
 
 # are any of the control panel checkboxes checked?
-if ($HTMLEDITOR != '' ) { $editorchck = 'checked'; }
-if ($PRETTYURLS != '' ) { $prettychck = 'checked'; }
+if ($HTMLEDITOR != '') { $htmleditorchck = 'checked'; }
+if ($CODEEDITOR != '') { $codeeditorchck = 'checked'; }
+if ($PRETTYURLS != '') { $prettychck = 'checked'; }
 
 # get all available language files
-if ($LANG == ''){ $LANG = 'en_US'; }
+if ($LANG == '') { $LANG = 'en_US'; }
 
 if (count($lang_array) != 0) {
 	sort($lang_array);
@@ -270,8 +277,8 @@ get_template('header', cl($SITENAME).' &raquo; '.i18n_r('GENERAL_SETTINGS'));
 			</p>
 		</div>
 		<div class="clear"></div>
-		<p class="inline" ><input name="show_htmleditor" id="show_htmleditor" type="checkbox" value="1" <?php echo $editorchck; ?> /> &nbsp;<label for="show_htmleditor" ><?php i18n('ENABLE_HTML_ED');?></label></p>
-
+		<p class="inline"><input name="show_htmleditor" id="show_htmleditor" type="checkbox" value="1" <?php echo $htmleditorchck; ?>> &nbsp;<label for="show_htmleditor"><?php i18n('ENABLE_HTML_ED'); ?></label></p>
+		<p class="inline"><input name="show_codeeditor" id="show_codeeditor" type="checkbox" value="1" <?php echo $codeeditorchck; ?>> &nbsp;<label for="show_codeeditor"><?php i18n('ENABLE_CODE_ED'); ?></label></p>
 		<?php exec_action('settings-user-extras'); ?>
 		
 		<p style="margin:0px 0 5px 0;font-size:12px;color:#999;" ><?php i18n('ONLY_NEW_PASSWORD');?>:</p>

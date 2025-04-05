@@ -59,13 +59,14 @@ if(isset($_POST['submitted'])) {
 		$PASSWD = passhash($random);
 		
 		# create user xml file
-		$file = _id($USR).'.xml';
+		$file = _id($USR) . '.xml';
 		createBak($file, GSUSERSPATH, GSBACKUSERSPATH);
-		$xml = new SimpleXMLElement('<item></item>');
+		$xml = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><item></item>');
 		$xml->addChild('USR', $USR);
 		$xml->addChild('PWD', $PASSWD);
 		$xml->addChild('EMAIL', $EMAIL);
 		$xml->addChild('HTMLEDITOR', '1');
+		$xml->addChild('CODEEDITOR', '1');
 		$xml->addChild('TIMEZONE', $TIMEZONE);
 		$xml->addChild('LANG', $LANG);
 		if (! XMLsave($xml, GSUSERSPATH . $file) ) {
@@ -73,12 +74,12 @@ if(isset($_POST['submitted'])) {
 		}
 		
 		# create password change trigger file
-		$flagfile = GSUSERSPATH . _id($USR).".xml.reset";
+		$flagfile = GSUSERSPATH . _id($USR) . ".xml.reset";
 		copy(GSUSERSPATH . $file, $flagfile);
 		
 		# create new website.xml file
 		$file = 'website.xml';
-		$xmls = new SimpleXMLExtended('<?xml version="1.0" encoding="UTF-8"?><item></item>');		
+		$xmls = new SimpleXMLExtended('<?xml version="1.0" encoding="UTF-8"?><item></item>');
 		$note = $xmls->addChild('SITENAME');
 		$note->addCData($SITENAME);
 		$note = $xmls->addChild('SITEURL');

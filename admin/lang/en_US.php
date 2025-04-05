@@ -654,4 +654,5 @@ $i18n = array(
  */
 "LABEL_WEBSITE_DESCRIPTION"	=>	"Website Description",
 "CLICK_TO_USE_URL" => "Click to use this URL",
+"ENABLE_CODE_ED" => "<b>Enable the Code editor</b>",
 );

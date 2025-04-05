@@ -172,7 +172,7 @@ if ($count > 1) {
 	$submitclass = 'hidden';
 }
 
-if (!getDef('GSNOHIGHLIGHT', true)) {
+if ($CODEEDITOR != '') {
 	register_script('codemirror', $SITEURL.$GSADMIN.'/template/js/codemirror/lib/codemirror-compressed.js', '0.2.0', FALSE);
 
 	register_style('codemirror-css',$SITEURL.$GSADMIN.'/template/js/codemirror/lib/codemirror.css','screen',FALSE);
@@ -188,7 +188,7 @@ get_template('header', cl($SITENAME) . ' &raquo; ' . i18n_r('COMPONENTS'));
 
 include('template/include-nav.php');
 
-if (!getDef('GSNOHIGHLIGHT', true)) {
+if ($CODEEDITOR != '') {
 ?>
 <script>
 window.onload = function() {

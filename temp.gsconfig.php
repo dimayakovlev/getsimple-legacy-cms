@@ -82,6 +82,7 @@ define('GSDONOTPING', 1);
 # define('GSNOCDN', true);
 
 # Disable Codemirror theme editor
+# Deprecated since version 2025.2. This parameter controlled via user settings
 # define('GSNOHIGHLIGHT', true);
 
 # Forces suppression of php errors when GSDEBUG is false, despite php ini settings

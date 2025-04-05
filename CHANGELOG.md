@@ -10,6 +10,7 @@ All notable changes of GetSimple Legacy CMS will be documented in this file.
 - Display content of the PHP errors log file. Use URL `/admin/log.php?log=errorlog.txt&view=text`.
 - Added the field *Website Description* to store the site description on the *Website Settings* page.
 - Fill in the *Website URL* field on the *Website Settings* page with the suggested website URL by clicking on it.
+- Control the use of the code editor via *User Settings*. The `GSNOHIGHLIGHT` constant is deprecated.
 
 ## [2025.1.1] - 2025.01.28
 

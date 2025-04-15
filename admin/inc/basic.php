@@ -590,40 +590,30 @@ function redirect($url) {
 }
 
 /**
- * Display i18n
+ * Get translated string
  *
- * Displays the default language's tranlation, but if it 
- * does not exist, it falls back to the en_US one.
+ * @param string $name The key of the translation to display
+ * @param bool $echo Optional, default is true, whether to echo or return the translation
+ * @uses $i18n
  *
  * @since 3.0
- * @author ccagle8
- * @uses GSLANGPATH
- * @uses $i18n
- * @uses $LANG
+ * @since 2025.2 Code refactored
  *
- * @param string $name
- * @param bool $echo Optional, default is true
+ * @author ccagle8
+ *
+ * @return void
  */
-function i18n($name, $echo=true) {
+function i18n($name, $echo = true) {
 	global $i18n;
-	global $LANG;
-
-	if(isset($i18n)){
-
-		if (isset($i18n[$name])) {
-			$myVar = $i18n[$name];
-		} else {
-			$myVar = '{'.$name.'}';
-		}
-	}
-	else {
-		$myVar = '{'.$name.'}'; // if $i18n doesnt exist yet return something
-	}
-
-	if (!$echo) {
-		return $myVar;
+	$name = (string) $name;
+	// Get the translation from the $i18n array
+	$translation = isset($i18n[$name]) ? (string) $i18n[$name] : '{' . $name . '}';
+	// If $echo is true, echo the translation
+	if ($echo) {
+		echo $translation;
 	} else {
-		echo $myVar;
+		// Otherwise return it
+		return $translation;
 	}
 }
 

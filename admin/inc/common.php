@@ -167,6 +167,7 @@ $thisfilew = GSDATAOTHERPATH . 'website.xml';
 if (file_exists($thisfilew)) {
 	$dataw = getXML($thisfilew);
 	$SITENAME = stripslashes((string) $dataw->SITENAME);
+	$SITETAGLINE = stripslashes((string) $dataw->SITETAGLINE);
 	$SITEDESCRIPTION = stripslashes((string) $dataw->SITEDESCRIPTION);
 	$SITEURL = (string) $dataw->SITEURL;
 	$TEMPLATE = (string) $dataw->TEMPLATE;

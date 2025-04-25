@@ -653,6 +653,7 @@ $i18n = array(
  * for settings.php
  */
 "LABEL_WEBSITE_DESCRIPTION"	=>	"Website Description",
+"LABEL_WEBSITE_TAGLINE"	=>	"Website Tagline",
 "CLICK_TO_USE_URL" => "Click to use this URL",
 "ENABLE_CODE_ED" => "<b>Enable the Code editor</b>",
 );

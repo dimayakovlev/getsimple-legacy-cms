@@ -75,6 +75,9 @@ if(isset($_POST['submitted'])) {
 	if (isset($_POST['sitename'])) {
 		$SITENAME = htmlentities($_POST['sitename'], ENT_QUOTES, 'UTF-8');
 	}
+	if (isset($_POST['sitetagline'])) {
+		$SITETAGLINE = $_POST['sitetagline'];
+	}
 	if (isset($_POST['sitedescription'])) {
 		$SITEDESCRIPTION = $_POST['sitedescription'];
 	}
@@ -159,6 +162,8 @@ if(isset($_POST['submitted'])) {
 		$xmls = new SimpleXMLExtended('<?xml version="1.0" encoding="UTF-8"?><item></item>');
 		$note = $xmls->addChild('SITENAME');
 		$note->addCData($SITENAME);
+		$note = $xmls->addChild('SITETAGLINE');
+		$note->addCData($SITETAGLINE);
 		$note=$xmls->addChild('SITEDESCRIPTION');
 		$note->addCData($SITEDESCRIPTION);
 		$note = $xmls->addChild('SITEURL');
@@ -228,6 +233,7 @@ get_template('header', cl($SITENAME).' &raquo; '.i18n_r('GENERAL_SETTINGS'));
 			<p><label for="siteurl"><?php i18n('LABEL_BASEURL');?>:</label><input class="text" id="siteurl" name="siteurl" type="url" value="<?php if (isset($SITEURL1)) { echo $SITEURL1; } else { echo $SITEURL; } ?>"></p><?php if ($fullpath != $SITEURL) { echo '<p style="margin:-15px 0 20px 0;color:#D94136;font-size:11px;">' . i18n_r('LABEL_SUGGESTION') . ': &nbsp; <code onclick="document.getElementById(\'siteurl\').value = \'' . $fullpath . '\'" title="' . i18n_r('CLICK_TO_USE_URL') . '" style="cursor: pointer;">' . $fullpath . '</code></p>'; } ?>
 		</div>
 		<div class="clear"></div>
+		<div class="widesec"><p><label for="sitetagline"><?php i18n('LABEL_WEBSITE_TAGLINE'); ?>:</label><input class="text" name="sitetagline" id="sitetagline" type="text" value="<?php if (isset($SITETAGLINE)) { echo var_out($SITETAGLINE); } ?>"></p></div>
 
 		<div class="widesec"><p><label for="sitedescription"><?php i18n('LABEL_WEBSITE_DESCRIPTION'); ?>:</label><textarea class="text" name="sitedescription" id="sitedescription"><?php if (isset($SITEDESCRIPTION)) { echo var_out($SITEDESCRIPTION); } ?></textarea></p></div>
 
@@ -300,7 +306,7 @@ get_template('header', cl($SITENAME).' &raquo; '.i18n_r('GENERAL_SETTINGS'));
 
 	</div>
 
-	<div id="sidebar" >
+	<div id="sidebar">
 		<?php include('template/sidebar-settings.php'); ?>
 	</div>
 

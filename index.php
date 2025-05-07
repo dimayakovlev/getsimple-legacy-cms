@@ -89,6 +89,7 @@ if(!$data_index) {
 }
 
 $title         = $data_index->title;
+$subtitle = $data_index->subtitle;
 $date          = $data_index->pubDate;
 $metak         = $data_index->meta;
 $metad         = $data_index->metad;

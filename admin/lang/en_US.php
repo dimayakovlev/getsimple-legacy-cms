@@ -656,4 +656,5 @@ $i18n = array(
 "LABEL_WEBSITE_TAGLINE"	=>	"Website Tagline",
 "CLICK_TO_USE_URL" => "Click to use this URL",
 "ENABLE_CODE_ED" => "<b>Enable the Code editor</b>",
+"PAGE_SUBTITLE" => "Page Subtitle",
 );

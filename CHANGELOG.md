@@ -12,6 +12,8 @@ All notable changes of GetSimple Legacy CMS will be documented in this file.
 - Added the field *Website Tagline* to store the site slogan or subtitle on the *Website Settings* page.
 - Fill in the *Website URL* field on the *Website Settings* page with the suggested website URL by clicking on it.
 - Control the use of the code editor via *User Settings*. The `GSNOHIGHLIGHT` constant is deprecated.
+- Added the field *Page Subtitle* to store subtitle or long title of the page.
+- Added theme function `get_page_subtitle()` to echo or return the page subtitle.
 
 ## [2025.1.1] - 2025.01.28
 

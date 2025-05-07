@@ -36,6 +36,7 @@ $menu = '';
 $content = '';
 $author = '';
 $title = '';
+$subtitle = '';
 $url = '';
 $metak = '';
 $metad = '';
@@ -50,6 +51,7 @@ if ($id) {
 
 	$data_edit = getXML($path . $file);
 	$title = stripslashes($data_edit->title);
+	$subtitle = stripslashes($data_edit->subtitle);
 	$pubDate = $data_edit->pubDate;
 	$metak = stripslashes($data_edit->meta);
 	$metad = stripslashes($data_edit->metad);
@@ -151,6 +153,12 @@ get_template('header', cl($SITENAME) . ' &raquo; ' . i18n_r('EDIT') . ' ' . $tit
 
 			<!-- metadata toggle screen -->
 			<div style="display:none;" id="metadata_window">
+			<div class="wideopt">
+				<p id="post-subtitle-wrap">
+					<label for="post-subtitle"><?php i18n('PAGE_SUBTITLE'); ?>:</label>
+					<input class="text" id="post-subtitle" name="post-subtitle" type="text" value="<?php echo $subtitle; ?>">
+				</p>
+			</div>
 			<div class="leftopt">
 				<p class="inline clearfix" id="post-private-wrap">
 					<label for="post-private" ><?php i18n('KEEP_PRIVATE'); ?>: &nbsp; </label>
@@ -249,8 +257,7 @@ get_template('header', cl($SITENAME) . ' &raquo; ' . i18n_r('EDIT') . ' ' . $tit
 			<div class="clear"></div>
 			<?php exec_action('edit-extras'); ?>
 
-			</div>	<!-- / metadata toggle screen -->
-
+			</div> <!-- / metadata toggle screen -->
 
 			<!-- page body -->
 			<p>

@@ -138,6 +138,29 @@ function get_page_clean_title($echo=true) {
 }
 
 /**
+ * Get Page Subtitle
+ *
+ * This function retrieves the subtitle of a page, optionally echoing it.
+ *
+ * @since 2025.2
+ * @uses $subtitle
+ * @uses strip_decode()
+ *
+ * @param bool $echo Optional, default is true. False will 'return' value.
+ * @return void Echos or returns string based on param $echo.
+ */
+
+function get_page_subtitle($echo = true) {
+	global $subtitle;
+	$result = strip_decode((string) $subtitle);
+	if ($echo) {
+		echo $result;
+	} else {
+		return $result;
+	}
+}
+
+/**
  * Get Page Slug
  *
  * This will return the slug value of a particular page

@@ -43,7 +43,7 @@ if (isset($_POST['submitted'])) {
 	if (trim($_POST['post-title']) == '') {
 		redirect('edit.php?upd=edit-error&type=' . urlencode(i18n_r('CANNOT_SAVE_EMPTY')));
 	} else {
-		$url = $title = $subtitle = $metad = $metak = $cont = '';
+		$url = $title = $subtitle = $summary = $metad = $metak = $cont = '';
 		// is a slug provided?
 		if (isset($_POST['post-id']) && trim($_POST['post-id']) != '') {
 			$url = $_POST['post-id'];
@@ -85,6 +85,7 @@ if (isset($_POST['submitted'])) {
 		// format and clean the responses
 		if(isset($_POST['post-title'])) 			{	$title = var_out(xss_clean($_POST['post-title']));	}
 		if (isset($_POST['post-subtitle'])) { $subtitle = var_out(xss_clean($_POST['post-subtitle'])); }
+		if (isset($_POST['post-summary'])) { $summary = safe_slash_html($_POST['post-summary']); }
 		if(isset($_POST['post-metak'])) 			{	$metak = safe_slash_html(strip_tags($_POST['post-metak']));	}
 		if(isset($_POST['post-metad'])) 			{	$metad = safe_slash_html(strip_tags($_POST['post-metad']));	}
 		if(isset($_POST['post-author'])) 			{	$author = safe_slash_html($_POST['post-author']);	}
@@ -132,6 +133,9 @@ if (isset($_POST['submitted'])) {
 
 		$note = $xml->addChild('subtitle');
 		$note->addCData($subtitle);
+
+		$note = $xml->addChild('summary');
+		$note->addCData($summary);
 
 		$note = $xml->addChild('url');
 		$note->addCData($url);

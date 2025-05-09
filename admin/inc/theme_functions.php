@@ -147,12 +147,37 @@ function get_page_clean_title($echo=true) {
  * @uses strip_decode()
  *
  * @param bool $echo Optional, default is true. False will 'return' value.
- * @return void Echos or returns string based on param $echo.
+ * @return string|null Echos or returns string based on param $echo.
  */
 
 function get_page_subtitle($echo = true) {
 	global $subtitle;
 	$result = strip_decode((string) $subtitle);
+	if ($echo) {
+		echo $result;
+	} else {
+		return $result;
+	}
+}
+
+/**
+ * Get Page Summary
+ *
+ * Retrieves the summary of a page, optionally echoing it.
+ * Allows the option to strip HTML tags from the summary.
+ *
+ * @since 2025.2
+ * @uses $summary
+ * @uses strip_decode()
+ *
+ * @param bool $echo Optional, default is true. If true, the summary is echoed.
+ * @param bool $strip_tags Optional, default is true. If true, HTML tags are stripped from the summary.
+ * @return string|null The summary of the page, either echoed or returned based on the $echo parameter.
+ */
+function get_page_summary($echo = true, $strip_tags = true) {
+	global $summary;
+	$result = strip_decode((string) $summary);
+	if ($strip_tags) $result = strip_tags($result);
 	if ($echo) {
 		echo $result;
 	} else {

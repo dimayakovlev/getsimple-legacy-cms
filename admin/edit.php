@@ -37,6 +37,7 @@ $content = '';
 $author = '';
 $title = '';
 $subtitle = '';
+$summary = '';
 $url = '';
 $metak = '';
 $metad = '';
@@ -52,6 +53,7 @@ if ($id) {
 	$data_edit = getXML($path . $file);
 	$title = stripslashes($data_edit->title);
 	$subtitle = stripslashes($data_edit->subtitle);
+	$summary = stripslashes($data_edit->summary);
 	$pubDate = $data_edit->pubDate;
 	$metak = stripslashes($data_edit->meta);
 	$metad = stripslashes($data_edit->metad);
@@ -157,6 +159,10 @@ get_template('header', cl($SITENAME) . ' &raquo; ' . i18n_r('EDIT') . ' ' . $tit
 				<p id="post-subtitle-wrap">
 					<label for="post-subtitle"><?php i18n('PAGE_SUBTITLE'); ?>:</label>
 					<input class="text" id="post-subtitle" name="post-subtitle" type="text" value="<?php echo $subtitle; ?>">
+				</p>
+				<p id="post-summary-wrap">
+					<label for="post-summary" class=""><?php i18n('PAGE_SUMMARY'); ?>:</label>
+					<textarea class="text" id="post-summary" name="post-summary"><?php echo $summary; ?></textarea>
 				</p>
 			</div>
 			<div class="leftopt">

@@ -14,6 +14,8 @@ All notable changes of GetSimple Legacy CMS will be documented in this file.
 - Control the use of the code editor via *User Settings*. The `GSNOHIGHLIGHT` constant is deprecated.
 - Added the field *Page Subtitle* to store subtitle or long title of the page.
 - Added theme function `get_page_subtitle()` to echo or return the page subtitle.
+- Added the field *Page Summary* to store summary of the page.
+- Added theme function `get_page_summary()` to echo or return the page summary.
 
 ## [2025.1.1] - 2025.01.28
 

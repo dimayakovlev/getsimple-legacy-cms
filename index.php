@@ -90,6 +90,7 @@ if(!$data_index) {
 
 $title         = $data_index->title;
 $subtitle = $data_index->subtitle;
+$summary = $data_index->summary;
 $date          = $data_index->pubDate;
 $metak         = $data_index->meta;
 $metad         = $data_index->metad;
@@ -97,7 +98,7 @@ $url           = $data_index->url;
 $content       = $data_index->content;
 $parent        = $data_index->parent;
 $template_file = $data_index->template;
-$private       = $data_index->private;	
+$private       = $data_index->private;
 
 // after fields from dataindex, can modify globals here or do whatever by checking them
 exec_action('index-post-dataindex');

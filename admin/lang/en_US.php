@@ -658,4 +658,5 @@ $i18n = array(
 "ENABLE_CODE_ED" => "<b>Enable the Code editor</b>",
 "PAGE_SUBTITLE" => "Page Subtitle",
 "PAGE_SUMMARY" => "Page Summary",
+"PAGE_FEATURED_IMAGE" => "Page Featured Image",
 );

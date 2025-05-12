@@ -16,6 +16,8 @@ All notable changes of GetSimple Legacy CMS will be documented in this file.
 - Added theme function `get_page_subtitle()` to echo or return the page subtitle.
 - Added the field *Page Summary* to store summary of the page.
 - Added theme function `get_page_summary()` to echo or return the page summary.
+- Added the field *Page Featured Image* to store URL of featured image of the page.
+- Added theme function `get_page_featured_image()` to echo or return the URL of the page featured image.
 
 ## [2025.1.1] - 2025.01.28
 

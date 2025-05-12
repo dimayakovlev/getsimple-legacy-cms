@@ -186,6 +186,26 @@ function get_page_summary($echo = true, $strip_tags = true) {
 }
 
 /**
+ * Get Page Featured Image
+ *
+ * Retrieves the featured image of a page, optionally echoing it.
+ *
+ * @since 2025.2
+ * @uses $featured_image
+ *
+ * @param bool $echo Optional, default is true. If true, the featured image is echoed.
+ * @return string|null The featured image of the page, either echoed or returned based on the $echo parameter.
+ */
+function get_page_featured_image($echo = true) {
+	global $featured_image;
+	if ($echo) {
+		echo (string) $featured_image;
+	} else {
+		return (string) $featured_image;
+	}
+}
+
+/**
  * Get Page Slug
  *
  * This will return the slug value of a particular page

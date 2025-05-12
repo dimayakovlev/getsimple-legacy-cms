@@ -41,6 +41,7 @@ $summary = '';
 $url = '';
 $metak = '';
 $metad = '';
+$featured_image = '';
 
 if ($id) {
 	// get saved page data
@@ -54,6 +55,7 @@ if ($id) {
 	$title = stripslashes($data_edit->title);
 	$subtitle = stripslashes($data_edit->subtitle);
 	$summary = stripslashes($data_edit->summary);
+	$featured_image = stripcslashes($data_edit->featuredImage);
 	$pubDate = $data_edit->pubDate;
 	$metak = stripslashes($data_edit->meta);
 	$metad = stripslashes($data_edit->metad);
@@ -163,6 +165,10 @@ get_template('header', cl($SITENAME) . ' &raquo; ' . i18n_r('EDIT') . ' ' . $tit
 				<p id="post-summary-wrap">
 					<label for="post-summary" class=""><?php i18n('PAGE_SUMMARY'); ?>:</label>
 					<textarea class="text" id="post-summary" name="post-summary"><?php echo $summary; ?></textarea>
+				</p>
+				<p id="post-featured-image-wrap">
+					<label for="post-featured-image"><?php i18n('PAGE_FEATURED_IMAGE'); ?>:</label>
+					<input class="text" id="post-featured-image" name="post-featured-image" type="text" value="<?php echo $featured_image; ?>">
 				</p>
 			</div>
 			<div class="leftopt">

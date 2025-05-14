@@ -652,10 +652,16 @@ $i18n = array(
 /*
  * for settings.php
  */
-"LABEL_WEBSITE_DESCRIPTION"	=>	"Website Description",
-"LABEL_WEBSITE_TAGLINE"	=>	"Website Tagline",
+"LABEL_WEBSITE_DESCRIPTION" => "Website Description",
+"LABEL_WEBSITE_TAGLINE" => "Website Tagline",
 "CLICK_TO_USE_URL" => "Click to use this URL",
 "ENABLE_CODE_ED" => "Enable the Code editor",
+"AVAILABLE_PERMALINK_TAGS" => "Available Tags for Custom Permalink Structure",
+"AVAILABLE_PERMALINK_TAGS_PARENT_DESCRIPTION" => "The direct parent of a page",
+"AVAILABLE_PERMALINK_TAGS_SLUG_DESCRIPTION" => "The slug of a page",
+/*
+ * for edit.php
+ */
 "PAGE_SUBTITLE" => "Page Subtitle",
 "PAGE_SUMMARY" => "Page Summary",
 "PAGE_FEATURED_IMAGE" => "Page Featured Image",

@@ -214,7 +214,7 @@ if (count($lang_array) != 0) {
 get_template('header', cl($SITENAME).' &raquo; '.i18n_r('GENERAL_SETTINGS')); 
 
 ?>
-	
+
 <?php include('template/include-nav.php'); ?>
 
 <div class="bodycontent clearfix">
@@ -239,12 +239,16 @@ get_template('header', cl($SITENAME).' &raquo; '.i18n_r('GENERAL_SETTINGS'));
 
 		<p class="inline"><input name="prettyurls" id="prettyurls" type="checkbox" value="1" <?php echo $prettychck; ?>> &nbsp;<label for="prettyurls"><?php i18n('USE_FANCY_URLS');?></label></p>
 
-		<div class="leftsec">
+		<div class="widesec">
 			<p><label for="permalink" class="clearfix"><?php i18n('PERMALINK'); ?>:</label><input class="text" name="permalink" id="permalink" type="text" placeholder="%parent%/%slug%/" value="<?php if (isset($PERMALINK)) { echo var_out($PERMALINK); } ?>"></p>
-		<a id="flushcache" class="button" href="?flushcache"><?php i18n('FLUSHCACHE'); ?></a>
+			<label><?php i18n('AVAILABLE_PERMALINK_TAGS'); ?>:</label>
+			<ul>
+				<li><code>%parent%</code> - <?php i18n('AVAILABLE_PERMALINK_TAGS_PARENT_DESCRIPTION'); ?>;</li>
+				<li><code>%slug%</code> - <?php i18n('AVAILABLE_PERMALINK_TAGS_SLUG_DESCRIPTION'); ?>.</li>
+			</ul>
 		</div>
 		<div class="clear"></div>
-
+		<p><a id="flushcache" class="button" href="?flushcache"><?php i18n('FLUSHCACHE'); ?></a></p>
 		<?php exec_action('settings-website-extras'); ?>
 
 		<div id="profile" class="section" >

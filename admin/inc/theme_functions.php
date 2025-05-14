@@ -599,7 +599,7 @@ function menu_data($id = null,$xml=false) {
  * @param bool $force Optional, default is false. If true, will force the component to run
  * @return void
  */
-function get_component($id, $force = false){
+function get_component($id, $force = false) {
 	global $components;
 	$id = (string) $id;
 	load_components();
@@ -627,7 +627,7 @@ function get_component($id, $force = false){
  * @param string $id The id of the component to check
  * @return bool True if component exists, false if not
  */
-function component_exists($id){
+function component_exists($id) {
 	global $components;
 	$id = (string) $id;
 	load_components();
@@ -651,13 +651,73 @@ function component_exists($id){
  * @param string $id The id of the component to check
  * @return bool|null Null if component does not exist, true if enabled, false if disabled
  */
-function component_enabled($id){
+function component_enabled($id) {
 	global $components;
 	$id = (string) $id;
 	load_components();
 	if (count($components) > 0) {
 		foreach ($components as $component) {
 			if ($id == (string) $component->slug) return (string) $component->disabled != '1';
+		}
+	}
+	return null;
+}
+
+/**
+ * Get the title of a component
+ *
+ * @since 2025.2
+ * @uses load_components()
+ * @uses $components
+ *
+ * @param string $id The id of the component to get
+ * @param bool $echo If true, echo the result, else return it
+ * @return string|null The title of the component or null if not found or echo
+ */
+function get_component_title($id, $echo = true) {
+	global $components;
+	$id = (string) $id;
+	load_components();
+	if (count($components) > 0) {
+		foreach ($components as $component) {
+			if ($id == (string) $component->slug) {
+				if ($echo) {
+					echo (string) $component->title;
+					return null;
+				} else {
+					return (string) $component->title;
+				}
+			}
+		}
+	}
+	return null;
+}
+
+/**
+ * Get the description of a component
+ *
+ * @since 2025.2
+ * @uses load_components()
+ * @uses $components
+ *
+ * @param string $id The id of the component to get
+ * @param bool $echo If true, echo the result, else return it
+ * @return string|null The description of the component or null if not found or echo
+ */
+function get_component_description($id, $echo = true) {
+	global $components;
+	$id = (string) $id;
+	load_components();
+	if (count($components) > 0) {
+		foreach ($components as $component) {
+			if ($id == (string) $component->slug) {
+				if ($echo) {
+					echo (string) $component->description;
+					return null;
+				} else {
+					return (string) $component->description;
+				}
+			}
 		}
 	}
 	return null;

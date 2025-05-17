@@ -228,24 +228,22 @@ function get_page_slug($echo=true) {
 }
 
 /**
- * Get Page Parent Slug
+ * Get Slug of Parent Page
  *
  * This will return the slug value of a particular page's parent
  *
- * @since 1.0
+ * @since 2025.2
  * @uses $parent
  *
  * @param bool $echo Optional, default is true. False will 'return' value
  * @return string Echos or returns based on param $echo
  */
-function get_parent($echo=true) {
+function get_page_parent($echo = true) {
 	global $parent;
-	$myVar = $parent;
-	
 	if ($echo) {
-		echo $myVar;
+		echo (string) $parent;
 	} else {
-		return $myVar;
+		return (string) $parent;
 	}
 }
 
@@ -586,13 +584,11 @@ function menu_data($id = null,$xml=false) {
  * Components are parsed for PHP within them.
  *
  * @since 1.0
- * @uses GSDATAOTHERPATH
- * @uses getXML
  *
- * @uses load_components
+ * @uses load_components()
  * @uses $components
  * @since 2024.2.1 Added $force parameter. Don't normalize id.
- * @since 2024.3 Refactored, use load_components
+ * @since 2024.3 Refactored, use load_components()
  *
  * @param string $id This is the ID of the component you want to display
  *				True will return value in XML format. False will return an array
@@ -619,9 +615,7 @@ function get_component($id, $force = false) {
  * This will check if a component with the given id exists in the component list
  *
  * @since 2024.3
- * @uses GSDATAOTHERPATH
- * @uses getXML
- * @uses load_components
+ * @uses load_components()
  * @uses $components
  *
  * @param string $id The id of the component to check
@@ -643,9 +637,7 @@ function component_exists($id) {
  * Check if a component is enabled or disabled
  *
  * @since 2024.3
- * @uses GSDATAOTHERPATH
- * @uses getXML
- * @uses load_components
+ * @uses load_components()
  * @uses $components
  *
  * @param string $id The id of the component to check
@@ -809,13 +801,21 @@ function return_page_slug() {
  */
 function return_site_ver() {
 	return get_site_version(FALSE);
-}	
+}
 /**
  * @depreciated as of 2.03
  */
-if(!function_exists('set_contact_page')) {
+if (!function_exists('set_contact_page')) {
 	function set_contact_page() {
-		#removed functionality	
+		#removed functionality
 	}
 }
-?>
+
+/**
+ * 
+ * @deprecated as of 2025.2
+ * @see get_page_parent()
+ */
+function get_parent($echo = true) {
+	get_page_parent((bool) $echo);
+}

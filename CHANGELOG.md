@@ -20,6 +20,11 @@ All notable changes of GetSimple Legacy CMS will be documented in this file.
 - Added theme function `get_page_featured_image()` to echo or return the URL of the page featured image.
 - Added theme function `get_component_title()` to echo or return title of a component.
 - Added theme function `get_component_description()` to echo or return description of a component.
+- Added theme function `get_page_parent()` to echo or return the slug of the parent page of a current page. This function replace deprecated theme function `get_parent()`.
+
+### Changed
+
+- The theme function `get_parent()` is deprecated. Use the function `get_page_parent()` instead.
 
 ## [2025.1.1] - 2025.01.28
 

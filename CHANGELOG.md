@@ -13,9 +13,9 @@ All notable changes of GetSimple Legacy CMS will be documented in this file.
 - Fill in the *Website URL* field on the *Website Settings* page with the suggested website URL by clicking on it.
 - Control the use of the code editor via *User Settings*. The `GSNOHIGHLIGHT` constant is deprecated.
 - Added the field *Page Subtitle* to store subtitle or long title of the page.
-- Added theme function `get_page_subtitle()` to echo or return the page subtitle.
+- Added theme function `get_page_subtitle()` and `get_page_clean_subtitle()` to echo or return the page subtitle or the page subtitle stipped of HTML tags.
 - Added the field *Page Summary* to store summary of the page.
-- Added theme functions `get_page_summary()` and `get_page_clean_summary()` to echo or return the page summary or the page summary stripped of html tags.
+- Added theme functions `get_page_summary()` and `get_page_clean_summary()` to echo or return the page summary or the page summary stripped of HTML tags.
 - Added the field *Page Featured Image* to store URL of featured image of the page.
 - Added theme function `get_page_featured_image()` to echo or return the URL of the page featured image.
 - Added theme function `get_component_title()` to echo or return title of a component.

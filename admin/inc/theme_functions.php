@@ -161,6 +161,30 @@ function get_page_subtitle($echo = true) {
 }
 
 /**
+ * Get Page Clean Subtitle
+ *
+ * Retrieves the subtitle of a page, stripped of HTML tags and decoded, optionally echoing it.
+ *
+ * @since 2025.2
+ * @uses $subtitle
+ * @uses strip_decode()
+ * @uses strip_tags()
+ *
+ * @param bool $echo Optional, default is true. If true, the subtitle is echoed.
+ * @return string|null The clean subtitle of the page, either echoed or returned based on the $echo parameter.
+ */
+
+function get_page_clean_subtitle($echo = true) {
+	global $subtitle;
+	$result = strip_tags(strip_decode((string) $subtitle));
+	if ($echo) {
+		echo $result;
+	} else {
+		return $result;
+	}
+}
+
+/**
  * Get Page Summary
  *
  * Retrieves the summary of a page, optionally echoing it.
@@ -183,9 +207,9 @@ function get_page_summary($echo = true) {
 }
 
 /**
- * Get clean page summary
+ * Get Clean Page Summary
  *
- * Retrieves the summary of a page, stripped of html tags and decoded, optionally echoing it.
+ * Retrieves the summary of a page, stripped of HTML tags and decoded, optionally echoing it.
  *
  * @since 2025.2
  * @uses $summary

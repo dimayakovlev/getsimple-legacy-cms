@@ -263,10 +263,10 @@ get_template('header', cl($SITENAME).' &raquo; '.i18n_r('GENERAL_SETTINGS'));
 			}?>
 		</div>
 		<div class="clear"></div>
-		<div class="leftsec">
-			<p><label for="name" ><?php i18n('LABEL_DISPNAME');?>:</label>
-			<span style="margin:0px 0 5px 0;font-size:12px;color:#999;" ><?php i18n('DISPLAY_NAME');?></span>			
-			<input class="text" id="name" name="name" type="text" value="<?php if(isset($NAME1)) { echo $NAME1; } else { echo var_out($NAME); } ?>" /></p>
+		<div class="widesec">
+			<p><label for="name"><?php i18n('LABEL_DISPNAME'); ?>:</label>
+			<span style="margin:0px 0 5px 0;font-size:12px;color:#999;"><?php i18n('DISPLAY_NAME'); ?></span>
+			<input class="text" id="name" name="name" type="text" value="<?php if(isset($NAME1)) { echo $NAME1; } else { echo var_out($NAME); } ?>"></p>
 		</div>
 		<div class="clear"></div>
 		<div class="leftsec">

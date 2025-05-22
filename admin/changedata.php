@@ -105,7 +105,12 @@ if (isset($_POST['submitted'])) {
 			{
 				$menuOrder = "0";
 			}
-		}		
+		}
+		if (isset($_POST['post-creation-date'])) {
+			$creation_date = $_POST['post-creation-date'];
+		} else {
+			$creation_date = date('r');
+		}
 		// If saving a new file do not overwrite existing, get next incremental filename, file-count.xml
 		// @todo this is a mess, new file existing file should all be determined at beginning of block and defined
 		if ( (file_exists($file) && $url != $existingurl) ||  in_array($url,$reservedSlugs) ) {
@@ -127,6 +132,7 @@ if (isset($_POST['submitted'])) {
 		
 		
 		$xml = new SimpleXMLExtended('<?xml version="1.0" encoding="UTF-8"?><item></item>');
+		$xml->addChild('creDate', $creation_date);
 		$xml->addChild('pubDate', date('r'));
 
 		$note = $xml->addChild('title');

@@ -21,6 +21,7 @@ All notable changes of GetSimple Legacy CMS will be documented in this file.
 - Added theme function `get_component_title()` to echo or return title of a component.
 - Added theme function `get_component_description()` to echo or return description of a component.
 - Added theme function `get_page_parent()` to echo or return the slug of the parent page of a current page. This function replace deprecated theme function `get_parent()`.
+- Added saving of the page creation date. The date is stored in the `creDate` page field.
 
 ### Changed
 

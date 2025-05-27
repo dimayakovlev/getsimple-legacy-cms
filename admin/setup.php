@@ -99,6 +99,7 @@ if (isset($_POST['submitted'])) {
 		if (!file_exists($init)) {
 			copy($temp, $init);
 			$xml = simplexml_load_file($init);
+			$xml->creDate = date('r');
 			$xml->pubDate = date('r');
 			$xml->asXML($init);
 		}

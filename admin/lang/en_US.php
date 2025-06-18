@@ -31,7 +31,7 @@ $i18n = array(
 "NOTE_USERNAME"			=>	"Your username is",
 "NOTE_PASSWORD"			=>	"and your password is",
 "INSTALLATION"			=>	"Installation",
-"LABEL_WEBSITE"			=>	"Website Name",
+"LABEL_WEBSITE"			=>	"Website Title", // "Website Name"
 "LABEL_BASEURL"			=>	"Website URL",
 "LABEL_SUGGESTION"	=>	"Our suggestion is",
 "LABEL_USERNAME"		=>	"Username",
@@ -654,6 +654,8 @@ $i18n = array(
  */
 "LABEL_WEBSITE_DESCRIPTION" => "Website Description",
 "LABEL_WEBSITE_TAGLINE" => "Website Tagline",
+"LABEL_WEBSITE_SUBTITLE" => "Website Subtitle",
+"LABEL_WEBSITE_KEYWORDS" => "Website Keywords",
 "CLICK_TO_USE_URL" => "Click to use this URL",
 "ENABLE_CODE_ED" => "Enable the Code editor",
 "AVAILABLE_PERMALINK_TAGS" => "Available Tags for Custom Permalink Structure",

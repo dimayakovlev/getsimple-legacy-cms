@@ -55,19 +55,19 @@ if (isset($_GET['undo'])) {
 
 # was this page restored?
 if (isset($_GET['restored'])) {
-	$restored = 'true'; 
+	$restored = 'true';
 } else {
 	$restored = 'false';
 }
 
 # was the form submitted?
-if(isset($_POST['submitted'])) {
-	
+if (isset($_POST['submitted'])) {
+
 	# first check for csrf
-	if (!defined('GSNOCSRF') || (GSNOCSRF == FALSE) ) {
+	if (!defined('GSNOCSRF') || (GSNOCSRF == false) ) {
 		$nonce = $_POST['nonce'];
-		if(!check_nonce($nonce, "save_settings")) {
-			die("CSRF detected!");
+		if(!check_nonce($nonce, 'save_settings')) {
+			die('CSRF detected!');
 		}
 	}
 
@@ -75,11 +75,28 @@ if(isset($_POST['submitted'])) {
 	if (isset($_POST['sitename'])) {
 		$SITENAME = htmlentities($_POST['sitename'], ENT_QUOTES, 'UTF-8');
 	}
+	if (isset($_POST['sitesubtitle'])) {
+		$SITE_SUBTITLE = $_POST['sitesubtitle'];
+	}
 	if (isset($_POST['sitetagline'])) {
-		$SITETAGLINE = $_POST['sitetagline'];
+		$SITE_TAGLINE = $_POST['sitetagline'];
+	}
+	if (isset($_POST['sitekeywords'])) {
+		$SITE_KEYWORDS = $_POST['sitekeywords'];
+		/*
+		 * Sanitize and prepare keywords
+		 * @todo Want to get feedback on the need to unique keywords. Perhaps this should also be implemented when saving pages.
+		 */
+		/*
+		$SITE_KEYWORDS = strip_tags($SITE_KEYWORDS);
+		$SITE_KEYWORDS_ARRAY = explode(',', $SITE_KEYWORDS);
+		$SITE_KEYWORDS_ARRAY = array_map('trim', $SITE_KEYWORDS_ARRAY);
+		$SITE_KEYWORDS_ARRAY = array_unique(array_filter($SITE_KEYWORDS_ARRAY));
+		$SITE_KEYWORDS = implode(', ', $SITE_KEYWORDS_ARRAY);
+		*/
 	}
 	if (isset($_POST['sitedescription'])) {
-		$SITEDESCRIPTION = $_POST['sitedescription'];
+		$SITE_DESCRIPTION = $_POST['sitedescription'];
 	}
 	if (isset($_POST['siteurl'])) {
 		$SITEURL = tsl($_POST['siteurl']);
@@ -158,24 +175,31 @@ if(isset($_POST['submitted'])) {
 		}
 		
 		# create website xml file
-		createBak($wfile, GSDATAOTHERPATH, GSBACKUPSPATH.'other/');
+		createBak($wfile, GSDATAOTHERPATH, GSBACKUPSPATH . 'other/');
 		$xmls = new SimpleXMLExtended('<?xml version="1.0" encoding="UTF-8"?><item></item>');
 		$note = $xmls->addChild('SITENAME');
 		$note->addCData($SITENAME);
+		$note = $xmls->addChild('SITESUBTITLE');
+		$note->addCData($SITE_SUBTITLE);
 		$note = $xmls->addChild('SITETAGLINE');
-		$note->addCData($SITETAGLINE);
+		$note->addCData($SITE_TAGLINE);
+		$note = $xmls->addChild('SITEKEYWORDS');
+		$note->addCData($SITE_KEYWORDS);
 		$note=$xmls->addChild('SITEDESCRIPTION');
-		$note->addCData($SITEDESCRIPTION);
+		$note->addCData($SITE_DESCRIPTION);
 		$note = $xmls->addChild('SITEURL');
 		$note->addCData($SITEURL);
 		$note = $xmls->addChild('TEMPLATE');
 		$note->addCData($TEMPLATE);
 		$xmls->addChild('PRETTYURLS', $PRETTYURLS);
 		$xmls->addChild('PERMALINK', var_out($PERMALINK));
-		
+		$xmls->addAttribute('modified', date('r'));
+		$xmls->addAttribute('user', $USR);
+		$xmls->addAttribute('appName', GSNAME);
+		$xmls->addAttribute('appVersion', GSVERSION);
 		exec_action('settings-website');
-		
-		if (! XMLsave($xmls, GSDATAOTHERPATH . $wfile) ) {
+
+		if (!XMLsave($xmls, GSDATAOTHERPATH . $wfile)) {
 			$error = i18n_r('CHMOD_ERROR');
 		}
 
@@ -233,9 +257,10 @@ get_template('header', cl($SITENAME).' &raquo; '.i18n_r('GENERAL_SETTINGS'));
 			<p><label for="siteurl"><?php i18n('LABEL_BASEURL');?>:</label><input class="text" id="siteurl" name="siteurl" type="url" value="<?php if (isset($SITEURL1)) { echo $SITEURL1; } else { echo $SITEURL; } ?>"></p><?php if ($fullpath != $SITEURL) { echo '<p style="margin:-15px 0 20px 0;color:#D94136;font-size:11px;">' . i18n_r('LABEL_SUGGESTION') . ': &nbsp; <code onclick="document.getElementById(\'siteurl\').value = \'' . $fullpath . '\'" title="' . i18n_r('CLICK_TO_USE_URL') . '" style="cursor: pointer;">' . $fullpath . '</code></p>'; } ?>
 		</div>
 		<div class="clear"></div>
-		<div class="widesec"><p><label for="sitetagline"><?php i18n('LABEL_WEBSITE_TAGLINE'); ?>:</label><input class="text" name="sitetagline" id="sitetagline" type="text" value="<?php if (isset($SITETAGLINE)) { echo var_out($SITETAGLINE); } ?>"></p></div>
-
-		<div class="widesec"><p><label for="sitedescription"><?php i18n('LABEL_WEBSITE_DESCRIPTION'); ?>:</label><textarea class="text" name="sitedescription" id="sitedescription"><?php if (isset($SITEDESCRIPTION)) { echo var_out($SITEDESCRIPTION); } ?></textarea></p></div>
+		<div class="widesec"><p><label for="sitesubtitle"><?php i18n('LABEL_WEBSITE_SUBTITLE'); ?>:</label><input class="text" name="sitesubtitle" id="sitesubtitle" type="text" value="<?php if (isset($SITE_SUBTITLE)) { echo var_out($SITE_SUBTITLE); } ?>"></p></div>
+		<div class="widesec"><p><label for="sitetagline"><?php i18n('LABEL_WEBSITE_TAGLINE'); ?>:</label><input class="text" name="sitetagline" id="sitetagline" type="text" value="<?php if (isset($SITE_TAGLINE)) { echo var_out($SITE_TAGLINE); } ?>"></p></div>
+		<div class="widesec"><p><label for="sitekeywords"><?php i18n('LABEL_WEBSITE_KEYWORDS'); ?>:</label><input class="text" name="sitekeywords" id="sitekeywords" type="text" value="<?php if (isset($SITE_KEYWORDS)) { echo var_out($SITE_KEYWORDS); } ?>"></p></div>
+		<div class="widesec"><p><label for="sitedescription"><?php i18n('LABEL_WEBSITE_DESCRIPTION'); ?>:</label><textarea class="text" name="sitedescription" id="sitedescription"><?php if (isset($SITE_DESCRIPTION)) { echo var_out($SITE_DESCRIPTION); } ?></textarea></p></div>
 
 		<p class="inline"><input name="prettyurls" id="prettyurls" type="checkbox" value="1" <?php echo $prettychck; ?>> &nbsp;<label for="prettyurls"><?php i18n('USE_FANCY_URLS');?></label></p>
 

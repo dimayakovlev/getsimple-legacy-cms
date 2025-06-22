@@ -23,6 +23,11 @@ All notable changes of GetSimple Legacy CMS will be documented in this file.
 - Added theme function `get_component_title()` to echo or return title of a component.
 - Added theme function `get_component_description()` to echo or return description of a component.
 - Added theme function `get_page_parent()` to echo or return the slug of the parent page of a current page. This function replace deprecated theme function `get_parent()`.
+- Added theme function `get_site_title()` to echo or return the title of the site. It is an alternative to the function `get_site_name()`.
+- Added theme function `get_site_subtile()` to echo or return the subtitle of the site.
+- Added theme function `get_site_tagline()` to echo or return the tagline of the site.
+- Added theme function `get_site_keywords()` to echo or return the keywords of the site as string.
+- Added theme function `get_site_keywords_array()` to return the keywords of the site as array. There is an option for a unique array.
 - Added saving of the page creation date. The date is stored in the `creDate` page field.
 
 ### Changed

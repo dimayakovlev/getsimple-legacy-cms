@@ -491,6 +491,116 @@ function get_site_name($echo=true) {
 }
 
 /**
+ * Get Site Title
+ *
+ * @since 2025.2
+ * @uses $SITENAME
+ *
+ * @param bool $echo Optional, default is true. False will 'return' value
+ * @return null|string Echos or returns based on param $echo
+ */
+function get_site_title($echo = true) {
+	global $SITENAME;
+	if ($echo) {
+		echo (string) $SITENAME;
+	} else {
+		return (string) $SITENAME;
+	}
+}
+/**
+ * Get Site Subtitle
+ *
+ * @since 2025.2
+ * @uses $SITE_SUBTITLE
+ *
+ * @param bool $echo Optional, default is true. False will 'return' value
+ * @return null|string Echos or returns based on param $echo
+ */
+function get_site_subtitle($echo = true) {
+	global $SITE_SUBTITLE;
+	if ($echo) {
+		echo (string) $SITE_SUBTITLE;
+	} else {
+		return (string) $SITE_SUBTITLE;
+	}
+}
+
+/**
+ * Get Site Tagline
+ *
+ * @since 2025.2
+ * @uses $SITE_TAGLINE
+ *
+ * @param bool $echo Optional, default is true. False will 'return' value
+ * @return null|string Echos or returns based on param $echo
+ */
+function get_site_tagline($echo = true) {
+	global $SITE_TAGLINE;
+	if ($echo) {
+		echo (string) $SITE_TAGLINE;
+	} else {
+		return (string) $SITE_TAGLINE;
+	}
+}
+
+/**
+ * Get Site Description
+ *
+ * @since 2025.2
+ * @uses $SITE_DESCRIPTION
+ *
+ * @param bool $echo Optional, default is true. False will 'return' value
+ * @return null|string Echos or returns based on param $echo
+ */
+function get_site_description($echo = true) {
+	global $SITE_DESCRIPTION;
+	if ($echo) {
+		echo (string) $SITE_DESCRIPTION;
+	} else {
+		return (string) $SITE_DESCRIPTION;
+	}
+}
+
+/**
+ * Get Site Keywords
+ *
+ * @since 2025.2
+ * @uses $SITE_KEYWORDS
+ *
+ * @param bool $echo Optional, default is true. False will 'return' value
+ * @return null|string Echos or returns based on param $echo
+ */
+function get_site_keywords($echo = true) {
+	global $SITE_KEYWORDS;
+	if ($echo) {
+		echo (string) $SITE_KEYWORDS;
+	} else {
+		return (string) $SITE_KEYWORDS;
+	}
+}
+
+/**
+ * Get Site Keywords as Array
+ *
+ * This function retrieves the site's keywords as an array, optionally ensuring uniqueness.
+ *
+ * @since 2025.2
+ * @uses $SITE_KEYWORDS
+ *
+ * @param bool $array_unique Optional, default is true. If true, the resulting array will contain unique keywords.
+ * @return array The site's keywords as an array, with optional uniqueness.
+ */
+
+function get_site_keywords_array($array_unique = true) {
+	global $SITE_KEYWORDS;
+	$result = array_map('trim', explode(',', (string) $SITE_KEYWORDS));
+	if ($array_unique) {
+		$result = array_unique($result, SORT_STRING);
+	}
+	return $result;
+}
+
+/**
  * Get Administrator's Email Address
  * 
  * This will return the value set in the control panel

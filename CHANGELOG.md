@@ -29,6 +29,7 @@ All notable changes of GetSimple Legacy CMS will be documented in this file.
 - Added theme function `get_site_keywords()` to echo or return the keywords of the site as string.
 - Added theme function `get_site_keywords_array()` to return the keywords of the site as array. There is an option for a unique array.
 - Added saving of the page creation date. The date is stored in the `creDate` page field.
+- Added function `isAlpha()` to check if release is an alpha.
 
 ### Changed
 

@@ -1305,14 +1305,29 @@ function isDebug(){
 }
 
 /**
+ * Check if GS Legacy version is an Alpha release
+ *
+ * @since 2025.2
+ * @uses get_site_version()
+ * @return boolean True if an alpha release
+ */
+function isAlpha() {
+	$version = strtok(get_site_version(false), '+');
+	return (bool) preg_match('/[.-_]?(alpha|a)\.*\d*$/i', $version);
+}
+
+/**
  * Check if GS Legacy version is a Beta release
  *
  * @since 3.3.0
  * @since 2025.1 Return boolean value
- * @return boolean true if beta release
+ * @since 2025.2 Refactored. Use functions strtok() and preg_match()
+ * @uses get_site_version()
+ * @return boolean True if a beta release
  */
-function isBeta(){
-	return strpos(get_site_version(false), 'b') !== false;
+function isBeta() {
+	$version = strtok(get_site_version(false), '+');
+	return (bool) preg_match('/[.-_]?(beta|b)\.*\d*$/i', $version);
 }
 
 /**

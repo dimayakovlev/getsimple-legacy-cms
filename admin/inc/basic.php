@@ -1309,10 +1309,14 @@ function isDebug(){
  *
  * @since 2025.2
  * @uses get_site_version()
+ * @todo Use regex
  * @return boolean True if an alpha release
  */
 function isAlpha() {
+	// First remove build metadata
 	$version = strtok(get_site_version(false), '+');
+	// Alternate method with regex
+	// return (bool) preg_match('/(?<=-)(alpha)/i', $version);
 	$parts = explode('-', $version, 2);
 	if (count($parts) < 2) {
 		return false;
@@ -1327,9 +1331,11 @@ function isAlpha() {
  * @since 2025.1 Return boolean value
  * @since 2025.2 Refactored
  * @uses get_site_version()
+ * @todo Use regex
  * @return boolean True if a beta release
  */
 function isBeta() {
+	// First remove build metadata
 	$version = strtok(get_site_version(false), '+');
 	$parts = explode('-', $version, 2);
 	if (count($parts) < 2) {

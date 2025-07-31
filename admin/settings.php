@@ -194,7 +194,7 @@ if (isset($_POST['submitted'])) {
 		$xmls->addChild('PRETTYURLS', $PRETTYURLS);
 		$xmls->addChild('PERMALINK', var_out($PERMALINK));
 		$xmls->addAttribute('modified', date('r'));
-		$xmls->addAttribute('user', $USR);
+		$xmls->addAttribute('lastModifiedBy', $USR);
 		$xmls->addAttribute('appName', GSNAME);
 		$xmls->addAttribute('appVersion', GSVERSION);
 		exec_action('settings-website');

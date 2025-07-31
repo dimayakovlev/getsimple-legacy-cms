@@ -91,7 +91,7 @@ if (isset($_POST['submitted'])) {
 		$xmls->addChild('PRETTYURLS', '');
 		$xmls->addChild('PERMALINK', '');
 		$xmls->addAttribute('modified', date('r'));
-		$xmls->addAttribute('user', $USR);
+		$xmls->addAttribute('lastModifiedBy', $USR);
 		$xmls->addAttribute('appName', GSNAME);
 		$xmls->addAttribute('appVersion', GSVERSION);
 		if (!XMLsave($xmls, GSDATAOTHERPATH . $file)) {

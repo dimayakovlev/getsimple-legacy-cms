@@ -597,7 +597,7 @@ function redirect($url) {
  * @uses $i18n
  *
  * @since 3.0
- * @since 2025.2 Code refactored
+ * @since 2025.2.0 Code refactored
  *
  * @author ccagle8
  *
@@ -1307,7 +1307,7 @@ function isDebug(){
 /**
  * Check if GS Legacy version is an Alpha release
  *
- * @since 2025.2
+ * @since 2025.2.0
  * @uses get_site_version()
  * @todo Use regex
  * @return boolean True if an alpha release
@@ -1329,7 +1329,7 @@ function isAlpha() {
  *
  * @since 3.3.0
  * @since 2025.1 Return boolean value
- * @since 2025.2 Refactored
+ * @since 2025.2.0 Refactored
  * @uses get_site_version()
  * @todo Use regex
  * @return boolean True if a beta release

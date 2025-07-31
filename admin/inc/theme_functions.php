@@ -142,7 +142,7 @@ function get_page_clean_title($echo=true) {
  *
  * This function retrieves the subtitle of a page, optionally echoing it.
  *
- * @since 2025.2
+ * @since 2025.2.0
  * @uses $subtitle
  * @uses strip_decode()
  *
@@ -165,7 +165,7 @@ function get_page_subtitle($echo = true) {
  *
  * Retrieves the subtitle of a page, stripped of HTML tags and decoded, optionally echoing it.
  *
- * @since 2025.2
+ * @since 2025.2.0
  * @uses $subtitle
  * @uses strip_decode()
  * @uses strip_tags()
@@ -189,7 +189,7 @@ function get_page_clean_subtitle($echo = true) {
  *
  * Retrieves the summary of a page, optionally echoing it.
  *
- * @since 2025.2
+ * @since 2025.2.0
  * @uses $summary
  * @uses strip_decode()
  *
@@ -211,7 +211,7 @@ function get_page_summary($echo = true) {
  *
  * Retrieves the summary of a page, stripped of HTML tags and decoded, optionally echoing it.
  *
- * @since 2025.2
+ * @since 2025.2.0
  * @uses $summary
  * @uses strip_decode()
  * @uses strip_tags()
@@ -234,7 +234,7 @@ function get_page_clean_summary($echo = true) {
  *
  * Retrieves the featured image of a page, optionally echoing it.
  *
- * @since 2025.2
+ * @since 2025.2.0
  * @uses $featured_image
  *
  * @param bool $echo Optional, default is true. If true, the featured image is echoed.
@@ -276,7 +276,7 @@ function get_page_slug($echo=true) {
  *
  * This will return the slug value of a particular page's parent
  *
- * @since 2025.2
+ * @since 2025.2.0
  * @uses $parent
  *
  * @param bool $echo Optional, default is true. False will 'return' value
@@ -493,7 +493,7 @@ function get_site_name($echo=true) {
 /**
  * Get Site Title
  *
- * @since 2025.2
+ * @since 2025.2.0
  * @uses $SITENAME
  *
  * @param bool $echo Optional, default is true. False will 'return' value
@@ -510,7 +510,7 @@ function get_site_title($echo = true) {
 /**
  * Get Site Subtitle
  *
- * @since 2025.2
+ * @since 2025.2.0
  * @uses $SITE_SUBTITLE
  *
  * @param bool $echo Optional, default is true. False will 'return' value
@@ -528,7 +528,7 @@ function get_site_subtitle($echo = true) {
 /**
  * Get Site Tagline
  *
- * @since 2025.2
+ * @since 2025.2.0
  * @uses $SITE_TAGLINE
  *
  * @param bool $echo Optional, default is true. False will 'return' value
@@ -546,7 +546,7 @@ function get_site_tagline($echo = true) {
 /**
  * Get Site Description
  *
- * @since 2025.2
+ * @since 2025.2.0
  * @uses $SITE_DESCRIPTION
  *
  * @param bool $echo Optional, default is true. False will 'return' value
@@ -564,7 +564,7 @@ function get_site_description($echo = true) {
 /**
  * Get Site Keywords
  *
- * @since 2025.2
+ * @since 2025.2.0
  * @uses $SITE_KEYWORDS
  *
  * @param bool $echo Optional, default is true. False will 'return' value
@@ -584,7 +584,7 @@ function get_site_keywords($echo = true) {
  *
  * This function retrieves the site's keywords as an array, optionally ensuring uniqueness.
  *
- * @since 2025.2
+ * @since 2025.2.0
  * @uses $SITE_KEYWORDS
  *
  * @param bool $array_unique Optional, default is true. If true, the resulting array will contain unique keywords.
@@ -812,7 +812,7 @@ function component_enabled($id) {
 /**
  * Get the title of a component
  *
- * @since 2025.2
+ * @since 2025.2.0
  * @uses load_components()
  * @uses $components
  *
@@ -842,7 +842,7 @@ function get_component_title($id, $echo = true) {
 /**
  * Get the description of a component
  *
- * @since 2025.2
+ * @since 2025.2.0
  * @uses load_components()
  * @uses $components
  *
@@ -967,7 +967,7 @@ if (!function_exists('set_contact_page')) {
 
 /**
  * 
- * @deprecated as of 2025.2
+ * @deprecated as of 2025.2.0
  * @see get_page_parent()
  */
 function get_parent($echo = true) {

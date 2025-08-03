@@ -90,8 +90,11 @@ if (isset($_POST['submitted'])) {
 		$xmls->addChild('TEMPLATE', 'Innovation');
 		$xmls->addChild('PRETTYURLS', '');
 		$xmls->addChild('PERMALINK', '');
+		$xmls->addAttribute('created', date('r'));
 		$xmls->addAttribute('modified', date('r'));
+		$xmls->addAttribute('creator', $USR);
 		$xmls->addAttribute('lastModifiedBy', $USR);
+		$xmls->addAttribure('revision', 1);
 		$xmls->addAttribute('appName', GSNAME);
 		$xmls->addAttribute('appVersion', GSVERSION);
 		if (!XMLsave($xmls, GSDATAOTHERPATH . $file)) {

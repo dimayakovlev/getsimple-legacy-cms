@@ -193,8 +193,11 @@ if (isset($_POST['submitted'])) {
 		$note->addCData($TEMPLATE);
 		$xmls->addChild('PRETTYURLS', $PRETTYURLS);
 		$xmls->addChild('PERMALINK', var_out($PERMALINK));
+		$xmls->addAttribute('created', isset($dataw->attributes()->created) ? $dataw->attributes()->created : date('r'));
 		$xmls->addAttribute('modified', date('r'));
+		$xmls->addAttribute('creator', isset($dataw->attributes()->creator) ? $dataw->attributes()->creator : $USR);
 		$xmls->addAttribute('lastModifiedBy', $USR);
+		$xmls->addAttribute('revision', filter_var($dataw->attributes()->revision, FILTER_VALIDATE_INT, array('options' => array('default' => 0, 'min_range' => 1))) + 1);
 		$xmls->addAttribute('appName', GSNAME);
 		$xmls->addAttribute('appVersion', GSVERSION);
 		exec_action('settings-website');

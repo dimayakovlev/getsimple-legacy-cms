@@ -8,32 +8,33 @@ All notable changes of GetSimple Legacy CMS will be documented in this file.
 
 - Display log file as text on the page `/admin/log.php`. Add GET parameter `view=text` to URL.
 - Display content of the PHP errors log file. Use URL `/admin/log.php?log=errorlog.txt&view=text`.
-- Added the field *Website Description* to store the site description on the *Website Settings* page.
-- Added the field *Website Tagline* to store the site tagline (or slogan) on the *Website Settings* page.
-- Added the field *Website Subtitle* to store the site subtitle on the *Website Settings* page.
-- Added the field *Website Keywords* to store the site keywords on the *Website Settings* page.
+- New *Website Description* field to store the site description on the *Website Settings* page.
+- New *Website Tagline* field to store the site tagline (or slogan) on the *Website Settings* page.
+- New *Website Subtitle* field to store the site subtitle on the *Website Settings* page.
+- New *Website Keywords* field to store the site keywords on the *Website Settings* page.
 - Fill in the *Website URL* field on the *Website Settings* page with the suggested website URL by clicking on it.
 - Control the use of the code editor via *User Settings*. The `GSNOHIGHLIGHT` constant is deprecated.
-- Added the field *Page Subtitle* to store subtitle or long title of the page.
-- Added theme function `get_page_subtitle()` and `get_page_clean_subtitle()` to echo or return the page subtitle or the page subtitle stipped of HTML tags.
-- Added the field *Page Summary* to store summary of the page.
-- Added theme functions `get_page_summary()` and `get_page_clean_summary()` to echo or return the page summary or the page summary stripped of HTML tags.
-- Added the field *Page Featured Image* to store URL of featured image of the page.
-- Added theme function `get_page_featured_image()` to echo or return the URL of the page featured image.
-- Added theme function `get_component_title()` to echo or return title of a component.
-- Added theme function `get_component_description()` to echo or return description of a component.
-- Added theme function `get_page_parent()` to echo or return the slug of the parent page of a current page. This function replace deprecated theme function `get_parent()`.
-- Added theme function `get_site_title()` to echo or return the title of the site. It is an alternative to the function `get_site_name()`.
-- Added theme function `get_site_subtile()` to echo or return the subtitle of the site.
-- Added theme function `get_site_tagline()` to echo or return the tagline of the site.
-- Added theme function `get_site_keywords()` to echo or return the keywords of the site as string.
-- Added theme function `get_site_keywords_array()` to return the keywords of the site as array. There is an option for a unique array.
-- Added saving of the page creation date. The date is stored in the `creDate` page field.
-- Added function `isAlpha()` to check if release is an alpha.
+- New *Page Subtitle* field to store subtitle or long title of the page.
+- New theme functions `get_page_subtitle()` and `get_page_clean_subtitle()` to echo or return the page subtitle or the page subtitle stipped of HTML tags.
+- New *Page Summary* field to store summary of the page.
+- New theme functions `get_page_summary()` and `get_page_clean_summary()` to echo or return the page summary or the page summary stripped of HTML tags.
+- New *Page Featured Image* field to store URL of featured image of the page.
+- New theme function `get_page_featured_image()` to echo or return the URL of the page featured image.
+- New theme function `get_component_title()` to echo or return title of a component.
+- New theme function `get_component_description()` to echo or return description of a component.
+- New theme function `get_page_parent()` to echo or return the slug of the parent page of a current page. This function replace deprecated theme function `get_parent()`.
+- New theme function `get_site_title()` to echo or return the title of the site. It is an alternative to the function `get_site_name()`.
+- New theme function `get_site_subtile()` to echo or return the subtitle of the site.
+- New theme function `get_site_tagline()` to echo or return the tagline of the site.
+- New theme function `get_site_keywords()` to echo or return the keywords of the site as string.
+- New theme function `get_site_keywords_array()` to return the keywords of the site as array. There is an option for a unique array.
+- Saving of the page creation date. The date is stored in the `creDate` page field.
+- New function `isAlpha()` to check if release is an alpha.
 
 ### Changed
 
 - The theme function `get_parent()` is deprecated. Use the function `get_page_parent()` instead.
+- Function `isBeta()` use new logic to detect if release is a beta. The version naming must follows the [SemVer](https://semver.org/) standard.
 
 ## [2025.1.1] - 2025.01.28
 

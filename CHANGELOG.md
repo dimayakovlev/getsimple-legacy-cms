@@ -9,6 +9,7 @@ All notable changes of GetSimple Legacy CMS will be documented in this file.
 - Display log file as text on the page `/admin/log.php`. Add GET parameter `view=text` to URL.
 - Display content of the PHP errors log file. Use URL `/admin/log.php?log=errorlog.txt&view=text`.
 - New *Website Description* field to store the site description on the *Website Settings* page.
+- New *Website Featured Image* field to store the URL of the site featured image on the *Website Settings* page. 
 - New *Website Tagline* field to store the site tagline (or slogan) on the *Website Settings* page.
 - New *Website Subtitle* field to store the site subtitle on the *Website Settings* page.
 - New *Website Keywords* field to store the site keywords on the *Website Settings* page.
@@ -28,6 +29,8 @@ All notable changes of GetSimple Legacy CMS will be documented in this file.
 - New theme function `get_site_tagline()` to echo or return the tagline of the site.
 - New theme function `get_site_keywords()` to echo or return the keywords of the site as string.
 - New theme function `get_site_keywords_array()` to return the keywords of the site as array. There is an option for a unique array.
+- New theme function `get_site_description()` to echo or return the description of the site.
+- New theme function `get_site_featured_image()` to echo or return the URL of the site featured image.
 - Saving of the page creation date. The date is stored in the `creDate` page field.
 - New function `isAlpha()` to check if release is an alpha.
 

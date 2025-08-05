@@ -85,6 +85,7 @@ if (isset($_POST['submitted'])) {
 		$note = $xmls->addChild('SITETAGLINE', '');
 		$note = $xmls->addChild('SITEKEYWORDS', '');
 		$note = $xmls->addChild('SITEDESCRIPTION', '');
+		$note = $xmls->addChild('SITEFEATUREDIMAGE', '');
 		$note = $xmls->addChild('SITEURL');
 		$note->addCData($SITEURL);
 		$xmls->addChild('TEMPLATE', 'Innovation');

@@ -653,6 +653,7 @@ $i18n = array(
  * for settings.php
  */
 "LABEL_WEBSITE_DESCRIPTION" => "Website Description",
+"LABEL_WEBSITE_FEATURED_IMAGE" => "Website Featured Image",
 "LABEL_WEBSITE_TAGLINE" => "Website Tagline",
 "LABEL_WEBSITE_SUBTITLE" => "Website Subtitle",
 "LABEL_WEBSITE_KEYWORDS" => "Website Keywords",

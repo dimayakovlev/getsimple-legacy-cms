@@ -171,6 +171,7 @@ if (file_exists($thisfilew)) {
 	$SITE_TAGLINE = stripslashes((string) $dataw->SITETAGLINE);
 	$SITE_KEYWORDS = stripslashes((string) $dataw->SITEKEYWORDS);
 	$SITE_DESCRIPTION = stripslashes((string) $dataw->SITEDESCRIPTION);
+	$SITE_FEATURED_IMAGE= stripslashes((string) $dataw->SITEFEATUREDIMAGE);
 	$SITEURL = (string) $dataw->SITEURL;
 	$TEMPLATE = (string) $dataw->TEMPLATE;
 	$PRETTYURLS = (string) $dataw->PRETTYURLS;

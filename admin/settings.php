@@ -98,6 +98,9 @@ if (isset($_POST['submitted'])) {
 	if (isset($_POST['sitedescription'])) {
 		$SITE_DESCRIPTION = $_POST['sitedescription'];
 	}
+	if (isset($_POST['sitefeaturedimage'])) {
+		$SITE_FEATURED_IMAGE = $_POST['sitefeaturedimage'];
+	}
 	if (isset($_POST['siteurl'])) {
 		$SITEURL = tsl($_POST['siteurl']);
 	}
@@ -185,8 +188,10 @@ if (isset($_POST['submitted'])) {
 		$note->addCData($SITE_TAGLINE);
 		$note = $xmls->addChild('SITEKEYWORDS');
 		$note->addCData($SITE_KEYWORDS);
-		$note=$xmls->addChild('SITEDESCRIPTION');
+		$note = $xmls->addChild('SITEDESCRIPTION');
 		$note->addCData($SITE_DESCRIPTION);
+		$note = $xmls->addChild('SITEFEATUREDIMAGE');
+		$note->addCData($SITE_FEATURED_IMAGE);
 		$note = $xmls->addChild('SITEURL');
 		$note->addCData($SITEURL);
 		$note = $xmls->addChild('TEMPLATE');
@@ -262,6 +267,7 @@ get_template('header', cl($SITENAME).' &raquo; '.i18n_r('GENERAL_SETTINGS'));
 		<div class="clear"></div>
 		<div class="widesec"><p><label for="sitesubtitle"><?php i18n('LABEL_WEBSITE_SUBTITLE'); ?>:</label><input class="text" name="sitesubtitle" id="sitesubtitle" type="text" value="<?php if (isset($SITE_SUBTITLE)) { echo var_out($SITE_SUBTITLE); } ?>"></p></div>
 		<div class="widesec"><p><label for="sitetagline"><?php i18n('LABEL_WEBSITE_TAGLINE'); ?>:</label><input class="text" name="sitetagline" id="sitetagline" type="text" value="<?php if (isset($SITE_TAGLINE)) { echo var_out($SITE_TAGLINE); } ?>"></p></div>
+		<div class="widesec"><p><label for="sitefeaturedimage"><?php i18n('LABEL_WEBSITE_FEATURED_IMAGE'); ?>:</label><input class="text" name="sitefeaturedimage" id="sitefeaturedimage" type="text" value="<?php if (isset($SITE_FEATURED_IMAGE)) { echo var_out($SITE_FEATURED_IMAGE); } ?>"></p></div>
 		<div class="widesec"><p><label for="sitekeywords"><?php i18n('LABEL_WEBSITE_KEYWORDS'); ?>:</label><input class="text" name="sitekeywords" id="sitekeywords" type="text" value="<?php if (isset($SITE_KEYWORDS)) { echo var_out($SITE_KEYWORDS); } ?>"></p></div>
 		<div class="widesec"><p><label for="sitedescription"><?php i18n('LABEL_WEBSITE_DESCRIPTION'); ?>:</label><textarea class="text" name="sitedescription" id="sitedescription"><?php if (isset($SITE_DESCRIPTION)) { echo var_out($SITE_DESCRIPTION); } ?></textarea></p></div>
 

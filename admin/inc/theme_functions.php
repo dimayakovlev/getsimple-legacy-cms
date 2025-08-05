@@ -562,6 +562,26 @@ function get_site_description($echo = true) {
 }
 
 /**
+ * Get Site Featured Image
+ *
+ * This function retrieves the featured image URL of the website, optionally echoing it.
+ *
+ * @since 2025.2.0
+ * @uses $SITE_FEATURED_IMAGE
+ *
+ * @param bool $echo Optional, default is true. If true, the featured image URL is echoed.
+ * @return null|string Echos or returns based on param $echo
+ */
+function get_site_featured_image($echo = true) {
+	global $SITE_FEATURED_IMAGE;
+	if ($echo) {
+		echo (string) $SITE_FEATURED_IMAGE;
+	} else {
+		return (string) $SITE_FEATURED_IMAGE;
+	}
+}
+
+/**
  * Get Site Keywords
  *
  * @since 2025.2.0

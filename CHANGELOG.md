@@ -38,6 +38,11 @@ All notable changes of GetSimple Legacy CMS will be documented in this file.
 
 - The theme function `get_parent()` is deprecated. Use the function `get_page_parent()` instead.
 - Function `isBeta()` use new logic to detect if release is a beta. The version naming must follows the [SemVer](https://semver.org/) standard.
+- The *Debug Console* displays human-readable information about an objects.
+
+### Fixed
+
+- The output in the *Debug Console* escaped to prevent XSS attacks and others issues.
 
 ## [2025.1.1] - 2025.01.28
 

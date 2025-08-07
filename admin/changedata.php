@@ -106,7 +106,7 @@ if (isset($_POST['submitted'])) {
 				$menuOrder = "0";
 			}
 		}
-		if (isset($_POST['post-creation-date'])) {
+		if (isset($_POST['post-creation-date']) && $_POST['post-creation-date'] != '') {
 			$creation_date = $_POST['post-creation-date'];
 		} else {
 			$creation_date = date('r');

@@ -2,14 +2,14 @@
 
 All notable changes of GetSimple Legacy CMS will be documented in this file.
 
-## [Unreleased]
+## [2025.2.0] - 2025.08.08
 
 ### Added
 
 - Display log file as text on the page `/admin/log.php`. Add GET parameter `view=text` to URL.
 - Display content of the PHP errors log file. Use URL `/admin/log.php?log=errorlog.txt&view=text`.
 - New *Website Description* field to store the site description on the *Website Settings* page.
-- New *Website Featured Image* field to store the URL of the site featured image on the *Website Settings* page. 
+- New *Website Featured Image* field to store the URL of the site featured image on the *Website Settings* page.
 - New *Website Tagline* field to store the site tagline (or slogan) on the *Website Settings* page.
 - New *Website Subtitle* field to store the site subtitle on the *Website Settings* page.
 - New *Website Keywords* field to store the site keywords on the *Website Settings* page.

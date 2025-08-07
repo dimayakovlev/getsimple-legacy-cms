@@ -304,7 +304,7 @@ function get_page_parent($echo = true) {
  * @param bool $echo Optional, default is true. False will 'return' value
  * @return string Echos or returns based on param $echo
  */
-function get_page_date($i = "l, F jS, Y - g:i A", $echo=true) {
+function get_page_date($i = "l, F jS, Y - g:i A", $echo = true) {
 	global $date;
 	global $TIMEZONE;
 	if ($TIMEZONE != '') {
@@ -319,6 +319,38 @@ function get_page_date($i = "l, F jS, Y - g:i A", $echo=true) {
 		echo $myVar;
 	} else {
 		return $myVar;
+	}
+}
+
+/**
+ * Get Page Creation Date
+ *
+ * This will return the page's creation date/timestamp
+ *
+ * @since 2025.2.0
+ * @uses $data_index
+ * @uses $TIMEZONE
+ *
+ * @param string $i Optional, default is "l, F jS, Y - g:i A"
+ * @param bool $echo Optional, default is true. False will 'return' value
+ * @return string Echos or returns based on param $echo
+ */
+function get_page_creation_date($i = "l, F jS, Y - g:i A", $echo = true) {
+	global $data_index;
+	global $TIMEZONE;
+	$page_creation_date = (string) $data_index->creDate;
+	if ($page_creation_date != '') {
+		if ($TIMEZONE != '') {
+			if (function_exists('date_default_timezone_set')) {
+				date_default_timezone_set($TIMEZONE);
+			}
+		}
+		$page_creation_date = date($i, strtotime($page_creation_date));
+	}
+	if ($echo) {
+		echo $page_creation_date;
+	} else {
+		return $page_creation_date;
 	}
 }
 

@@ -26,7 +26,7 @@ $NAME			= $data->NAME;
 $lang_array = getFiles(GSLANGPATH);
 
 # initialize these all as null
-$pwd1 = $error = $success = $pwd2 = $editorchck = $prettychck = null;
+$pwd1 = $error = $success = $pwd2 = $htmleditorchck = $codeeditorchck = $prettychck = null;
 
 # if the flush cache command was invoked
 if (isset($_GET['flushcache'])) { 
@@ -55,37 +55,63 @@ if (isset($_GET['undo'])) {
 
 # was this page restored?
 if (isset($_GET['restored'])) {
-	$restored = 'true'; 
+	$restored = 'true';
 } else {
 	$restored = 'false';
 }
 
 # was the form submitted?
-if(isset($_POST['submitted'])) {
-	
+if (isset($_POST['submitted'])) {
+
 	# first check for csrf
-	if (!defined('GSNOCSRF') || (GSNOCSRF == FALSE) ) {
+	if (!defined('GSNOCSRF') || (GSNOCSRF == false) ) {
 		$nonce = $_POST['nonce'];
-		if(!check_nonce($nonce, "save_settings")) {
-			die("CSRF detected!");
+		if(!check_nonce($nonce, 'save_settings')) {
+			die('CSRF detected!');
 		}
 	}
 
 	# website-specific fields
-	if(isset($_POST['sitename'])) { 
-		$SITENAME = htmlentities($_POST['sitename'], ENT_QUOTES, 'UTF-8'); 
+	if (isset($_POST['sitename'])) {
+		$SITENAME = htmlentities($_POST['sitename'], ENT_QUOTES, 'UTF-8');
 	}
-	if(isset($_POST['siteurl'])) { 
-		$SITEURL = tsl($_POST['siteurl']); 
+	if (isset($_POST['sitesubtitle'])) {
+		$SITE_SUBTITLE = $_POST['sitesubtitle'];
 	}
-	if(isset($_POST['permalink'])) { 
-		$PERMALINK = trim($_POST['permalink']); 
+	if (isset($_POST['sitetagline'])) {
+		$SITE_TAGLINE = $_POST['sitetagline'];
 	}
-	if(isset($_POST['template'])) { 
-		$TEMPLATE = $_POST['template']; 
+	if (isset($_POST['sitekeywords'])) {
+		$SITE_KEYWORDS = $_POST['sitekeywords'];
+		/*
+		 * Sanitize and prepare keywords
+		 * @todo Want to get feedback on the need to unique keywords. Perhaps this should also be implemented when saving pages.
+		 */
+		/*
+		$SITE_KEYWORDS = strip_tags($SITE_KEYWORDS);
+		$SITE_KEYWORDS_ARRAY = explode(',', $SITE_KEYWORDS);
+		$SITE_KEYWORDS_ARRAY = array_map('trim', $SITE_KEYWORDS_ARRAY);
+		$SITE_KEYWORDS_ARRAY = array_unique(array_filter($SITE_KEYWORDS_ARRAY));
+		$SITE_KEYWORDS = implode(', ', $SITE_KEYWORDS_ARRAY);
+		*/
 	}
-	if(isset($_POST['prettyurls'])) {
-	  $PRETTYURLS = $_POST['prettyurls'];
+	if (isset($_POST['sitedescription'])) {
+		$SITE_DESCRIPTION = $_POST['sitedescription'];
+	}
+	if (isset($_POST['sitefeaturedimage'])) {
+		$SITE_FEATURED_IMAGE = $_POST['sitefeaturedimage'];
+	}
+	if (isset($_POST['siteurl'])) {
+		$SITEURL = tsl($_POST['siteurl']);
+	}
+	if (isset($_POST['permalink'])) {
+		$PERMALINK = trim($_POST['permalink']);
+	}
+	if (isset($_POST['template'])) {
+		$TEMPLATE = $_POST['template'];
+	}
+	if (isset($_POST['prettyurls'])) {
+		$PRETTYURLS = $_POST['prettyurls'];
 	} else {
 		$PRETTYURLS = '';
 	}
@@ -106,10 +132,15 @@ if(isset($_POST['submitted'])) {
 	if(isset($_POST['lang'])) { 
 		$LANG = var_out($_POST['lang']); 
 	}
-	if(isset($_POST['show_htmleditor'])) {
-	  $HTMLEDITOR = var_out($_POST['show_htmleditor']); 
+	if (isset($_POST['show_htmleditor'])) {
+		$HTMLEDITOR = var_out($_POST['show_htmleditor']);
 	} else {
 		$HTMLEDITOR = '';
+	}
+	if (isset($_POST['show_codeeditor'])) {
+		$CODEEDITOR = var_out($_POST['show_codeeditor']);
+	} else {
+		$CODEEDITOR = '';
 	}
 
 	# check to see if passwords are changing
@@ -136,6 +167,7 @@ if(isset($_POST['submitted'])) {
 		$xml->addChild('PWD', $PASSWD);
 		$xml->addChild('EMAIL', var_out($EMAIL,'email'));
 		$xml->addChild('HTMLEDITOR', $HTMLEDITOR);
+		$xml->addChild('CODEEDITOR', $CODEEDITOR);
 		$xml->addChild('TIMEZONE', $TIMEZONE);
 		$xml->addChild('LANG', $LANG);
 		
@@ -146,20 +178,36 @@ if(isset($_POST['submitted'])) {
 		}
 		
 		# create website xml file
-		createBak($wfile, GSDATAOTHERPATH, GSBACKUPSPATH.'other/');
+		createBak($wfile, GSDATAOTHERPATH, GSBACKUPSPATH . 'other/');
 		$xmls = new SimpleXMLExtended('<?xml version="1.0" encoding="UTF-8"?><item></item>');
 		$note = $xmls->addChild('SITENAME');
 		$note->addCData($SITENAME);
+		$note = $xmls->addChild('SITESUBTITLE');
+		$note->addCData($SITE_SUBTITLE);
+		$note = $xmls->addChild('SITETAGLINE');
+		$note->addCData($SITE_TAGLINE);
+		$note = $xmls->addChild('SITEKEYWORDS');
+		$note->addCData($SITE_KEYWORDS);
+		$note = $xmls->addChild('SITEDESCRIPTION');
+		$note->addCData($SITE_DESCRIPTION);
+		$note = $xmls->addChild('SITEFEATUREDIMAGE');
+		$note->addCData($SITE_FEATURED_IMAGE);
 		$note = $xmls->addChild('SITEURL');
 		$note->addCData($SITEURL);
 		$note = $xmls->addChild('TEMPLATE');
 		$note->addCData($TEMPLATE);
 		$xmls->addChild('PRETTYURLS', $PRETTYURLS);
 		$xmls->addChild('PERMALINK', var_out($PERMALINK));
-		
+		$xmls->addAttribute('created', isset($dataw->attributes()->created) ? $dataw->attributes()->created : date('r'));
+		$xmls->addAttribute('modified', date('r'));
+		$xmls->addAttribute('creator', isset($dataw->attributes()->creator) ? $dataw->attributes()->creator : $USR);
+		$xmls->addAttribute('lastModifiedBy', $USR);
+		$xmls->addAttribute('revision', filter_var($dataw->attributes()->revision, FILTER_VALIDATE_INT, array('options' => array('default' => 0, 'min_range' => 1))) + 1);
+		$xmls->addAttribute('appName', GSNAME);
+		$xmls->addAttribute('appVersion', GSVERSION);
 		exec_action('settings-website');
-		
-		if (! XMLsave($xmls, GSDATAOTHERPATH . $wfile) ) {
+
+		if (!XMLsave($xmls, GSDATAOTHERPATH . $wfile)) {
 			$error = i18n_r('CHMOD_ERROR');
 		}
 
@@ -175,11 +223,12 @@ if(isset($_POST['submitted'])) {
 }
 
 # are any of the control panel checkboxes checked?
-if ($HTMLEDITOR != '' ) { $editorchck = 'checked'; }
-if ($PRETTYURLS != '' ) { $prettychck = 'checked'; }
+if ($HTMLEDITOR != '') { $htmleditorchck = 'checked'; }
+if ($CODEEDITOR != '') { $codeeditorchck = 'checked'; }
+if ($PRETTYURLS != '') { $prettychck = 'checked'; }
 
 # get all available language files
-if ($LANG == ''){ $LANG = 'en_US'; }
+if ($LANG == '') { $LANG = 'en_US'; }
 
 if (count($lang_array) != 0) {
 	sort($lang_array);
@@ -197,35 +246,43 @@ if (count($lang_array) != 0) {
 get_template('header', cl($SITENAME).' &raquo; '.i18n_r('GENERAL_SETTINGS')); 
 
 ?>
-	
+
 <?php include('template/include-nav.php'); ?>
 
 <div class="bodycontent clearfix">
 	
 	<div id="maincontent">
-		<form class="largeform" action="<?php myself(); ?>" method="post" accept-charset="utf-8" >
-		<input id="nonce" name="nonce" type="hidden" value="<?php echo get_nonce("save_settings"); ?>" />
+		<form class="largeform" action="<?php myself(); ?>" method="post" accept-charset="utf-8">
+		<input id="nonce" name="nonce" type="hidden" value="<?php echo get_nonce("save_settings"); ?>">
 
 		<div class="main">
 		<h3><?php i18n('WEBSITE_SETTINGS');?></h3>
-		
+
 		<div class="leftsec">
-			<p><label for="sitenameinput" ><?php i18n('LABEL_WEBSITE');?>:</label><input class="text" id="sitenameinput" name="sitename" type="text" value="<?php if(isset($SITENAME1)) { echo stripslashes($SITENAME1); } else { echo stripslashes($SITENAME); } ?>" /></p>
+			<p><label for="sitenameinput"><?php i18n('LABEL_WEBSITE');?>:</label><input class="text" id="sitenameinput" name="sitename" type="text" value="<?php if(isset($SITENAME1)) { echo stripslashes($SITENAME1); } else { echo stripslashes($SITENAME); } ?>"></p>
 		</div>
 		<div class="rightsec">
-			<p><label for="siteurl" ><?php i18n('LABEL_BASEURL');?>:</label><input class="text" id="siteurl" name="siteurl" type="url" value="<?php if(isset($SITEURL1)) { echo $SITEURL1; } else { echo $SITEURL; } ?>" /></p>
-			<?php if ($fullpath != $SITEURL) { echo '<p style="margin:-15px 0 20px 0;color:#D94136;font-size:11px;" >'.i18n_r('LABEL_SUGGESTION').': &nbsp; <code>'.$fullpath.'</code></p>'; } ?>
+			<p><label for="siteurl"><?php i18n('LABEL_BASEURL');?>:</label><input class="text" id="siteurl" name="siteurl" type="url" value="<?php if (isset($SITEURL1)) { echo $SITEURL1; } else { echo $SITEURL; } ?>"></p><?php if ($fullpath != $SITEURL) { echo '<p style="margin:-15px 0 20px 0;color:#D94136;font-size:11px;">' . i18n_r('LABEL_SUGGESTION') . ': &nbsp; <code onclick="document.getElementById(\'siteurl\').value = \'' . $fullpath . '\'" title="' . i18n_r('CLICK_TO_USE_URL') . '" style="cursor: pointer;">' . $fullpath . '</code></p>'; } ?>
 		</div>
 		<div class="clear"></div>
+		<div class="widesec"><p><label for="sitesubtitle"><?php i18n('LABEL_WEBSITE_SUBTITLE'); ?>:</label><input class="text" name="sitesubtitle" id="sitesubtitle" type="text" value="<?php if (isset($SITE_SUBTITLE)) { echo var_out($SITE_SUBTITLE); } ?>"></p></div>
+		<div class="widesec"><p><label for="sitetagline"><?php i18n('LABEL_WEBSITE_TAGLINE'); ?>:</label><input class="text" name="sitetagline" id="sitetagline" type="text" value="<?php if (isset($SITE_TAGLINE)) { echo var_out($SITE_TAGLINE); } ?>"></p></div>
+		<div class="widesec"><p><label for="sitefeaturedimage"><?php i18n('LABEL_WEBSITE_FEATURED_IMAGE'); ?>:</label><input class="text" name="sitefeaturedimage" id="sitefeaturedimage" type="text" value="<?php if (isset($SITE_FEATURED_IMAGE)) { echo var_out($SITE_FEATURED_IMAGE); } ?>"></p></div>
+		<div class="widesec"><p><label for="sitekeywords"><?php i18n('LABEL_WEBSITE_KEYWORDS'); ?>:</label><input class="text" name="sitekeywords" id="sitekeywords" type="text" value="<?php if (isset($SITE_KEYWORDS)) { echo var_out($SITE_KEYWORDS); } ?>"></p></div>
+		<div class="widesec"><p><label for="sitedescription"><?php i18n('LABEL_WEBSITE_DESCRIPTION'); ?>:</label><textarea class="text" name="sitedescription" id="sitedescription"><?php if (isset($SITE_DESCRIPTION)) { echo var_out($SITE_DESCRIPTION); } ?></textarea></p></div>
 
-		<p class="inline" ><input name="prettyurls" id="prettyurls" type="checkbox" value="1" <?php echo $prettychck; ?>  /> &nbsp;<label for="prettyurls" ><?php i18n('USE_FANCY_URLS');?></label></p>
+		<p class="inline"><input name="prettyurls" id="prettyurls" type="checkbox" value="1" <?php echo $prettychck; ?>> &nbsp;<label for="prettyurls"><?php i18n('USE_FANCY_URLS');?></label></p>
 
-		<div class="leftsec">
-			<p><label for="permalink"  class="clearfix"><?php i18n('PERMALINK');?>:</label><input class="text" name="permalink" id="permalink" type="text" placeholder="%parent%/%slug%/" value="<?php if(isset($PERMALINK)) { echo var_out($PERMALINK); } ?>" /></p>
-		<a id="flushcache" class="button" href="?flushcache"><?php i18n('FLUSHCACHE'); ?></a>
+		<div class="widesec">
+			<p><label for="permalink" class="clearfix"><?php i18n('PERMALINK'); ?>:</label><input class="text" name="permalink" id="permalink" type="text" placeholder="%parent%/%slug%/" value="<?php if (isset($PERMALINK)) { echo var_out($PERMALINK); } ?>"></p>
+			<label><?php i18n('AVAILABLE_PERMALINK_TAGS'); ?>:</label>
+			<ul>
+				<li><code>%parent%</code> - <?php i18n('AVAILABLE_PERMALINK_TAGS_PARENT_DESCRIPTION'); ?>;</li>
+				<li><code>%slug%</code> - <?php i18n('AVAILABLE_PERMALINK_TAGS_SLUG_DESCRIPTION'); ?>.</li>
+			</ul>
 		</div>
 		<div class="clear"></div>
-
+		<p><a id="flushcache" class="button" href="?flushcache"><?php i18n('FLUSHCACHE'); ?></a></p>
 		<?php exec_action('settings-website-extras'); ?>
 
 		<div id="profile" class="section" >
@@ -240,10 +297,10 @@ get_template('header', cl($SITENAME).' &raquo; '.i18n_r('GENERAL_SETTINGS'));
 			}?>
 		</div>
 		<div class="clear"></div>
-		<div class="leftsec">
-			<p><label for="name" ><?php i18n('LABEL_DISPNAME');?>:</label>
-			<span style="margin:0px 0 5px 0;font-size:12px;color:#999;" ><?php i18n('DISPLAY_NAME');?></span>			
-			<input class="text" id="name" name="name" type="text" value="<?php if(isset($NAME1)) { echo $NAME1; } else { echo var_out($NAME); } ?>" /></p>
+		<div class="widesec">
+			<p><label for="name"><?php i18n('LABEL_DISPNAME'); ?>:</label>
+			<span style="margin:0px 0 5px 0;font-size:12px;color:#999;"><?php i18n('DISPLAY_NAME'); ?></span>
+			<input class="text" id="name" name="name" type="text" value="<?php if(isset($NAME1)) { echo $NAME1; } else { echo var_out($NAME); } ?>"></p>
 		</div>
 		<div class="clear"></div>
 		<div class="leftsec">
@@ -264,8 +321,8 @@ get_template('header', cl($SITENAME).' &raquo; '.i18n_r('GENERAL_SETTINGS'));
 			</p>
 		</div>
 		<div class="clear"></div>
-		<p class="inline" ><input name="show_htmleditor" id="show_htmleditor" type="checkbox" value="1" <?php echo $editorchck; ?> /> &nbsp;<label for="show_htmleditor" ><?php i18n('ENABLE_HTML_ED');?></label></p>
-
+		<p class="inline"><input name="show_htmleditor" id="show_htmleditor" type="checkbox" value="1" <?php echo $htmleditorchck; ?>> &nbsp;<label for="show_htmleditor"><?php i18n('ENABLE_HTML_ED'); ?></label></p>
+		<p class="inline"><input name="show_codeeditor" id="show_codeeditor" type="checkbox" value="1" <?php echo $codeeditorchck; ?>> &nbsp;<label for="show_codeeditor"><?php i18n('ENABLE_CODE_ED'); ?></label></p>
 		<?php exec_action('settings-user-extras'); ?>
 		
 		<p style="margin:0px 0 5px 0;font-size:12px;color:#999;" ><?php i18n('ONLY_NEW_PASSWORD');?>:</p>
@@ -287,7 +344,7 @@ get_template('header', cl($SITENAME).' &raquo; '.i18n_r('GENERAL_SETTINGS'));
 
 	</div>
 
-	<div id="sidebar" >
+	<div id="sidebar">
 		<?php include('template/sidebar-settings.php'); ?>
 	</div>
 

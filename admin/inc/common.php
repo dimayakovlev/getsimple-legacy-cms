@@ -163,18 +163,23 @@ $load['plugin'] = (isset($load['plugin'])) ? $load['plugin'] : '';
  */
  
 /** grab website data */
-$thisfilew = GSDATAOTHERPATH .'website.xml';
+$thisfilew = GSDATAOTHERPATH . 'website.xml';
 if (file_exists($thisfilew)) {
 	$dataw = getXML($thisfilew);
-	$SITENAME = stripslashes($dataw->SITENAME);
-	$SITEURL = $dataw->SITEURL;
-	$TEMPLATE = $dataw->TEMPLATE;
-	$PRETTYURLS = $dataw->PRETTYURLS;
-	$PERMALINK = $dataw->PERMALINK;
+	$SITENAME = stripslashes((string) $dataw->SITENAME);
+	$SITE_SUBTITLE = stripslashes((string) $dataw->SITESUBTITLE);
+	$SITE_TAGLINE = stripslashes((string) $dataw->SITETAGLINE);
+	$SITE_KEYWORDS = stripslashes((string) $dataw->SITEKEYWORDS);
+	$SITE_DESCRIPTION = stripslashes((string) $dataw->SITEDESCRIPTION);
+	$SITE_FEATURED_IMAGE= stripslashes((string) $dataw->SITEFEATUREDIMAGE);
+	$SITEURL = (string) $dataw->SITEURL;
+	$TEMPLATE = (string) $dataw->TEMPLATE;
+	$PRETTYURLS = (string) $dataw->PRETTYURLS;
+	$PERMALINK = (string) $dataw->PERMALINK;
 } else {
 	$SITENAME = '';
 	$SITEURL = '';
-} 
+}
 
 
 /** grab user data */
@@ -184,6 +189,7 @@ if (isset($_COOKIE['GS_ADMIN_USERNAME'])) {
 		$datau = getXML(GSUSERSPATH  . $cookie_user_id.'.xml');
 		$USR = stripslashes($datau->USR);
 		$HTMLEDITOR = $datau->HTMLEDITOR;
+		$CODEEDITOR = $datau->CODEEDITOR;
 		$TIMEZONE = $datau->TIMEZONE;
 		$LANG = $datau->LANG;
 	} else {

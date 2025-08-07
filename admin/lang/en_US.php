@@ -31,7 +31,7 @@ $i18n = array(
 "NOTE_USERNAME"			=>	"Your username is",
 "NOTE_PASSWORD"			=>	"and your password is",
 "INSTALLATION"			=>	"Installation",
-"LABEL_WEBSITE"			=>	"Website Name",
+"LABEL_WEBSITE"			=>	"Website Title", // "Website Name"
 "LABEL_BASEURL"			=>	"Website URL",
 "LABEL_SUGGESTION"	=>	"Our suggestion is",
 "LABEL_USERNAME"		=>	"Username",
@@ -214,7 +214,7 @@ $i18n = array(
 "LOCAL_TIMEZONE"		=>	"Local Timezone",
 "LANGUAGE"					=>	"Language",
 "USE_FANCY_URLS"		=>	"Use Fancy URLs - <b style=\"font-weight:100\">Requires that your host has <code>mod_rewrite</code> enabled</b>",
-"ENABLE_HTML_ED"		=>	"<b>Enable the HTML editor</b>",
+"ENABLE_HTML_ED"		=>	"Enable the HTML editor",
 "WARN_EMAILINVALID"	=>	"WARNING: This email address does not look valid!",
 "ONLY_NEW_PASSWORD"	=>	"Only provide a password below if you want to change your current one",
 "NEW_PASSWORD"			=>	"New Password",
@@ -463,7 +463,7 @@ $i18n = array(
 "AUTHOR" 				=> "Author", //plugins.php
 "ENABLE" 				=> "Activate", //plugins.php
 "DISABLE" 				=> "Deactivate", //plugins.php
-"NO_THEME_SCREENSHOT" => "Your theme does not have a screenshot preview", //theme.php
+"NO_THEME_SCREENSHOT" => "This theme does not have a screenshot preview", //theme.php
 "UNSAVED_INFORMATION" => "You are about to leave this page and will lose any unsaved information.", //edit.php
 "BACK_TO_WEBSITE" => "Back to Website", //index & resetpassword
 "SUPPORT_FORUM" => "Support Forum", //support.php
@@ -637,4 +637,35 @@ $i18n = array(
 
 /* common string */
 "UNSAVED_CHANGES" => 'There are unsaved changes',
+
+/***********************************************************************************
+ * SINCE Version 2024.3
+***********************************************************************************/
+/*
+ * for log.php
+ */
+"VIEW_PHP_ERROR_LOG" => 'View PHP Errors',
+
+/***********************************************************************************
+ * SINCE Version 2025.2.0
+***********************************************************************************/
+/*
+ * for settings.php
+ */
+"LABEL_WEBSITE_DESCRIPTION" => "Website Description",
+"LABEL_WEBSITE_FEATURED_IMAGE" => "Website Featured Image",
+"LABEL_WEBSITE_TAGLINE" => "Website Tagline",
+"LABEL_WEBSITE_SUBTITLE" => "Website Subtitle",
+"LABEL_WEBSITE_KEYWORDS" => "Website Keywords",
+"CLICK_TO_USE_URL" => "Click to use this URL",
+"ENABLE_CODE_ED" => "Enable the Code editor",
+"AVAILABLE_PERMALINK_TAGS" => "Available Tags for Custom Permalink Structure",
+"AVAILABLE_PERMALINK_TAGS_PARENT_DESCRIPTION" => "The direct parent of a page",
+"AVAILABLE_PERMALINK_TAGS_SLUG_DESCRIPTION" => "The slug of a page",
+/*
+ * for edit.php
+ */
+"PAGE_SUBTITLE" => "Page Subtitle",
+"PAGE_SUMMARY" => "Page Summary",
+"PAGE_FEATURED_IMAGE" => "Page Featured Image",
 );

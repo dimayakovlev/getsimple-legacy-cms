@@ -590,40 +590,30 @@ function redirect($url) {
 }
 
 /**
- * Display i18n
+ * Get translated string
  *
- * Displays the default language's tranlation, but if it 
- * does not exist, it falls back to the en_US one.
+ * @param string $name The key of the translation to display
+ * @param bool $echo Optional, default is true, whether to echo or return the translation
+ * @uses $i18n
  *
  * @since 3.0
- * @author ccagle8
- * @uses GSLANGPATH
- * @uses $i18n
- * @uses $LANG
+ * @since 2025.2.0 Code refactored
  *
- * @param string $name
- * @param bool $echo Optional, default is true
+ * @author ccagle8
+ *
+ * @return void
  */
-function i18n($name, $echo=true) {
+function i18n($name, $echo = true) {
 	global $i18n;
-	global $LANG;
-
-	if(isset($i18n)){
-
-		if (isset($i18n[$name])) {
-			$myVar = $i18n[$name];
-		} else {
-			$myVar = '{'.$name.'}';
-		}
-	}
-	else {
-		$myVar = '{'.$name.'}'; // if $i18n doesnt exist yet return something
-	}
-
-	if (!$echo) {
-		return $myVar;
+	$name = (string) $name;
+	// Get the translation from the $i18n array
+	$translation = isset($i18n[$name]) ? (string) $i18n[$name] : '{' . $name . '}';
+	// If $echo is true, echo the translation
+	if ($echo) {
+		echo $translation;
 	} else {
-		echo $myVar;
+		// Otherwise return it
+		return $translation;
 	}
 }
 
@@ -1315,14 +1305,43 @@ function isDebug(){
 }
 
 /**
+ * Check if GS Legacy version is an Alpha release
+ *
+ * @since 2025.2.0
+ * @uses get_site_version()
+ * @todo Use regex
+ * @return boolean True if an alpha release
+ */
+function isAlpha() {
+	// First remove build metadata
+	$version = strtok(get_site_version(false), '+');
+	// Alternate method with regex
+	// return (bool) preg_match('/(?<=-)(alpha)/i', $version);
+	$parts = explode('-', $version, 2);
+	if (count($parts) < 2) {
+		return false;
+	}
+	return strpos(strtolower($parts[1]), 'alpha') === 0;
+}
+
+/**
  * Check if GS Legacy version is a Beta release
  *
  * @since 3.3.0
  * @since 2025.1 Return boolean value
- * @return boolean true if beta release
+ * @since 2025.2.0 Refactored
+ * @uses get_site_version()
+ * @todo Use regex
+ * @return boolean True if a beta release
  */
-function isBeta(){
-	return strpos(get_site_version(false), 'b') !== false;
+function isBeta() {
+	// First remove build metadata
+	$version = strtok(get_site_version(false), '+');
+	$parts = explode('-', $version, 2);
+	if (count($parts) < 2) {
+		return false;
+	}
+	return strpos(strtolower($parts[1]), 'beta') === 0;
 }
 
 /**
@@ -1463,10 +1482,13 @@ function doTransliteration($str){
  * Get transliteration set as defined in i18n
  * @since 3.3.11
  * @since 2025.1.1 Use exec_filter() to execute filter transliterationtable
+ * @uses $i18n
+ * @uses exec_filter
  * @return array
  */
 function getTransliteration(){
-	return (array) exec_filter('get_transliteration', (array) i18n_r('TRANSLITERATION'));
+	global $i18n;
+	return (array) exec_filter('get_transliteration', (array) $i18n['TRANSLITERATION']);
 }
 
 /**

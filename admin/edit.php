@@ -36,9 +36,13 @@ $menu = '';
 $content = '';
 $author = '';
 $title = '';
+$subtitle = '';
+$summary = '';
 $url = '';
 $metak = '';
 $metad = '';
+$featured_image = '';
+$creation_date = '';
 
 if ($id) {
 	// get saved page data
@@ -50,6 +54,9 @@ if ($id) {
 
 	$data_edit = getXML($path . $file);
 	$title = stripslashes($data_edit->title);
+	$subtitle = stripslashes($data_edit->subtitle);
+	$summary = stripslashes($data_edit->summary);
+	$featured_image = stripcslashes($data_edit->featuredImage);
 	$pubDate = $data_edit->pubDate;
 	$metak = stripslashes($data_edit->meta);
 	$metad = stripslashes($data_edit->metad);
@@ -63,6 +70,11 @@ if ($id) {
 	$menuStatus = $data_edit->menuStatus;
 	$menuOrder = $data_edit->menuOrder;
 	$buttonname = i18n_r('BTN_SAVEUPDATES');
+	if ($data_edit->creDate) {
+		$creation_date = (string) $data_edit->creDate;
+	} else {
+		$creation_date = (string) $data_edit->pubDate;
+	}
 } else {
 	// prefill fields is provided
 	$title      =  isset( $_GET['title']      ) ? var_out( $_GET['title']      ) : '';
@@ -141,6 +153,7 @@ get_template('header', cl($SITENAME) . ' &raquo; ' . i18n_r('EDIT') . ' ' . $tit
 		<form class="largeform" id="editform" action="changedata.php" method="post" accept-charset="utf-8">
 			<input id="nonce" name="nonce" type="hidden" value="<?php echo get_nonce("edit", "edit.php"); ?>">
 			<input id="author" name="post-author" type="hidden" value="<?php echo $USR; ?>">
+			<input id="creation-date" name="post-creation-date" type="hidden" value="<?php echo var_out($creation_date); ?>">
 
 			<!-- page title toggle screen -->
 			<p id="edit_window">
@@ -151,6 +164,20 @@ get_template('header', cl($SITENAME) . ' &raquo; ' . i18n_r('EDIT') . ' ' . $tit
 
 			<!-- metadata toggle screen -->
 			<div style="display:none;" id="metadata_window">
+			<div class="wideopt">
+				<p id="post-subtitle-wrap">
+					<label for="post-subtitle"><?php i18n('PAGE_SUBTITLE'); ?>:</label>
+					<input class="text" id="post-subtitle" name="post-subtitle" type="text" value="<?php echo $subtitle; ?>">
+				</p>
+				<p id="post-summary-wrap">
+					<label for="post-summary" class=""><?php i18n('PAGE_SUMMARY'); ?>:</label>
+					<textarea class="text" id="post-summary" name="post-summary"><?php echo $summary; ?></textarea>
+				</p>
+				<p id="post-featured-image-wrap">
+					<label for="post-featured-image"><?php i18n('PAGE_FEATURED_IMAGE'); ?>:</label>
+					<input class="text" id="post-featured-image" name="post-featured-image" type="text" value="<?php echo $featured_image; ?>">
+				</p>
+			</div>
 			<div class="leftopt">
 				<p class="inline clearfix" id="post-private-wrap">
 					<label for="post-private" ><?php i18n('KEEP_PRIVATE'); ?>: &nbsp; </label>
@@ -249,8 +276,7 @@ get_template('header', cl($SITENAME) . ' &raquo; ' . i18n_r('EDIT') . ' ' . $tit
 			<div class="clear"></div>
 			<?php exec_action('edit-extras'); ?>
 
-			</div>	<!-- / metadata toggle screen -->
-
+			</div> <!-- / metadata toggle screen -->
 
 			<!-- page body -->
 			<p>

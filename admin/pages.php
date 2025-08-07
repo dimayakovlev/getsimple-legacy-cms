@@ -4,7 +4,7 @@
  *
  * Displays all pages 
  *
- * @package GetSimple
+ * @package GetSimple Legacy
  * @subpackage Page-Edit
  */
 
@@ -16,52 +16,53 @@ include('inc/common.php');
 
 // Variable settings
 login_cookie_check();
-$id      =  isset($_GET['id']) ? $_GET['id'] : null;
-$ptype   = isset($_GET['type']) ? $_GET['type'] : null; 
+$id      = isset($_GET['id']) ? $_GET['id'] : null;
+$ptype   = isset($_GET['type']) ? $_GET['type'] : null;
 $path    = GSDATAPAGESPATH;
-$counter = '0';
+$counter = 0;
 $table   = '';
 
 # clone attempt happening
-if ( isset($_GET['action']) && isset($_GET['id']) && $_GET['action'] == 'clone') {
-	
+if (isset($_GET['action']) && isset($_GET['id']) && $_GET['action'] == 'clone') {
+
 	// check for csrf
 	if (!defined('GSNOCSRF') || (GSNOCSRF == FALSE) ) {
 		$nonce = $_GET['nonce'];
-		if(!check_nonce($nonce, "clone", "pages.php")) {
-			die("CSRF detected!");	
+		if (!check_nonce($nonce, 'clone', 'pages.php')) {
+			die('CSRF detected!');
 		}
 	}
 
 	# check to not overwrite
 	$count = 1;
-	$newfile = GSDATAPAGESPATH . $_GET['id'] ."-".$count.".xml";
+	$newfile = GSDATAPAGESPATH . $_GET['id'] . '-' . $count . '.xml';
 	if (file_exists($newfile)) {
-		while ( file_exists($newfile) ) {
+		while (file_exists($newfile)) {
 			$count++;
-			$newfile = GSDATAPAGESPATH . $_GET['id'] ."-".$count.".xml";
+			$newfile = GSDATAPAGESPATH . $_GET['id'] . '-' . $count . '.xml';
 		}
 	}
-	$newurl = $_GET['id'] .'-'. $count;
-	
+	$newurl = $_GET['id'] . '-' . $count;
+
 	# do the copy
-	$status = copy($path.$_GET['id'].'.xml', $path.$newurl.'.xml');
+	$status = copy($path . $_GET['id'] . '.xml', $path.$newurl . '.xml');
 	if ($status) {
-		$newxml = getXML($path.$newurl.'.xml');
+		$newxml = getXML($path . $newurl . '.xml');
 		$newxml->url = $newurl;
-		$newxml->title = $newxml->title.' ['.i18n_r('COPY').']';
+		$newxml->title = (string) $newxml->title . ' [' . i18n_r('COPY') . ']';
+		$newxml->creDate = date('r');
 		$newxml->pubDate = date('r');
-		$status = XMLsave($newxml, $path.$newurl.'.xml');
+		$status = XMLsave($newxml, $path . $newurl . '.xml');
 		if ($status) {
 			create_pagesxml('true');
-			header('Location: pages.php?upd=clone-success&id='.$newurl);
+			header('Location: pages.php?upd=clone-success&id=' . $newurl);
 		} else {
 			$error = sprintf(i18n_r('CLONE_ERROR'), $_GET['id']);
-			header('Location: pages.php?error='.$error);
+			header('Location: pages.php?error=' . $error);
 		}
 	} else {
 		$error = sprintf(i18n_r('CLONE_ERROR'), $_GET['id']);
-		header('Location: pages.php?error='.$error);
+		header('Location: pages.php?error=' . $error);
 	}
 }
 

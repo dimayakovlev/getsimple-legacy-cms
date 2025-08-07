@@ -138,6 +138,118 @@ function get_page_clean_title($echo=true) {
 }
 
 /**
+ * Get Page Subtitle
+ *
+ * This function retrieves the subtitle of a page, optionally echoing it.
+ *
+ * @since 2025.2.0
+ * @uses $subtitle
+ * @uses strip_decode()
+ *
+ * @param bool $echo Optional, default is true. False will 'return' value.
+ * @return string|null Echos or returns string based on param $echo.
+ */
+
+function get_page_subtitle($echo = true) {
+	global $subtitle;
+	$result = strip_decode((string) $subtitle);
+	if ($echo) {
+		echo $result;
+	} else {
+		return $result;
+	}
+}
+
+/**
+ * Get Page Clean Subtitle
+ *
+ * Retrieves the subtitle of a page, stripped of HTML tags and decoded, optionally echoing it.
+ *
+ * @since 2025.2.0
+ * @uses $subtitle
+ * @uses strip_decode()
+ * @uses strip_tags()
+ *
+ * @param bool $echo Optional, default is true. If true, the subtitle is echoed.
+ * @return string|null The clean subtitle of the page, either echoed or returned based on the $echo parameter.
+ */
+
+function get_page_clean_subtitle($echo = true) {
+	global $subtitle;
+	$result = strip_tags(strip_decode((string) $subtitle));
+	if ($echo) {
+		echo $result;
+	} else {
+		return $result;
+	}
+}
+
+/**
+ * Get Page Summary
+ *
+ * Retrieves the summary of a page, optionally echoing it.
+ *
+ * @since 2025.2.0
+ * @uses $summary
+ * @uses strip_decode()
+ *
+ * @param bool $echo Optional, default is true. If true, the summary is echoed.
+ * @return string|null The summary of the page, either echoed or returned based on the $echo parameter.
+ */
+function get_page_summary($echo = true) {
+	global $summary;
+	$result = strip_decode((string) $summary);
+	if ($echo) {
+		echo $result;
+	} else {
+		return $result;
+	}
+}
+
+/**
+ * Get Clean Page Summary
+ *
+ * Retrieves the summary of a page, stripped of HTML tags and decoded, optionally echoing it.
+ *
+ * @since 2025.2.0
+ * @uses $summary
+ * @uses strip_decode()
+ * @uses strip_tags()
+ *
+ * @param bool $echo Optional, default is true. If true, the summary is echoed.
+ * @return string|null The clean summary of the page, either echoed or returned based on the $echo parameter.
+ */
+function get_page_clean_summary($echo = true) {
+	global $summary;
+	$result = stip_tags(strip_decode((string) $summary));
+	if ($echo) {
+		echo $result;
+	} else {
+		return $result;
+	}
+}
+
+/**
+ * Get Page Featured Image
+ *
+ * Retrieves the featured image of a page, optionally echoing it.
+ *
+ * @since 2025.2.0
+ * @uses $featured_image
+ *
+ * @param bool $echo Optional, default is true. If true, the featured image is echoed.
+ * @return string|null The featured image of the page, either echoed or returned based on the $echo parameter.
+ */
+function get_page_featured_image($echo = true) {
+	global $featured_image;
+	if ($echo) {
+		echo (string) $featured_image;
+	} else {
+		return (string) $featured_image;
+	}
+}
+
+/**
  * Get Page Slug
  *
  * This will return the slug value of a particular page
@@ -160,24 +272,22 @@ function get_page_slug($echo=true) {
 }
 
 /**
- * Get Page Parent Slug
+ * Get Slug of Parent Page
  *
  * This will return the slug value of a particular page's parent
  *
- * @since 1.0
+ * @since 2025.2.0
  * @uses $parent
  *
  * @param bool $echo Optional, default is true. False will 'return' value
  * @return string Echos or returns based on param $echo
  */
-function get_parent($echo=true) {
+function get_page_parent($echo = true) {
 	global $parent;
-	$myVar = $parent;
-	
 	if ($echo) {
-		echo $myVar;
+		echo (string) $parent;
 	} else {
-		return $myVar;
+		return (string) $parent;
 	}
 }
 
@@ -194,7 +304,7 @@ function get_parent($echo=true) {
  * @param bool $echo Optional, default is true. False will 'return' value
  * @return string Echos or returns based on param $echo
  */
-function get_page_date($i = "l, F jS, Y - g:i A", $echo=true) {
+function get_page_date($i = "l, F jS, Y - g:i A", $echo = true) {
 	global $date;
 	global $TIMEZONE;
 	if ($TIMEZONE != '') {
@@ -209,6 +319,38 @@ function get_page_date($i = "l, F jS, Y - g:i A", $echo=true) {
 		echo $myVar;
 	} else {
 		return $myVar;
+	}
+}
+
+/**
+ * Get Page Creation Date
+ *
+ * This will return the page's creation date/timestamp
+ *
+ * @since 2025.2.0
+ * @uses $data_index
+ * @uses $TIMEZONE
+ *
+ * @param string $i Optional, default is "l, F jS, Y - g:i A"
+ * @param bool $echo Optional, default is true. False will 'return' value
+ * @return string Echos or returns based on param $echo
+ */
+function get_page_creation_date($i = "l, F jS, Y - g:i A", $echo = true) {
+	global $data_index;
+	global $TIMEZONE;
+	$page_creation_date = (string) $data_index->creDate;
+	if ($page_creation_date != '') {
+		if ($TIMEZONE != '') {
+			if (function_exists('date_default_timezone_set')) {
+				date_default_timezone_set($TIMEZONE);
+			}
+		}
+		$page_creation_date = date($i, strtotime($page_creation_date));
+	}
+	if ($echo) {
+		echo $page_creation_date;
+	} else {
+		return $page_creation_date;
 	}
 }
 
@@ -381,6 +523,136 @@ function get_site_name($echo=true) {
 }
 
 /**
+ * Get Site Title
+ *
+ * @since 2025.2.0
+ * @uses $SITENAME
+ *
+ * @param bool $echo Optional, default is true. False will 'return' value
+ * @return null|string Echos or returns based on param $echo
+ */
+function get_site_title($echo = true) {
+	global $SITENAME;
+	if ($echo) {
+		echo (string) $SITENAME;
+	} else {
+		return (string) $SITENAME;
+	}
+}
+/**
+ * Get Site Subtitle
+ *
+ * @since 2025.2.0
+ * @uses $SITE_SUBTITLE
+ *
+ * @param bool $echo Optional, default is true. False will 'return' value
+ * @return null|string Echos or returns based on param $echo
+ */
+function get_site_subtitle($echo = true) {
+	global $SITE_SUBTITLE;
+	if ($echo) {
+		echo (string) $SITE_SUBTITLE;
+	} else {
+		return (string) $SITE_SUBTITLE;
+	}
+}
+
+/**
+ * Get Site Tagline
+ *
+ * @since 2025.2.0
+ * @uses $SITE_TAGLINE
+ *
+ * @param bool $echo Optional, default is true. False will 'return' value
+ * @return null|string Echos or returns based on param $echo
+ */
+function get_site_tagline($echo = true) {
+	global $SITE_TAGLINE;
+	if ($echo) {
+		echo (string) $SITE_TAGLINE;
+	} else {
+		return (string) $SITE_TAGLINE;
+	}
+}
+
+/**
+ * Get Site Description
+ *
+ * @since 2025.2.0
+ * @uses $SITE_DESCRIPTION
+ *
+ * @param bool $echo Optional, default is true. False will 'return' value
+ * @return null|string Echos or returns based on param $echo
+ */
+function get_site_description($echo = true) {
+	global $SITE_DESCRIPTION;
+	if ($echo) {
+		echo (string) $SITE_DESCRIPTION;
+	} else {
+		return (string) $SITE_DESCRIPTION;
+	}
+}
+
+/**
+ * Get Site Featured Image
+ *
+ * This function retrieves the featured image URL of the website, optionally echoing it.
+ *
+ * @since 2025.2.0
+ * @uses $SITE_FEATURED_IMAGE
+ *
+ * @param bool $echo Optional, default is true. If true, the featured image URL is echoed.
+ * @return null|string Echos or returns based on param $echo
+ */
+function get_site_featured_image($echo = true) {
+	global $SITE_FEATURED_IMAGE;
+	if ($echo) {
+		echo (string) $SITE_FEATURED_IMAGE;
+	} else {
+		return (string) $SITE_FEATURED_IMAGE;
+	}
+}
+
+/**
+ * Get Site Keywords
+ *
+ * @since 2025.2.0
+ * @uses $SITE_KEYWORDS
+ *
+ * @param bool $echo Optional, default is true. False will 'return' value
+ * @return null|string Echos or returns based on param $echo
+ */
+function get_site_keywords($echo = true) {
+	global $SITE_KEYWORDS;
+	if ($echo) {
+		echo (string) $SITE_KEYWORDS;
+	} else {
+		return (string) $SITE_KEYWORDS;
+	}
+}
+
+/**
+ * Get Site Keywords as Array
+ *
+ * This function retrieves the site's keywords as an array, optionally ensuring uniqueness.
+ *
+ * @since 2025.2.0
+ * @uses $SITE_KEYWORDS
+ *
+ * @param bool $array_unique Optional, default is true. If true, the resulting array will contain unique keywords.
+ * @return array The site's keywords as an array, with optional uniqueness.
+ */
+
+function get_site_keywords_array($array_unique = true) {
+	global $SITE_KEYWORDS;
+	$result = array_map('trim', explode(',', (string) $SITE_KEYWORDS));
+	if ($array_unique) {
+		$result = array_unique($result, SORT_STRING);
+	}
+	return $result;
+}
+
+/**
  * Get Administrator's Email Address
  * 
  * This will return the value set in the control panel
@@ -518,20 +790,18 @@ function menu_data($id = null,$xml=false) {
  * Components are parsed for PHP within them.
  *
  * @since 1.0
- * @uses GSDATAOTHERPATH
- * @uses getXML
  *
- * @uses load_components
+ * @uses load_components()
  * @uses $components
  * @since 2024.2.1 Added $force parameter. Don't normalize id.
- * @since 2024.3 Refactored, use load_components
+ * @since 2024.3 Refactored, use load_components()
  *
  * @param string $id This is the ID of the component you want to display
  *				True will return value in XML format. False will return an array
  * @param bool $force Optional, default is false. If true, will force the component to run
  * @return void
  */
-function get_component($id, $force = false){
+function get_component($id, $force = false) {
 	global $components;
 	$id = (string) $id;
 	load_components();
@@ -551,15 +821,13 @@ function get_component($id, $force = false){
  * This will check if a component with the given id exists in the component list
  *
  * @since 2024.3
- * @uses GSDATAOTHERPATH
- * @uses getXML
- * @uses load_components
+ * @uses load_components()
  * @uses $components
  *
  * @param string $id The id of the component to check
  * @return bool True if component exists, false if not
  */
-function component_exists($id){
+function component_exists($id) {
 	global $components;
 	$id = (string) $id;
 	load_components();
@@ -575,21 +843,79 @@ function component_exists($id){
  * Check if a component is enabled or disabled
  *
  * @since 2024.3
- * @uses GSDATAOTHERPATH
- * @uses getXML
- * @uses load_components
+ * @uses load_components()
  * @uses $components
  *
  * @param string $id The id of the component to check
  * @return bool|null Null if component does not exist, true if enabled, false if disabled
  */
-function component_enabled($id){
+function component_enabled($id) {
 	global $components;
 	$id = (string) $id;
 	load_components();
 	if (count($components) > 0) {
 		foreach ($components as $component) {
 			if ($id == (string) $component->slug) return (string) $component->disabled != '1';
+		}
+	}
+	return null;
+}
+
+/**
+ * Get the title of a component
+ *
+ * @since 2025.2.0
+ * @uses load_components()
+ * @uses $components
+ *
+ * @param string $id The id of the component to get
+ * @param bool $echo If true, echo the result, else return it
+ * @return string|null The title of the component or null if not found or echo
+ */
+function get_component_title($id, $echo = true) {
+	global $components;
+	$id = (string) $id;
+	load_components();
+	if (count($components) > 0) {
+		foreach ($components as $component) {
+			if ($id == (string) $component->slug) {
+				if ($echo) {
+					echo (string) $component->title;
+					return null;
+				} else {
+					return (string) $component->title;
+				}
+			}
+		}
+	}
+	return null;
+}
+
+/**
+ * Get the description of a component
+ *
+ * @since 2025.2.0
+ * @uses load_components()
+ * @uses $components
+ *
+ * @param string $id The id of the component to get
+ * @param bool $echo If true, echo the result, else return it
+ * @return string|null The description of the component or null if not found or echo
+ */
+function get_component_description($id, $echo = true) {
+	global $components;
+	$id = (string) $id;
+	load_components();
+	if (count($components) > 0) {
+		foreach ($components as $component) {
+			if ($id == (string) $component->slug) {
+				if ($echo) {
+					echo (string) $component->description;
+					return null;
+				} else {
+					return (string) $component->description;
+				}
+			}
 		}
 	}
 	return null;
@@ -681,13 +1007,21 @@ function return_page_slug() {
  */
 function return_site_ver() {
 	return get_site_version(FALSE);
-}	
+}
 /**
  * @depreciated as of 2.03
  */
-if(!function_exists('set_contact_page')) {
+if (!function_exists('set_contact_page')) {
 	function set_contact_page() {
-		#removed functionality	
+		#removed functionality
 	}
 }
-?>
+
+/**
+ * 
+ * @deprecated as of 2025.2.0
+ * @see get_page_parent()
+ */
+function get_parent($echo = true) {
+	get_page_parent((bool) $echo);
+}

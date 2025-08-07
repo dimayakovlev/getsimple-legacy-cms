@@ -1,11 +1,11 @@
-<?php 
+<?php
 /**
  * Page Edit Action
  *
- * Code to either create or edit a page. This is the action page  
- * for the form on edit.php	
+ * Code to either create or edit a page. This is the action page
+ * for the form on edit.php
  *
- * @package GetSimple
+ * @package GetSimple Legacy
  * @subpackage Page-Edit
  */
 
@@ -17,35 +17,33 @@ include('inc/common.php');
 
 $autoSaveDraft = false; // auto save to autosave drafts
 
-// check form referrer - needs siteurl and edit.php in it. 
+// check form referrer - needs siteurl and edit.php in it.
 if (isset($_SERVER['HTTP_REFERER'])) {
-	if ( !(strpos(str_replace('http://www.', '', $SITEURL), $_SERVER['HTTP_REFERER']) === false) || !(strpos("edit.php", $_SERVER['HTTP_REFERER']) === false)) {
-		echo "<b>Invalid Referer</b><br />-------<br />"; 
+	if (!(strpos(str_replace('http://www.', '', $SITEURL), $_SERVER['HTTP_REFERER']) === false) || !(strpos('edit.php', $_SERVER['HTTP_REFERER']) === false)) {
+		echo '<b>Invalid Referer</b><br />-------<br />';
 		echo 'Invalid Referer: ' . htmlentities($_SERVER['HTTP_REFERER'], ENT_QUOTES);
 		die('Invalid Referer');
 	}
 }
 
 login_cookie_check();
-	
+
 if (isset($_POST['submitted'])) {
 
 	$existingurl = isset($_POST['existing-url']) ? $_POST['existing-url'] : null;
-	
+
 	// check for csrf
-	if (!defined('GSNOCSRF') || (GSNOCSRF == FALSE) ) {
+	if (!defined('GSNOCSRF') || (GSNOCSRF == false)) {
 		$nonce = $_POST['nonce'];
-		if(!check_nonce($nonce, "edit", "edit.php")) {
-			die("CSRF detected!");	
+		if (!check_nonce($nonce, 'edit', 'edit.php')) {
+			die('CSRF detected!');
 		}
 	}
-	
-	if ( trim($_POST['post-title']) == '' )	{
-		redirect("edit.php?upd=edit-error&type=".urlencode(i18n_r('CANNOT_SAVE_EMPTY')));
-	}	else {
 
-		$url="";$title="";$metad=""; $metak="";	$cont="";
-
+	if (trim($_POST['post-title']) == '') {
+		redirect('edit.php?upd=edit-error&type=' . urlencode(i18n_r('CANNOT_SAVE_EMPTY')));
+	} else {
+		$url = $title = $subtitle = $summary = $featured_image = $metad = $metak = $cont = '';
 		// is a slug provided?
 		if (isset($_POST['post-id']) && trim($_POST['post-id']) != '') {
 			$url = $_POST['post-id'];
@@ -86,6 +84,9 @@ if (isset($_POST['submitted'])) {
 		
 		// format and clean the responses
 		if(isset($_POST['post-title'])) 			{	$title = var_out(xss_clean($_POST['post-title']));	}
+		if (isset($_POST['post-subtitle'])) { $subtitle = var_out(xss_clean($_POST['post-subtitle'])); }
+		if (isset($_POST['post-featured-image'])) { $featured_image = filter_var($_POST['post-featured-image'], FILTER_SANITIZE_URL); }
+		if (isset($_POST['post-summary'])) { $summary = safe_slash_html($_POST['post-summary']); }
 		if(isset($_POST['post-metak'])) 			{	$metak = safe_slash_html(strip_tags($_POST['post-metak']));	}
 		if(isset($_POST['post-metad'])) 			{	$metad = safe_slash_html(strip_tags($_POST['post-metad']));	}
 		if(isset($_POST['post-author'])) 			{	$author = safe_slash_html($_POST['post-author']);	}
@@ -104,7 +105,12 @@ if (isset($_POST['submitted'])) {
 			{
 				$menuOrder = "0";
 			}
-		}		
+		}
+		if (isset($_POST['post-creation-date']) && $_POST['post-creation-date'] != '') {
+			$creation_date = $_POST['post-creation-date'];
+		} else {
+			$creation_date = date('r');
+		}
 		// If saving a new file do not overwrite existing, get next incremental filename, file-count.xml
 		// @todo this is a mess, new file existing file should all be determined at beginning of block and defined
 		if ( (file_exists($file) && $url != $existingurl) ||  in_array($url,$reservedSlugs) ) {
@@ -119,19 +125,28 @@ if (isset($_POST['submitted'])) {
 
 		
 		// if we are editing an existing page, create a backup
-		if ( file_exists($file) ) 
-		{
-			$bakfile = GSBACKUPSPATH."pages/". $url .".bak.xml";
+		if (file_exists($file)) {
+			$bakfile = GSBACKUPSPATH . 'pages/' . $url . '.bak.xml';
 			copy($file, $bakfile);
 		}
 		
 		
 		$xml = new SimpleXMLExtended('<?xml version="1.0" encoding="UTF-8"?><item></item>');
+		$xml->addChild('creDate', $creation_date);
 		$xml->addChild('pubDate', date('r'));
 
 		$note = $xml->addChild('title');
 		$note->addCData($title);
-		
+
+		$note = $xml->addChild('subtitle');
+		$note->addCData($subtitle);
+
+		$note = $xml->addChild('summary');
+		$note->addCData($summary);
+
+		$note = $xml->addChild('featuredImage');
+		$note->addCData($featured_image);
+
 		$note = $xml->addChild('url');
 		$note->addCData($url);
 		

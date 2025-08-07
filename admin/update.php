@@ -87,13 +87,14 @@ if (file_exists(GSDATAOTHERPATH .'user.xml')) {
 	}
 
 	# get $USR data
-	$datau = getXML(GSDATAOTHERPATH .'user.xml');
-	$datac = getXML(GSDATAOTHERPATH .'cp_settings.xml');
-	$dataw = getXML(GSDATAOTHERPATH .'website.xml');
+	$datau = getXML(GSDATAOTHERPATH . 'user.xml');
+	$datac = getXML(GSDATAOTHERPATH . 'cp_settings.xml');
+	$dataw = getXML(GSDATAOTHERPATH . 'website.xml');
 	$USR = _id(stripslashes($datau->USR));
 	$EMAIL = $datau->EMAIL;
 	$PASSWD = $datau->PWD;
 	$HTMLEDITOR = $datac->HTMLEDITOR;
+	$CODEEDITOR = $datac->CODEEDITOR;
 	$PRETTYURLS = $datac->PRETTYURLS;
 	$PERMALINK = $datac->PERMALINK;
 	$TIMEZONE = $datac->TIMEZONE;
@@ -109,9 +110,10 @@ if (file_exists(GSDATAOTHERPATH .'user.xml')) {
 	$xml->addChild('PWD', $PASSWD);
 	$xml->addChild('EMAIL', $EMAIL);
 	$xml->addChild('HTMLEDITOR', $HTMLEDITOR);
+	$xml->addChild('CODEEDITOR', $CODEEDITOR);
 	$xml->addChild('TIMEZONE', $TIMEZONE);
 	$xml->addChild('LANG', $LANG);
-	$status = XMLsave($xml, GSUSERSPATH . _id($USR) .'.xml');	
+	$status = XMLsave($xml, GSUSERSPATH . _id($USR) . '.xml');
 	chmod(GSUSERSPATH . _id($USR) .'.xml', 0777);
 	if (!$status) {
 		$error .= msgError('Unable to create new  '._id($USR).'.xml file!');	

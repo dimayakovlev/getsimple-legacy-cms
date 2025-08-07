@@ -28,8 +28,7 @@
 		global $GS_debug;
 		echo '<div><h2>' . i18n_r('DEBUG_CONSOLE') . '</h2><div id="gsdebug"><pre>';
 		foreach ($GS_debug as $log) {
-			if (is_array($log)) print_r($log) . '<br/>';
-			else print($log . '<br/>');
+			echo htmlspecialchars(print_r($log, true), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') . '<br/>';
 		}
 		echo '</pre></div></div>';
 	}

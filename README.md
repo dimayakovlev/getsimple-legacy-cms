@@ -1,6 +1,6 @@
 # GetSimple Legacy Content Management System
 
-**GetSimple Legacy CMS** is a **simple**, **fast**, **efficient** and **flexible** flat-file content managment system.
+**GetSimple Legacy CMS** is a **simple**, **fast**, **efficient** and **flexible** flat-file content management system.
 
 It's independent fork of well known [**GetSimple CMS**](https://github.com/GetSimpleCMS/GetSimpleCMS), based on stable version *3.3.16*.
 

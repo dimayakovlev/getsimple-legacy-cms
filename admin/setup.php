@@ -95,7 +95,7 @@ if (isset($_POST['submitted'])) {
 		$xmls->addAttribute('modified', date('r'));
 		$xmls->addAttribute('creator', $USR);
 		$xmls->addAttribute('lastModifiedBy', $USR);
-		$xmls->addAttribure('revision', 1);
+		$xmls->addAttribute('revision', 1);
 		$xmls->addAttribute('appName', GSNAME);
 		$xmls->addAttribute('appVersion', GSVERSION);
 		if (!XMLsave($xmls, GSDATAOTHERPATH . $file)) {

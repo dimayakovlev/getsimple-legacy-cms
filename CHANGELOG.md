@@ -2,6 +2,12 @@
 
 All notable changes of GetSimple Legacy CMS will be documented in this file.
 
+## [2025.2.1] - 2025.08.10
+
+### Fixed
+
+- A typo in the *setup.php* file causes an error during installation.
+
 ## [2025.2.0] - 2025.08.08
 
 ### Added

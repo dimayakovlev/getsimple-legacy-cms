@@ -119,12 +119,27 @@ if (isset($_POST['submitted'])) {
 		if (!file_exists($init)) {
 			copy($temp, $init);
 		}
-		
+
 		# create default 404.xml page
 		$init = GSDATAOTHERPATH . '404.xml';
-		$temp = GSADMININCPATH . 'tmp/tmp-404.xml'; 
+		$temp = GSADMININCPATH . 'tmp/tmp-404.xml';
 		if (!file_exists($init)) {
 			copy($temp, $init);
+		}
+
+		# create Custom PHP Code custom-php-code.xml file
+		$init = GSDATAOTHERPATH . 'custom-php-code.xml';
+		$temp = GSADMININCPATH . 'tmp/tmp-custom-php-code.xml';
+		if (!file_exists($init)) {
+			$xml = simplexml_load_file($temp);
+			$xml->addAttribute('created', date('r'));
+			$xml->addAttribute('modified', date('r'));
+			$xml->addAttribute('creator', $USR);
+			$xml->addAttribute('lastModifiedBy', $USR);
+			$xml->addAttribute('revision', 1);
+			$xml->addAttribute('appName', GSNAME);
+			$xml->addAttribute('appVersion', GSVERSION);
+			$xml->asXML($init);
 		}
 
 		# create root .htaccess file

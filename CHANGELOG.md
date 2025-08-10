@@ -2,6 +2,12 @@
 
 All notable changes of GetSimple Legacy CMS will be documented in this file.
 
+## [Unreleased]
+
+### Added
+
+- **Custom PHP Code** feature allows to execute custom PHP code and extend functionality of the **GetSimple Legacy CMS** without writing or installing plugins.
+
 ## [2025.2.1] - 2025.08.10
 
 ### Fixed

@@ -135,3 +135,7 @@ define('GSSUPPRESSERRORS', true);
 # Set to 1 or to 2 to enable the advanced transliteration mode.
 # define('GSTRANSLITERATIONMODE', 1); # transliterate to ASCII with a simple Transliterator rule ':: Any-Latin ; :: Latin-ASCII ;'
 # define('GSTRANSLITERATIONMODE', 2); # transliterate to ASCII with a custom Transliterator rule started with the rule based on the transliteration table defined in a loaded language file
+
+# @since 2025.3.0 GS Legacy has new feature Custom PHP Code
+# This is a way to execute custom PHP code and extend functionality of GS Legacy without writing or installing a plugins.
+# define('GSCUSTOMPHPCODE', true);

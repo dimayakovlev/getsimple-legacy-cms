@@ -173,6 +173,7 @@ input:focus:-ms-input-placeholder { color:transparent; } /* IE 10+ */
 #menu-manager .wrapper .nav li a.pages,
 #plugins .wrapper .nav li a.plugins,
 #settings .wrapper .nav li a.settings,
+#custom-php-code .wrapper .nav li a.plugins,
 #components .wrapper .nav li a.theme,
 #theme .wrapper .nav li a.theme,
 #sitemap .wrapper .nav li a.theme,

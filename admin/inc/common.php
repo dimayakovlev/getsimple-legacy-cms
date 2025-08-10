@@ -352,7 +352,7 @@ if (get_filename_id() != 'install' && get_filename_id() != 'setup' && get_filena
  */
 include_once(GSADMININCPATH.'cookie_functions.php');
 if(isset($load['plugin']) && $load['plugin']){
-	# remove the pages.php plugin if it exists. 	
+	# remove the pages.php plugin if it exists.
 	if (file_exists(GSPLUGINPATH.'pages.php'))	{
 		unlink(GSPLUGINPATH.'pages.php');
 	}
@@ -366,9 +366,41 @@ if(isset($load['plugin']) && $load['plugin']){
 	}
 	# include core plugin for page caching
 	include_once('caching_functions.php');
-	
+	# load and execute custom php code
+	if (defined('GSCUSTOMPHPCODE') && GSCUSTOMPHPCODE === true) {
+		$custom_php_code_file = GSDATAOTHERPATH . 'custom-php-code.xml';
+		if (is_readable($custom_php_code_file)) {
+			$custom_php_code_xml = @simplexml_load_file($custom_php_code_file, 'SimpleXMLExtended');
+			if (is_object($custom_php_code_xml)) {
+				if (filter_var($custom_php_code_xml->enabled, FILTER_VALIDATE_BOOLEAN)) {
+					ob_start();
+					try {
+						eval(strip_decode((string) $custom_php_code_xml->code));
+					} catch (Throwable $e) {
+						if (getDef('GSDEBUG', true)) {
+							debugLog('Custom PHP Code error: ' . $e->getMessage());
+						}
+					} catch (Exception $e) {
+						if (getDef('GSDEBUG', true)) {
+							debugLog('Custom PHP Code error: ' . $e->getMessage());
+						}
+					}
+					ob_end_clean();
+				}
+			} else {
+				if (getDef('GSDEBUG', true)) {
+					debugLog('Custom PHP Code file parse error: ' . $custom_php_code_file);
+				}
+			}
+			unset($custom_php_code_xml);
+		} else {
+			if (getDef('GSDEBUG', true)) {
+				debugLog('Custom PHP Code file not found or not readable: ' . $custom_php_code_file);
+			}
+		}
+		unset($custom_php_code_file);
+	}
 	# main hook for common.php
 	exec_action('common');
-	
 }
-if(isset($load['login']) && $load['login']){ 	include_once(GSADMININCPATH.'login_functions.php'); }
+if (isset($load['login']) && $load['login']) { include_once(GSADMININCPATH . 'login_functions.php'); }

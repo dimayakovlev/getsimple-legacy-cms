@@ -87,7 +87,15 @@
 		case 'comp-restored':
 			echo '<div class="updated"><p>'.i18n_r('ER_COMPONENT_REST').'. <a href="components.php?undo&nonce='.get_nonce("undo").'">'.i18n_r('UNDO').'</a></p></div>';
 		break;
-		
+		case 'cphpc-success':
+			echo '<div class="updated"><p>' . i18n_r('ER_CUSTOM_PHP_CODE_SAVE') . '. <a href="custom-php-code.php?undo&nonce=' . get_nonce('undo') . '">' . i18n_r('UNDO') . '</a></p></div>';
+		break;
+		case 'cphpc-error':
+			echo '<div class="error"><p><b>' . i18n_r('ERROR') . ': </b>' . i18n_r('ER_CUSTOM_PHP_CODE_SAVE_ERROR') . '.</p></div>';
+		break;
+		case 'cphpc-restored':
+			echo '<div class="updated"><p>' . i18n_r('ER_CUSTOM_PHP_CODE_REST') . '. <a href="custom-php-code.php?undo&nonce=' . get_nonce('undo') . '">' . i18n_r('UNDO') . '</a></p></div>';
+		break;
 		/**/
 		default:
 			if ( isset( $error ) ) echo '<div class="error"><p><b>'.i18n_r('ERROR').':</b> '. $error .'</div>';

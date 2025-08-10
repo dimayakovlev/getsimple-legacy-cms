@@ -668,4 +668,19 @@ $i18n = array(
 "PAGE_SUBTITLE" => "Page Subtitle",
 "PAGE_SUMMARY" => "Page Summary",
 "PAGE_FEATURED_IMAGE" => "Page Featured Image",
+
+/***********************************************************************************
+ * SINCE Version 2025.3.0
+***********************************************************************************/
+/* 
+ * For: custom-php.php
+*/
+"SIDE_CUSTOM_PHP_CODE" => "Edit Custom PHP Code",
+"CUSTOM_PHP_CODE" => "Custom PHP Code",
+"EDIT_CUSTOM_PHP_CODE" => "Edit Custom PHP Code",
+"ENABLE_CUSTOM_PHP_CODE" => "Enable execution of custom PHP code",
+"CUSTOM_PHP_CODE_PLACEHOLDER" => "# Place your PHP code here. Avoid using PHP opening and closing tags.",
+"ER_CUSTOM_PHP_CODE_SAVE" => "Your PHP code have been saved",
+"ER_CUSTOM_PHP_CODE_REST" => "Your PHP code have been restored",
+"ER_CUSTOM_PHP_CODE_SAVE_ERROR" => "There was a problem saving PHP code",
 );

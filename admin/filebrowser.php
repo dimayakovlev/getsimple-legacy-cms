@@ -1,31 +1,28 @@
 <?php
 /**
- * Basic File Browser for CKEditor
+ * Basic File Browser
  *
- * Displays and selects file link to insert into CKEditor
+ * Displays and selects file link to insert into CKEditor or form field
  *
  * @package GetSimple Legacy
  * @subpackage Files
- *
- * Version: 1.1 (2011-03-12)
- * Version: 1.2 (2024-11-25)
- * Version: 1.2.1 (2024-12-22)
  */
 
 // Setup inclusions
 include('inc/common.php');
 login_cookie_check();
 
-$path = (isset($_GET['path'])) ? '../data/uploads/' . $_GET['path'] : '../data/uploads/';
-$subPath = (isset($_GET['path'])) ? $_GET['path'] : '';
+$subPath = (string) filter_input(INPUT_GET, 'path', FILTER_DEFAULT);
+$path = '../data/uploads/' . $subPath;
 if (!path_is_safe($path, GSDATAUPLOADPATH)) die();
-$returnid = isset($_GET['returnid']) ? var_out($_GET['returnid']) : '';
-$func = (isset($_GET['func'])) ? var_out($_GET['func']) : '';
+$returnid = isset($_GET['returnid']) ? var_out($_GET['returnid']) : null;
+$func = (isset($_GET['func'])) ? var_out($_GET['func']) : null;
 $path = tsl($path);
 // check if host uses Linux (used for displaying permissions
 $isUnixHost = (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' ? false : true);
-$CKEditorFuncNum = isset($_GET['CKEditorFuncNum']) ? var_out($_GET['CKEditorFuncNum']) : '';
-$sitepath = suggest_site_path();
+$CKEditorFuncNum = isset($_GET['CKEditorFuncNum']) ? var_out($_GET['CKEditorFuncNum']) : 0;
+$use_relative_urls = filter_input(INPUT_GET, 'relative-urls', FILTER_VALIDATE_BOOLEAN);
+$sitepath = rtrim(suggest_site_path($use_relative_urls), '/') . '/';
 $fullPath = $sitepath . 'data/uploads/';
 $type = isset($_GET['type']) ? var_out($_GET['type']) : '';
 
@@ -116,12 +113,12 @@ $LANG_header = preg_replace('/(?:(?<=([a-z]{2}))).*/', '', $LANG);
 	$curPart = end($pathParts);
 	$urlPath = '';
 
-	echo '<div class="h5">/ <a href="?CKEditorFuncNum=' . $CKEditorFuncNum . '&amp;type=' . $type . '">uploads</a> / ';
+	echo '<div class="h5">/ <a href="?CKEditorFuncNum=' . $CKEditorFuncNum . ($use_relative_urls !== null ? '&amp;relative-urls=' . ($use_relative_urls ? 'true' : 'false') : '') . ($returnid !== null ? '&amp;returnid=' . $returnid : '') . ($func !== null ? '&amp;func=' . $func : '') . '&amp;type=' . $type . '">uploads</a> / ';
 	foreach ($pathParts as $pathPart) {
-		if ($pathPart !='') {
+		if ($pathPart != '') {
 			$urlPath .= $pathPart . '/';
 			if ($pathPart != $curPart) {
-				echo '<a href="?path=' . $urlPath . '&amp;CKEditorFuncNum=' . $CKEditorFuncNum . '&amp;type=' . $type . '&amp;func='.$func.'">' . $pathPart . '</a> / ';
+				echo '<a href="?path=' . $urlPath . '&amp;CKEditorFuncNum=' . $CKEditorFuncNum . ($use_relative_urls !== null ? '&amp;relative-urls=' . ($use_relative_urls ? 'true' : 'false') : '') . ($returnid !== null ? '&amp;returnid=' . $returnid : '') . ($func !== null ? '&amp;func=' . $func : '') . '&amp;type=' . $type . '">' . $pathPart . '</a> / ';
 			} else {
 				echo '<span class="current">' . $pathPart . '</span> / ';
 			}
@@ -136,17 +133,7 @@ $LANG_header = preg_replace('/(?:(?<=([a-z]{2}))).*/', '', $LANG);
 			echo '<tr class="All">';
 			echo '<td class="" colspan="5">';
 			$adm = substr($path . $upload['name'], 16);
-			if ($returnid!='') {
-				$returnlink = '&returnid=' . $returnid;
-			} else {
-				$returnlink = '';
-			}
-			if ($func != '') {
-				$funct = '&func=' . $func;
-			} else {
-				$funct='';
-			}
-			echo '<img src="template/images/folder.png" width="11"> <a href="filebrowser.php?path=' . $adm . '&amp;CKEditorFuncNum=' . $CKEditorFuncNum . '&amp;type=' . $type . $returnlink . '&amp;' . $funct . '" title="' . $upload['name'] . '"><strong>' . $upload['name'] . '</strong></a>';
+			echo '<img src="template/images/folder.png" width="11"> <a href="filebrowser.php?path=' . $adm . '&amp;CKEditorFuncNum=' . $CKEditorFuncNum . ($use_relative_urls !== null ? '&amp;relative-urls=' . ($use_relative_urls ? 'true' : 'false') : '') . ($returnid !== null ? '&amp;returnid=' . $returnid : '') . ($func !== null ? '&amp;func=' . $func : '') . '&amp;type=' . $type . '" title="' . $upload['name'] . '"><strong>' . $upload['name'] . '</strong></a>';
 			echo '</td>';
 			echo '</tr>';
 		}
@@ -157,17 +144,17 @@ $LANG_header = preg_replace('/(?:(?<=([a-z]{2}))).*/', '', $LANG);
 			$upload['name'] = rawurlencode($upload['name']);
 			$thumb = null; $thumbnailLink = null;
 			$subDir = ($subPath == '' ? '' : $subPath . '/');
-			$selectLink = 'title="' . i18n_r('SELECT_FILE') . ': ' . htmlspecialchars($upload['name']) . '" href="javascript:void(0)" onclick="submitLink(' . $CKEditorFuncNum . ',\'' . $fullPath . $subDir . $upload['name'] . '\')"';
+			$selectLink = 'title="' . i18n_r('SELECT_FILE') . ': ' . htmlspecialchars($upload['name']) . '" href="javascript:void(0)" onclick="submitLink(' . $CKEditorFuncNum . ', \'' . $fullPath . $subDir . $upload['name'] . '\')"';
 
 			if ($type == 'images') {
-				if ($upload['type'] == i18n_r('IMAGES') .' Images') {
+				if ($upload['type'] == i18n_r('IMAGES') . ' Images') {
 					# get internal thumbnail to show beside link in table
 					$thumb = '<td class="imgthumb" style="display:table-cell">';
 					$thumbLink = $urlPath . 'thumbsm.' . $upload['name'];
 					if (file_exists('../data/thumbs/' . $thumbLink)) {
-						$imgSrc='<img src="../data/thumbs/' . $thumbLink . '">';
+						$imgSrc = '<img src="../data/thumbs/' . $thumbLink . '">';
 					} else {
-						$imgSrc='<img src="inc/thumb.php?src=' . $urlPath . $upload['name'] . '&amp;dest=' . $thumbLink . '&amp;x=65&amp;f=1">';
+						$imgSrc = '<img src="inc/thumb.php?src=' . $urlPath . $upload['name'] . '&amp;dest=' . $thumbLink . '&amp;x=65&amp;f=1">';
 					}
 					$thumb .= '<a ' . $selectLink . '>' . $imgSrc . '</a>';
 					$thumb .= '</td>';
@@ -175,7 +162,7 @@ $LANG_header = preg_replace('/(?:(?<=([a-z]{2}))).*/', '', $LANG);
 					# get external thumbnail link
 					$thumbLinkExternal = 'data/thumbs/' . $urlPath . 'thumbnail.' . $upload['name'];
 					if (file_exists('../' . $thumbLinkExternal)) {
-						$thumbnailLink = '<span>&nbsp;&ndash;&nbsp;</span><a href="javascript:void(0)" onclick="submitLink(' . $CKEditorFuncNum . ',\'' . $sitepath.$thumbLinkExternal . '\')">' . i18n_r('THUMBNAIL') . '</a>';
+						$thumbnailLink = '<span>&nbsp;&ndash;&nbsp;</span><a href="javascript:void(0)" onclick="submitLink(' . $CKEditorFuncNum . ', \'' . $sitepath . $thumbLinkExternal . '\')">' . i18n_r('THUMBNAIL') . '</a>';
 					}
 				} else {
 					continue;

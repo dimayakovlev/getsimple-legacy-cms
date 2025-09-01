@@ -2,11 +2,12 @@
 
 All notable changes of GetSimple Legacy CMS will be documented in this file.
 
-## [Unreleased]
+## [2025.3.0] - 2025.09.01
 
 ### Added
 
 - **Custom PHP Code** feature allows to execute custom PHP code and extend functionality of the **GetSimple Legacy CMS** without writing or installing plugins.
+- The constant `GSCUSTOMPHPCODE` controls use of the **Custom PHP Code** feature.
 - The file browser `filebrowser.php` returns a relative path when opened with the GET parameter `relative-urls=true`.
 
 ## [2025.2.1] - 2025.08.10

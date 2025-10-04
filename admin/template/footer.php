@@ -26,9 +26,13 @@
 	}
 	if (!isAuthPage() && isDebug()) {
 		global $GS_debug;
+		$gs_debug_last_key = count($GS_debug) - 1;
 		echo '<div><h2>' . i18n_r('DEBUG_CONSOLE') . '</h2><div id="gsdebug"><pre>';
-		foreach ($GS_debug as $log) {
-			echo htmlspecialchars(print_r($log, true), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') . '<br/>';
+		foreach ($GS_debug as $gs_debug_key => $log) {
+			echo htmlspecialchars(print_r($log, true), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+			if ($gs_debug_last_key != $gs_debug_key) {
+				echo '<br />';
+			}
 		}
 		echo '</pre></div></div>';
 	}

@@ -139,3 +139,8 @@ define('GSSUPPRESSERRORS', true);
 # @since 2025.3.0 GS Legacy has new feature Custom PHP Code
 # This is a way to execute custom PHP code and extend functionality of GS Legacy without writing or installing a plugins.
 # define('GSCUSTOMPHPCODE', true);
+
+# @since 2025.4.0
+# Enables output of debug log messages to the browser's JavaScript console instead of the Debug Console in the footer of administration panel.
+# Requires GSDEBUG to be enabled.
+# define('GSDEBUG_JS_CONSOLE', true);

@@ -2,6 +2,12 @@
 
 All notable changes of GetSimple Legacy CMS will be documented in this file.
 
+## [Unreleased]
+
+### Added
+
+- Output the debug log to the web browser JavaScript console. Feature is controlled by the constant `GSDEBUG_JS_CONSOLE` in the _config.php_ file.
+
 ## [2025.3.0] - 2025.09.01
 
 ### Added

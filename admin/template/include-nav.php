@@ -8,7 +8,7 @@
 if (cookie_check()) { 
 	echo '<ul id="pill"><li class="leftnav"><a href="logout.php" accesskey="' . find_accesskey(i18n_r('TAB_LOGOUT')) . '">' . i18n_r('TAB_LOGOUT') . '</a></li>';
 	if (isDebug()) {
-		echo '<li class="debug"><a href="#gsdebug">' . i18n_r('DEBUG_MODE') . '</a></li>';
+		echo '<li class="debug"><a href="' . (getDef('GSDEBUG_JS_CONSOLE', true) ? 'javascript:void(0);' : '#gsdebug') . '">' . i18n_r('DEBUG_MODE') . '</a></li>';
 	}
 	echo '<li class="rightnav"><a href="settings.php#profile">' . i18n_r('WELCOME') . ', <strong>' . ($datau->NAME != '' ? var_out($datau->NAME) : $USR) . '</strong>!</a></li></ul>';
 }

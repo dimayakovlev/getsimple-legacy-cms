@@ -26,15 +26,25 @@
 	}
 	if (!isAuthPage() && isDebug()) {
 		global $GS_debug;
-		$gs_debug_last_key = count($GS_debug) - 1;
-		echo '<div><h2>' . i18n_r('DEBUG_CONSOLE') . '</h2><div id="gsdebug"><pre>';
-		foreach ($GS_debug as $gs_debug_key => $log) {
-			echo htmlspecialchars(print_r($log, true), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
-			if ($gs_debug_last_key != $gs_debug_key) {
-				echo '<br />';
+		if (getDef('GSDEBUG_JS_CONSOLE', true)) {
+			echo '<script>';
+			foreach ($GS_debug as $log) {
+				$log = print_r($log, true); // Comment this line if you want to log as objects
+				echo 'console.log(' . json_encode($log, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP). ');';
 			}
+			echo '</script>';
+		} else {
+			$gs_debug_last_key = count($GS_debug) - 1;
+			echo '<div><h2>' . i18n_r('DEBUG_CONSOLE') . '</h2><div id="gsdebug"><pre>';
+			foreach ($GS_debug as $gs_debug_key => $log) {
+				$log = print_r($log, true);
+				echo htmlspecialchars(print_r($log, true), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+				if ($gs_debug_last_key != $gs_debug_key) {
+					echo '<br />';
+				}
+			}
+			echo '</pre></div></div>';
 		}
-		echo '</pre></div></div>';
 	}
 ?>
 	</div><!-- end .wrapper -->

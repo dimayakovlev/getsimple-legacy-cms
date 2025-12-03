@@ -1482,13 +1482,18 @@ function doTransliteration($str){
  * Get transliteration set as defined in i18n
  * @since 3.3.11
  * @since 2025.1.1 Use exec_filter() to execute filter transliterationtable
+ * @since 2026.1.0 Use static variable to cache result
  * @uses $i18n
  * @uses exec_filter
  * @return array
  */
 function getTransliteration(){
-	global $i18n;
-	return (array) exec_filter('get_transliteration', (array) $i18n['TRANSLITERATION']);
+	static $transliteration = null;
+	if ($transliteration === null) {
+		global $i18n;
+		$transliteration = (array) exec_filter('get_transliteration', (array) $i18n['TRANSLITERATION']);
+	}
+	return $transliteration;
 }
 
 /**

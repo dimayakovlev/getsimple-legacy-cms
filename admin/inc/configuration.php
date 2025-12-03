@@ -7,7 +7,7 @@
  */
 
 define('GSNAME', 'GetSimple Legacy CMS');
-define('GSVERSION', '2025.4.0');
+define('GSVERSION', '2026.1.0-alpha');
 define('GSURL', 'https://github.com/dimayakovlev/getsimple-legacy-cms');
 
 // These variables are deprecated. Use constants GSNAME, GSVERSION and GSURL instead.

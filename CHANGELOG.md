@@ -2,6 +2,12 @@
 
 All notable changes of GetSimple Legacy CMS will be documented in this file.
 
+## [Unreleased]
+
+### Changed
+
+- Function `getTransliteration()` use static variable to cache result.
+
 ## [2025.4.0] - 2025.12.01
 
 ### Added

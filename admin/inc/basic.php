@@ -1519,3 +1519,16 @@ function load_components($force = false){
 	$components = $data->item;
 	return true;
 }
+
+/**
+ * Checks if website maintenance mode is enabled.
+ *
+ * @return bool True if maintenance mode is enabled, false if not.
+ *
+ * @since 2026.1.0
+ * @uses $dataw
+ */
+function is_maintenance_mode(){
+	global $dataw;
+	return filter_var($dataw->maintenanceMode, FILTER_VALIDATE_BOOLEAN);
+}

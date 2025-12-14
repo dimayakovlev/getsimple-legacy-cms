@@ -683,4 +683,14 @@ $i18n = array(
 "ER_CUSTOM_PHP_CODE_SAVE" => "Your PHP code have been saved",
 "ER_CUSTOM_PHP_CODE_REST" => "Your PHP code have been restored",
 "ER_CUSTOM_PHP_CODE_SAVE_ERROR" => "There was a problem saving PHP code",
+
+/***********************************************************************************
+ * SINCE Version 2026.1.0
+***********************************************************************************/
+"MAINTENANCE_MODE" => "Maintenance Mode",
+/*
+ * for settings.php
+ */
+"ENABLE_MAINTENANCE_MODE" => "Enable Maintenance Mode",
+"ENABLE_MAINTENANCE_MODE_DESCRIPTION" => "Temporarily hide your site from visitors to perform maintenance works",
 );

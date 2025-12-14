@@ -26,7 +26,8 @@ $NAME			= $data->NAME;
 $lang_array = getFiles(GSLANGPATH);
 
 # initialize these all as null
-$pwd1 = $error = $success = $pwd2 = $htmleditorchck = $codeeditorchck = $prettychck = null;
+$pwd1 = $error = $success = $pwd2 = $htmleditorchck = $codeeditorchck = $prettychck = $maintenance_mode_enabled_chck = null;
+$is_maintenance_mode = is_maintenance_mode();
 
 # if the flush cache command was invoked
 if (isset($_GET['flushcache'])) { 
@@ -110,6 +111,7 @@ if (isset($_POST['submitted'])) {
 	if (isset($_POST['template'])) {
 		$TEMPLATE = $_POST['template'];
 	}
+	$is_maintenance_mode = filter_input(INPUT_POST, 'maintenancemode', FILTER_VALIDATE_BOOL);
 	if (isset($_POST['prettyurls'])) {
 		$PRETTYURLS = $_POST['prettyurls'];
 	} else {
@@ -196,6 +198,7 @@ if (isset($_POST['submitted'])) {
 		$note->addCData($SITEURL);
 		$note = $xmls->addChild('TEMPLATE');
 		$note->addCData($TEMPLATE);
+		$xmls->addChild('maintenanceMode', (string) $is_maintenance_mode);
 		$xmls->addChild('PRETTYURLS', $PRETTYURLS);
 		$xmls->addChild('PERMALINK', var_out($PERMALINK));
 		$xmls->addAttribute('created', isset($dataw->attributes()->created) ? $dataw->attributes()->created : date('r'));
@@ -226,6 +229,7 @@ if (isset($_POST['submitted'])) {
 if ($HTMLEDITOR != '') { $htmleditorchck = 'checked'; }
 if ($CODEEDITOR != '') { $codeeditorchck = 'checked'; }
 if ($PRETTYURLS != '') { $prettychck = 'checked'; }
+if ($is_maintenance_mode) $maintenance_mode_enabled_chck = 'checked';
 
 # get all available language files
 if ($LANG == '') { $LANG = 'en_US'; }
@@ -270,6 +274,8 @@ get_template('header', cl($SITENAME).' &raquo; '.i18n_r('GENERAL_SETTINGS'));
 		<div class="widesec"><p><label for="sitefeaturedimage"><?php i18n('LABEL_WEBSITE_FEATURED_IMAGE'); ?>:</label><input class="text" name="sitefeaturedimage" id="sitefeaturedimage" type="text" value="<?php if (isset($SITE_FEATURED_IMAGE)) { echo var_out($SITE_FEATURED_IMAGE); } ?>"></p></div>
 		<div class="widesec"><p><label for="sitekeywords"><?php i18n('LABEL_WEBSITE_KEYWORDS'); ?>:</label><input class="text" name="sitekeywords" id="sitekeywords" type="text" value="<?php if (isset($SITE_KEYWORDS)) { echo var_out($SITE_KEYWORDS); } ?>"></p></div>
 		<div class="widesec"><p><label for="sitedescription"><?php i18n('LABEL_WEBSITE_DESCRIPTION'); ?>:</label><textarea class="text" name="sitedescription" id="sitedescription"><?php if (isset($SITE_DESCRIPTION)) { echo var_out($SITE_DESCRIPTION); } ?></textarea></p></div>
+
+		<p class="inline"><input name="maintenancemode" id="maintenancemode" type="checkbox" value="1" <?php echo $maintenance_mode_enabled_chck; ?>> &nbsp;<label for="maintenancemode"><?php i18n('ENABLE_MAINTENANCE_MODE');?><span class="normal"> - <?php i18n('ENABLE_MAINTENANCE_MODE_DESCRIPTION'); ?></span></label></p>
 
 		<p class="inline"><input name="prettyurls" id="prettyurls" type="checkbox" value="1" <?php echo $prettychck; ?>> &nbsp;<label for="prettyurls"><?php i18n('USE_FANCY_URLS');?></label></p>
 

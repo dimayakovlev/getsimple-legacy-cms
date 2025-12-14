@@ -4,6 +4,11 @@ All notable changes of GetSimple Legacy CMS will be documented in this file.
 
 ## [Unreleased]
 
+### Added
+
+- New website *Maintenance Mode* to enable system state used to safely perform updates, deployments, or fixes without disrupting the public user experience or corrupting data.
+- Function `is_maintenance_mode()` to check if website maintenance mode is enabled.
+
 ### Changed
 
 - Function `getTransliteration()` use static variable to cache result.

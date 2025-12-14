@@ -89,6 +89,7 @@ if (isset($_POST['submitted'])) {
 		$note = $xmls->addChild('SITEURL');
 		$note->addCData($SITEURL);
 		$xmls->addChild('TEMPLATE', 'Innovation');
+		$xmls->addChild('maintenanceMode', 1);
 		$xmls->addChild('PRETTYURLS', '');
 		$xmls->addChild('PERMALINK', '');
 		$xmls->addAttribute('created', date('r'));
@@ -123,6 +124,13 @@ if (isset($_POST['submitted'])) {
 		# create default 404.xml page
 		$init = GSDATAOTHERPATH . '404.xml';
 		$temp = GSADMININCPATH . 'tmp/tmp-404.xml';
+		if (!file_exists($init)) {
+			copy($temp, $init);
+		}
+
+		# create default 503.xml page
+		$init = GSDATAOTHERPATH . '503.xml';
+		$temp = GSADMININCPATH . 'tmp/tmp-503.xml';
 		if (!file_exists($init)) {
 			copy($temp, $init);
 		}

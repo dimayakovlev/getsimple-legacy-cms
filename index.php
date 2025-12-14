@@ -60,32 +60,47 @@ if (isset($_GET['id'])){
 $id = exec_filter('indexid',$id);
  // $_GET['id'] = $id; // support for plugins that are checking get?
 
-# define page, spit out 404 if it doesn't exist
-$file_404 = GSDATAOTHERPATH . '404.xml';
-$user_created_404 = GSDATAPAGESPATH . '404.xml';
 $data_index = null;
 
-// apply page data if page id exists
-if (isset($pagesArray[$id])) {
-	$data_index = getXml(GSDATAPAGESPATH . $id . '.xml');
-} 
-
-// filter to modify data_index obj
-$data_index = exec_filter('data_index',$data_index);
-
-// page not found handling
-if(!$data_index) {	
-	if (isset($pagesArray['404'])) {
-		// use user created 404 page
-		$data_index = getXml($user_created_404);		
-	} elseif (file_exists($file_404))	{
-		// default 404
-		$data_index = getXml($file_404);
+if (is_maintenance_mode() && !is_logged_in()) {
+	if (isset($pagesArray['503'])) {
+		$data_index = getXml(GSDATAPAGESPATH . '503.xml');
+	} elseif (file_exists(GSDATAOTHERPATH . '503.xml')) {
+		$data_index = getXml(GSDATAOTHERPATH . '503.xml');
+	}
+	if ($data_index) {
+		header($_SERVER['SERVER_PROTOCOL'] . ' 503 Service Unavailable');
 	} else {
-		// fail over
-		redirect('404');
-	} 	
-	exec_action('error-404');
+		redirect('503');
+	}
+} else {
+	# define page, spit out 404 if it doesn't exist
+	$file_404 = GSDATAOTHERPATH . '404.xml';
+	$user_created_404 = GSDATAPAGESPATH . '404.xml';
+
+
+	// apply page data if page id exists
+	if (isset($pagesArray[$id])) {
+		$data_index = getXml(GSDATAPAGESPATH . $id . '.xml');
+	}
+
+	// filter to modify data_index obj
+	$data_index = exec_filter('data_index', $data_index);
+
+	// page not found handling
+	if (!$data_index) {
+		if (isset($pagesArray['404'])) {
+			// use user created 404 page
+			$data_index = getXml($user_created_404);
+		} elseif (file_exists($file_404))	{
+			// default 404
+			$data_index = getXml($file_404);
+		} else {
+			// fail over
+			redirect('404');
+		}
+		exec_action('error-404');
+	}
 }
 
 $title         = $data_index->title;

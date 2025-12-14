@@ -7,6 +7,9 @@
 
 if (cookie_check()) { 
 	echo '<ul id="pill"><li class="leftnav"><a href="logout.php" accesskey="' . find_accesskey(i18n_r('TAB_LOGOUT')) . '">' . i18n_r('TAB_LOGOUT') . '</a></li>';
+	if (is_maintenance_mode()) {
+		echo '<li class="maintenance"><a href="settings.php#maintenancemode">' . i18n_r('MAINTENANCE_MODE') . '</a></li>';
+	}
 	if (isDebug()) {
 		echo '<li class="debug"><a href="' . (getDef('GSDEBUG_JS_CONSOLE', true) ? 'javascript:void(0);' : '#gsdebug') . '">' . i18n_r('DEBUG_MODE') . '</a></li>';
 	}

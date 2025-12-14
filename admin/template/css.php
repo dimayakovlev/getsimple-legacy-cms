@@ -158,7 +158,10 @@ input:focus:-ms-input-placeholder { color:transparent; } /* IE 10+ */
 
 .wrapper #pill li.debug a:link,
 .wrapper #pill li.debug a:visited,
-.wrapper #pill li.debug a:hover {
+.wrapper #pill li.debug a:hover,
+.wrapper #pill li.maintenance a:link,
+.wrapper #pill li.maintenance a:visited,
+.wrapper #pill li.maintenance a:hover {
 	color: #fff;
 	background: #cc0000;
 	padding: 4px 10px;
@@ -166,6 +169,7 @@ input:focus:-ms-input-placeholder { color:transparent; } /* IE 10+ */
 	text-decoration: none !important;
 	display: block;
 	border-left: 1px solid <?php echo $primary_3; ?>;
+	text-transform: uppercase;
 }
 
 #edit .wrapper .nav li a.pages,
@@ -886,6 +890,10 @@ label {
 	font-size: 12px;
 	font-weight: bold;
 	font-family: arial, helvetica, sans-serif
+}
+
+label span.normal {
+	font-weight: normal;
 }
 
 label span.right {

@@ -175,24 +175,24 @@ function delete_thumbnail($id, $path = ''){
  * Delete Cache Files
  *
  * @since 3.1.3
+ * @since 2026.1.0 Refactored
  * @uses GSCACHEPATH
  *
- * @returns deleted count on success, null if there are any errors
+ * @return int|null Return number of deleted cache files on success or null if there are any errors
  */
-function delete_cache() { 
-	$cachepath = GSCACHEPATH;
-	
-	$cnt = 0;	
-	$success = null;
-	
-	foreach(glob($cachepath.'*.txt') as $file){
-		if(unlink($file)) $cnt++;
-		else $success = false;
-	}	
-
-	if($success == false) return null;
-	return $cnt;
-} 
+function delete_cache() {
+	$count = 0;
+	$success = true;
+	foreach (glob(GSCACHEPATH . '*.txt') as $file) {
+		if (!unlink($file)) {
+			$success = false;
+		} else {
+			$count++;
+		}
+	}
+	if (!$success) return null;
+	return $count;
+}
 
 /**
  * Delete Pages Backup File

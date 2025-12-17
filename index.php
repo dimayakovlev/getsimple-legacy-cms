@@ -11,96 +11,99 @@
 
 /* pre-common setup, load gsconfig and get GSADMIN path */
 
-	/* GSCONFIG definitions */
-	if(!defined('GSFRONT')) define('GSFRONT',1);
-	if(!defined('GSBACK'))  define('GSBACK',2);
-	if(!defined('GSBOTH'))  define('GSBOTH',3);
-	if(!defined('GSSTYLEWIDE')) define('GSSTYLEWIDE','wide'); // wide style sheet
-	if(!defined('GSSTYLE_SBFIXED')) define('GSSTYLE_SBFIXED','sbfixed'); // fixed sidebar
+/* GSCONFIG definitions */
+if (!defined('GSFRONT')) define('GSFRONT', 1);
+if (!defined('GSBACK')) define('GSBACK', 2);
+if (!defined('GSBOTH')) define('GSBOTH', 3);
+if (!defined('GSSTYLEWIDE')) define('GSSTYLEWIDE', 'wide'); // wide style sheet
+if (!defined('GSSTYLE_SBFIXED')) define('GSSTYLE_SBFIXED', 'sbfixed'); // fixed sidebar
 
-	define('GSFRONTEND', true);
-	# Check and load gsconfig
-	if (file_exists('gsconfig.php')) {
-		require_once('gsconfig.php');
-	}
+define('GSFRONTEND', true);
+# Check and load gsconfig
+if (file_exists('gsconfig.php')) {
+	require_once('gsconfig.php');
+}
 
-	# Apply GSADMIN env
-	if (defined('GSADMIN')) {
-		$GSADMIN = GSADMIN;
-	} else {
-		$GSADMIN = 'admin';
-	}
+# Apply GSADMIN env
+$GSADMIN = defined('GSADMIN') ? (string) GSADMIN : 'admin';
 
-	# setup paths 
-	# @todo wtf are these for ?
-	$admin_relative = $GSADMIN.'/inc/';
-	$lang_relative = $GSADMIN.'/';
+# setup paths 
+# @todo wtf are these for ?
+$admin_relative = $GSADMIN . '/inc/';
+$lang_relative = $GSADMIN . '/';
 
-	$load['plugin'] = true;
-	$base = true;
+$load['plugin'] = true;
+$base = true;
 
 /* end */
 
 # Include common.php
-include($GSADMIN.'/inc/common.php');
+include($GSADMIN . '/inc/common.php');
 
 # Hook to load page Cache
 exec_action('index-header');
 
 # get page id (url slug) that is being passed via .htaccess mod_rewrite
-if (isset($_GET['id'])){ 
-	$id = str_replace ('..','',$_GET['id']);
-	$id = str_replace ('/','',$id);
-	$id = lowercase($id);
-} else {
-	$id = "index";
-}
+$id = isset($_GET['id']) ? lowercase(str_replace(array('..', '/'), '', $_GET['id'])) : 'index';
 
 // filter to modify page id request
-$id = exec_filter('indexid',$id);
- // $_GET['id'] = $id; // support for plugins that are checking get?
+$id = exec_filter('indexid', $id);
+// $_GET['id'] = $id; // support for plugins that are checking get?
 
 $data_index = null;
 
 if (is_maintenance_mode() && !is_logged_in()) {
-	if (isset($pagesArray['503'])) {
-		$data_index = getXml(GSDATAPAGESPATH . '503.xml');
-	} elseif (file_exists(GSDATAOTHERPATH . '503.xml')) {
+	if (defined('GS_503_CUSTOM_SLUG') && isset($pagesArray[GS_503_CUSTOM_SLUG])) {
+		$data_index = getXml(GSDATAPAGESPATH . GS_503_CUSTOM_SLUG . '.xml');
+		if (is_object($data_index)) {
+			$data_index->private = '';
+		}
+	}
+	if (!is_object($data_index)) {
 		$data_index = getXml(GSDATAOTHERPATH . '503.xml');
 	}
-	if ($data_index) {
-		header($_SERVER['SERVER_PROTOCOL'] . ' 503 Service Unavailable');
-	} else {
+	if (!is_object($data_index)) {
 		redirect('503');
 	}
-} else {
-	# define page, spit out 404 if it doesn't exist
-	$file_404 = GSDATAOTHERPATH . '404.xml';
-	$user_created_404 = GSDATAPAGESPATH . '404.xml';
-
-
+	header($_SERVER['SERVER_PROTOCOL'] . ' 503 Service Unavailable');
+} elseif (isset($pagesArray[$id])) {
 	// apply page data if page id exists
-	if (isset($pagesArray[$id])) {
-		$data_index = getXml(GSDATAPAGESPATH . $id . '.xml');
-	}
+	$data_index = getXml(GSDATAPAGESPATH . $id . '.xml');
+}
 
-	// filter to modify data_index obj
-	$data_index = exec_filter('data_index', $data_index);
+// filter to modify data_index obj
+$data_index = exec_filter('data_index', $data_index);
 
-	// page not found handling
-	if (!$data_index) {
-		if (isset($pagesArray['404'])) {
-			// use user created 404 page
-			$data_index = getXml($user_created_404);
-		} elseif (file_exists($file_404))	{
-			// default 404
-			$data_index = getXml($file_404);
-		} else {
-			// fail over
-			redirect('404');
+if (is_object($data_index)) {
+	// private page handling
+	if (in_array((string) $data_index->private, array('Y', '1'))) {
+		if (defined('GS_404_CUSTOM_SLUG') && GS_404_CUSTOM_SLUG == $id) {
+			// reset private field value if view custom 404 page directly
+			$data_index->private = '';
+		} elseif (!is_logged_in()) {
+			// reset page data if not logged in to process as not found page
+			$data_index = null;
 		}
-		exec_action('error-404');
 	}
+}
+
+// page not found handling
+if (!is_object($data_index)) {
+	if (defined('GS_404_CUSTOM_SLUG') && isset($pagesArray[GS_404_CUSTOM_SLUG])) {
+		$data_index = getXml(GSDATAPAGESPATH . GS_404_CUSTOM_SLUG . '.xml');
+		if (is_object($data_index)) {
+			// reset private field value
+			$data_index->private = '';
+		}
+	}
+	if (!is_object($data_index)) {
+		$data_index = getXml(GSDATAOTHERPATH . '404.xml');
+	}
+	if (!is_object($data_index)) {
+		redirect('404');
+	}
+	header($_SERVER["SERVER_PROTOCOL"] . ' 404 Not Found');
+	exec_action('error-404');
 }
 
 $title         = $data_index->title;
@@ -119,20 +122,6 @@ $private       = $data_index->private;
 // after fields from dataindex, can modify globals here or do whatever by checking them
 exec_action('index-post-dataindex');
 
-# if page is private, check user
-if ($private == 'Y') {
-	if (isset($USR) && $USR == get_cookie('GS_ADMIN_USERNAME')) {
-		//ok, allow the person to see it then
-	} else {
-		redirect('404');
-	}
-}
-
-# if page does not exist, throw 404 error
-if ($url == '404') {
-	header($_SERVER["SERVER_PROTOCOL"]." 404 Not Found");
-}
-
 # check for correctly formed url
 if (getDef('GSCANONICAL',true)) {
 	if ($_SERVER['REQUEST_URI'] != find_url($url, $parent, 'relative')) {
@@ -141,8 +130,8 @@ if (getDef('GSCANONICAL',true)) {
 }
 
 # include the functions.php page if it exists within the theme
-if ( file_exists(GSTHEMESPATH .$TEMPLATE."/functions.php") ) {
-	include(GSTHEMESPATH .$TEMPLATE."/functions.php");	
+if (file_exists(GSTHEMESPATH . $TEMPLATE . '/functions.php')) {
+	include(GSTHEMESPATH . $TEMPLATE . '/functions.php');
 }
 
 # call pretemplate Hook

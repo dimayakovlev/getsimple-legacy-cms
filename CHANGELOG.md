@@ -2,6 +2,13 @@
 
 All notable changes of GetSimple Legacy CMS will be documented in this file.
 
+## [Unreleased]
+
+### Added
+
+- Add support for the custom 404 error page slug. This slug can be defined using the constant `GS_404_CUSTOM_SLUG`.
+- Add support for the custom 503 maintenance mode page slug. This slug can be defined using the constant `GS_503_CUSTOM_SLUG`.
+
 ## [2026.1.0-alpha.1] - 2025.12.14
 
 ### Added

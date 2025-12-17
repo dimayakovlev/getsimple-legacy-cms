@@ -144,3 +144,14 @@ define('GSSUPPRESSERRORS', true);
 # Enables output of debug log messages to the browser's JavaScript console instead of the Debug Console in the footer of administration panel.
 # Requires GSDEBUG to be enabled.
 # define('GSDEBUG_JS_CONSOLE', true);
+
+# @since 2026.1.0
+# This is a way to define custom 404 error page.
+# Sets the slug of the existing page that will be displayed in case of a 404 error.
+# define('GS_404_CUSTOM_SLUG', 'custom-404');
+# define('GS_404_CUSTOM_SLUG', '404');
+
+# This is a way to define custom 503 maintenance mode page.
+# Works same as GS_404_CUSTOM_SLUG.
+# define('GS_503_CUSTOM_SLUG', 'custom-503');
+# define('GS_503_CUSTOM_SLUG', '503');

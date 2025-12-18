@@ -693,4 +693,8 @@ $i18n = array(
  */
 "ENABLE_MAINTENANCE_MODE" => "Enable Maintenance Mode",
 "ENABLE_MAINTENANCE_MODE_DESCRIPTION" => "Temporarily hide your site from visitors to perform maintenance works",
+/*
+ * for health-check.php
+ */
+"NOT_CONFIGURED" => "Not Configured",
 );

@@ -27,6 +27,9 @@ if (file_exists('gsconfig.php')) {
 # Apply GSADMIN env
 $GSADMIN = defined('GSADMIN') ? (string) GSADMIN : 'admin';
 
+# Apply canonical redirect
+$should_canonical_redirect = defined('GSCANONICAL') ? (bool) GSCANONICAL : false;
+
 # setup paths 
 # @todo wtf are these for ?
 $admin_relative = $GSADMIN . '/inc/';
@@ -65,6 +68,7 @@ if (is_maintenance_mode() && !is_logged_in()) {
 	if (!is_object($data_index)) {
 		redirect('503');
 	}
+	$should_canonical_redirect = false;
 	header($_SERVER['SERVER_PROTOCOL'] . ' 503 Service Unavailable');
 } elseif (isset($pagesArray[$id])) {
 	// apply page data if page id exists
@@ -102,6 +106,7 @@ if (!is_object($data_index)) {
 	if (!is_object($data_index)) {
 		redirect('404');
 	}
+	$should_canonical_redirect = false;
 	header($_SERVER["SERVER_PROTOCOL"] . ' 404 Not Found');
 	exec_action('error-404');
 }
@@ -123,7 +128,7 @@ $private       = $data_index->private;
 exec_action('index-post-dataindex');
 
 # check for correctly formed url
-if (getDef('GSCANONICAL',true)) {
+if ($should_canonical_redirect) {
 	if ($_SERVER['REQUEST_URI'] != find_url($url, $parent, 'relative')) {
 		redirect(find_url($url, $parent));
 	}

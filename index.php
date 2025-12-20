@@ -96,6 +96,11 @@ if (!is_object($data_index)) {
 	if (defined('GS_404_CUSTOM_SLUG') && isset($pagesArray[GS_404_CUSTOM_SLUG])) {
 		$data_index = getXml(GSDATAPAGESPATH . GS_404_CUSTOM_SLUG . '.xml');
 		if (is_object($data_index)) {
+			// do legacy 404 redirect if configured
+			if (defined('GS_404_CUSTOM_SLUG_REDIRECT') && (bool) GS_404_CUSTOM_SLUG_REDIRECT) {
+				header($_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found');
+				redirect(find_url((string) $data_index->url, (string) $data_index->parent));
+			}
 			// reset private field value
 			$data_index->private = '';
 		}
@@ -107,7 +112,7 @@ if (!is_object($data_index)) {
 		redirect('404');
 	}
 	$should_canonical_redirect = false;
-	header($_SERVER["SERVER_PROTOCOL"] . ' 404 Not Found');
+	header($_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found');
 	exec_action('error-404');
 }
 

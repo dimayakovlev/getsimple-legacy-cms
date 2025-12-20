@@ -9,6 +9,7 @@ All notable changes of GetSimple Legacy CMS will be documented in this file.
 - Add support for the custom 404 error page slug. This slug can be defined using the constant `GS_404_CUSTOM_SLUG`.
 - Add support for the custom 503 maintenance mode page slug. This slug can be defined using the constant `GS_503_CUSTOM_SLUG`.
 - Show the values of the constants `GS_404_CUSTOM_SLUG` and `GS_503_CUSTOM_SLUG` on the page *Website Health Check*.
+- Add constant `GS_404_CUSTOM_SLUG_REDIRECT` to enable redirect on 404 error to the page with slug defined in the constant `GS_404_CUSTOM_SLUG`. State of the constant `GS_404_CUSTOM_SLUG_REDIRECT` is shown on the page *Website Health Check*.
 
 ## [2026.1.0-alpha.1] - 2025.12.14
 

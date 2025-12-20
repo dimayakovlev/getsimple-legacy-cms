@@ -155,3 +155,7 @@ define('GSSUPPRESSERRORS', true);
 # Works same as GS_404_CUSTOM_SLUG.
 # define('GS_503_CUSTOM_SLUG', 'custom-503');
 # define('GS_503_CUSTOM_SLUG', '503');
+
+# Enables the redirect on 404 error to the page with slug defined in GS_404_CUSTOM_SLUG.
+# Works if GS_404_CUSTOM_SLUG is defined and the page with such slug exists.
+# define('GS_404_CUSTOM_SLUG_REDIRECT', true);

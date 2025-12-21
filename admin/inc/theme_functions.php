@@ -221,7 +221,7 @@ function get_page_summary($echo = true) {
  */
 function get_page_clean_summary($echo = true) {
 	global $summary;
-	$result = stip_tags(strip_decode((string) $summary));
+	$result = strip_tags(strip_decode((string) $summary));
 	if ($echo) {
 		echo $result;
 	} else {

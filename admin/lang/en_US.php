@@ -697,4 +697,8 @@ $i18n = array(
  * for health-check.php
  */
 "NOT_CONFIGURED" => "Not Configured",
+/*
+ * for pages.php
+ */
+"STATUS_CUSTOM_PAGE" => "custom page %s",
 );

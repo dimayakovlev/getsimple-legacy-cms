@@ -802,51 +802,62 @@ function ckeditor_add_page_link(){
  * @since 3.0
  * @uses $pagesSorted
  *
+ * @since 2026.1.0 Use constants GS_404_CUSTOM SLUG and GS_503_CUSTOM_SlUG
+ *
  * @param string $parent
  * @param string $menu
  * @param int $level
  * 
- * @returns string
+ * @return string
  */
-function get_pages_menu($parent, $menu,$level) {
+function get_pages_menu($parent, $menu, $level) {
 	global $pagesSorted;
-	
-	$items=array();
+
+	$items = array();
 	foreach ($pagesSorted as $page) {
-		if ($page['parent']==$parent){
-			$items[(string)$page['url']]=$page;
-		}	
-	}	
-	if (count($items)>0){
+		if ($page['parent'] == $parent){
+			$items[(string)$page['url']] = $page;
+		}
+	}
+	if (count($items) > 0) {
+		$custom_404_slug = defined('GS_404_CUSTOM_SLUG') ? (string) GS_404_CUSTOM_SLUG : '';
+		$custom_503_slug = defined('GS_503_CUSTOM_SLUG') ? (string) GS_503_CUSTOM_SLUG : '';
 		foreach ($items as $page) {
-		  	$dash="";
+			$custom_page = '';
+		  	$dash = '';
 		  	if ($page['parent'] != '') {
-	  			$page['parent'] = $page['parent']."/";
+	  			$page['parent'] = $page['parent'] . '/';
 	  		}
-			for ($i=0;$i<=$level-1;$i++){
-				if ($i!=$level-1){
+			for ($i=0; $i <= $level - 1; $i++) {
+				if ($i != $level - 1) {
 	  				$dash .= '<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>';
 				} else {
 					$dash .= '<span>&nbsp;&nbsp;&ndash;&nbsp;&nbsp;&nbsp;</span>';
 				}
 			} 
-			$menu .= '<tr id="tr-'.$page['url'] .'" >';
-			if ($page['title'] == '' ) { $page['title'] = '[No Title] &nbsp;&raquo;&nbsp; <em>'. $page['url'] .'</em>'; }
-			if ($page['menuStatus'] != '' ) { $page['menuStatus'] = ' <sup>['.i18n_r('MENUITEM_SUBTITLE').']</sup>'; } else { $page['menuStatus'] = ''; }
-			if ($page['private'] != '' ) { $page['private'] = ' <sup>['.i18n_r('PRIVATE_SUBTITLE').']</sup>'; } else { $page['private'] = ''; }
-			if ($page['url'] == 'index' ) { $homepage = ' <sup>['.i18n_r('HOMEPAGE_SUBTITLE').']</sup>'; } else { $homepage = ''; }
-			$menu .= '<td class="pagetitle">'. $dash .'<a title="'.i18n_r('EDITPAGE_TITLE').': '. var_out($page['title']) .'" href="edit.php?id='. $page['url'] .'" >'. cl($page['title']) .'</a><span class="showstatus toggle" >'. $homepage . $page['menuStatus'] . $page['private'] .'</span></td>';
-			$menu .= '<td style="width:80px;text-align:right;" ><span>'. shtDate($page['pubDate']) .'</span></td>';
-			$menu .= '<td class="secondarylink" >';
-			$menu .= '<a title="'.i18n_r('VIEWPAGE_TITLE').': '. var_out($page['title']) .'" target="_blank" href="'. find_url($page['url'],$page['parent']) .'">#</a>';
+			$menu .= '<tr id="tr-' . $page['url'] . '">';
+			if ($page['title'] == '') { $page['title'] = '[No Title] &nbsp;&raquo;&nbsp; <em>'. $page['url'] .'</em>'; }
+			if ($page['menuStatus'] != '') { $page['menuStatus'] = ' <sup>[' . i18n_r('MENUITEM_SUBTITLE') . ']</sup>'; } else { $page['menuStatus'] = ''; }
+			if ($page['private'] != '') { $page['private'] = ' <sup>[' . i18n_r('PRIVATE_SUBTITLE') . ']</sup>'; } else { $page['private'] = ''; }
+			if ($page['url'] == 'index') { $homepage = ' <sup>[' . i18n_r('HOMEPAGE_SUBTITLE') . ']</sup>'; } else { $homepage = ''; }
+			if ($page['url'] == $custom_404_slug) {
+				$custom_page = ' <sup>[' . sprintf(i18n_r('STATUS_CUSTOM_PAGE'), '404') . ']</sup>';
+			}
+			if ($page['url'] == $custom_503_slug) {
+				$custom_page .= ' <sup>[' . sprintf(i18n_r('STATUS_CUSTOM_PAGE'), '503') . ']</sup>';
+			}
+			$menu .= '<td class="pagetitle">' . $dash . '<a title="' . i18n_r('EDITPAGE_TITLE') . ': ' . var_out($page['title']) . '" href="edit.php?id=' . $page['url'] . '">' . cl($page['title']) . '</a><span class="showstatus toggle">' . $homepage . $page['menuStatus'] . $page['private'] . $custom_page . '</span></td>';
+			$menu .= '<td style="width:80px;text-align:right;"><span>' . shtDate($page['pubDate']) . '</span></td>';
+			$menu .= '<td class="secondarylink">';
+			$menu .= '<a title="' . i18n_r('VIEWPAGE_TITLE') . ': ' . var_out($page['title']) . '" target="_blank" href="' . find_url($page['url'], $page['parent']) . '">#</a>';
 			$menu .= '</td>';
-			if ($page['url'] != 'index' ) {
-				$menu .= '<td class="delete" ><a class="delconfirm" href="deletefile.php?id='. $page['url'] .'&amp;nonce='.get_nonce("delete", "deletefile.php").'" title="'.i18n_r('DELETEPAGE_TITLE').': '. var_out($page['title']) .'" >&times;</a></td>';
+			if ($page['url'] != 'index') {
+				$menu .= '<td class="delete"><a class="delconfirm" href="deletefile.php?id=' . $page['url'] . '&amp;nonce=' . get_nonce('delete', 'deletefile.php') . '" title="' . i18n_r('DELETEPAGE_TITLE') . ': ' . var_out($page['title']) . '">&times;</a></td>';
 			} else {
-				$menu .= '<td class="delete" ></td>';
+				$menu .= '<td class="delete"></td>';
 			}
 			$menu .= '</tr>';
-			$menu = get_pages_menu((string)$page['url'], $menu,$level+1);	  	
+			$menu = get_pages_menu((string) $page['url'], $menu, $level + 1);
 		}
 	}
 	return $menu;

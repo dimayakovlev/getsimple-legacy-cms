@@ -932,65 +932,60 @@ function get_gs_version(){
  * Creates Sitemap
  *
  * Creates sitemap.xml in the site's root.
+ *
+ * @since 2026.1.0 Use GS_404_CUSTOM_SLUG and GS_503_CUSTOM_SLUG
+ *
+ * @return void
  */
 function generate_sitemap() {
-	
-	if(getDef('GSNOSITEMAP',true)) return;
-
+	if (getDef('GSNOSITEMAP', true)) return;
 	// Variable settings
 	global $SITEURL;
 	$path = GSDATAPAGESPATH;
-	
 	global $pagesArray;
+	$custom_pages = array((string) getDef('GS_404_CUSTOM_SLUG', false), (string) getDef('GS_503_CUSTOM_SLUG', false));
 	getPagesXmlValues(false);
-	$pagesSorted = subval_sort($pagesArray,'menuStatus');
-	
-	if (count($pagesSorted) != 0)
-	{ 
+	$pagesSorted = subval_sort($pagesArray, 'menuStatus');
+	if (count($pagesSorted) != 0) {
 		$xml = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><urlset></urlset>');
 		$xml->addAttribute('xsi:schemaLocation', 'http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd', 'http://www.w3.org/2001/XMLSchema-instance');
 		$xml->addAttribute('xmlns', 'http://www.sitemaps.org/schemas/sitemap/0.9');
-		
-		foreach ($pagesSorted as $page)
-		{	
-			if ($page['url'] != '404')
-			{		
-			if ($page['private'] != 'Y')
-			{
-				// set <loc>
-				$pageLoc = find_url($page['url'], $page['parent']);
-				
-				// set <lastmod>
-					$tmpDate = date("Y-m-d H:i:s", strtotime($page['pubDate']));
-				$pageLastMod = makeIso8601TimeStamp($tmpDate);
-				
-				// set <changefreq>
-				$pageChangeFreq = 'weekly';
-				
-				// set <priority>
-				if ($page['menuStatus'] == 'Y') {
-					$pagePriority = '1.0';
-				} else {
-					$pagePriority = '0.5';
-				}
-				
-				//add to sitemap
-				$url_item = $xml->addChild('url');
-				$url_item->addChild('loc', $pageLoc);
-				$url_item->addChild('lastmod', $pageLastMod);
-				$url_item->addChild('changefreq', $pageChangeFreq);
-				$url_item->addChild('priority', $pagePriority);
+		foreach ($pagesSorted as $page) {
+			if (in_array($page['url'], $custom_pages) || in_array($page['private'], array('Y', '1'))) {
+				continue;
 			}
+			// set <loc>
+			$pageLoc = find_url($page['url'], $page['parent']);
+
+			// set <lastmod>
+			$tmpDate = date("Y-m-d H:i:s", strtotime($page['pubDate']));
+			$pageLastMod = makeIso8601TimeStamp($tmpDate);
+
+			// set <changefreq>
+			$pageChangeFreq = 'weekly';
+
+			// set <priority>
+			if ($page['menuStatus'] == 'Y' || $page['menuStatus'] == '1') {
+				$pagePriority = '1.0';
+			} else {
+				$pagePriority = '0.5';
+			}
+
+			//add to sitemap
+			$url_item = $xml->addChild('url');
+			$url_item->addChild('loc', $pageLoc);
+			$url_item->addChild('lastmod', $pageLastMod);
+			$url_item->addChild('changefreq', $pageChangeFreq);
+			$url_item->addChild('priority', $pagePriority);
 		}
-		}
-		
+
 		//create xml file
 		$file = GSROOTPATH .'sitemap.xml';
-		$xml = exec_filter('sitemap',$xml);
+		$xml = exec_filter('sitemap', $xml);
 		XMLsave($xml, $file);
 		exec_action('sitemap-aftersave');
 	}
-	
+
 	if (!defined('GSDONOTPING')) {
 		if (file_exists(GSROOTPATH .'sitemap.xml')){
 			if( 200 === ($status=pingGoogleSitemaps($SITEURL.'sitemap.xml')))	{

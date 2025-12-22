@@ -11,6 +11,10 @@ All notable changes of GetSimple Legacy CMS will be documented in this file.
 - Show the values of the constants `GS_404_CUSTOM_SLUG` and `GS_503_CUSTOM_SLUG` on the page *Website Health Check*.
 - Add constant `GS_404_CUSTOM_SLUG_REDIRECT` to enable redirect on 404 error to the page with slug defined in the constant `GS_404_CUSTOM_SLUG`. State of the constant `GS_404_CUSTOM_SLUG_REDIRECT` is shown on the page *Website Health Check*.
 
+### Changed
+
+- Update function `generate_sitemap()` to exclude custom 404 and 503 pages from the file *sitemap.xml*.
+
 ## [2026.1.0-alpha.1] - 2025.12.14
 
 ### Added

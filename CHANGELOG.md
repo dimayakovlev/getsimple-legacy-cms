@@ -2,6 +2,12 @@
 
 All notable changes of GetSimple Legacy CMS will be documented in this file.
 
+## [Unreleased]
+
+### Changed
+
+- Function `load_components()` replaced with the function `get_components_data()`. Function `get_component_data()` returns SimpleXMLElements object or null. All functions using function `load_components()` have been updated.
+
 ## [2026.1.0-alpha.2] - 2025.12.22
 
 ### Added

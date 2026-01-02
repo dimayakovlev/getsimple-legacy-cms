@@ -791,10 +791,9 @@ function menu_data($id = null,$xml=false) {
  *
  * @since 1.0
  *
- * @uses load_components()
- * @uses $components
+ * @uses get_components_data()
  * @since 2024.2.1 Added $force parameter. Don't normalize id.
- * @since 2024.3 Refactored, use load_components()
+ * @since 2026.1.0 Refactored, use function get_components_data()
  *
  * @param string $id This is the ID of the component you want to display
  *				True will return value in XML format. False will return an array
@@ -802,11 +801,10 @@ function menu_data($id = null,$xml=false) {
  * @return void
  */
 function get_component($id, $force = false) {
-	global $components;
 	$id = (string) $id;
-	load_components();
-	if (count($components) > 0) {
-		foreach ($components as $component) {
+	$components = get_components_data();
+	if (is_object($components)) {
+		foreach ($components->item as $component) {
 			if ($id == (string) $component->slug) {
 				if (!$force && (string) $component->disabled == '1') continue;
 				eval('?>' . strip_decode((string) $component->value) . '<?php ');
@@ -821,18 +819,17 @@ function get_component($id, $force = false) {
  * This will check if a component with the given id exists in the component list
  *
  * @since 2024.3
- * @uses load_components()
- * @uses $components
+ * @since 2026.1.0 Refactored, use function get_components_data()
+ * @uses get_components_data()
  *
  * @param string $id The id of the component to check
  * @return bool True if component exists, false if not
  */
 function component_exists($id) {
-	global $components;
 	$id = (string) $id;
-	load_components();
-	if (count($components) > 0) {
-		foreach ($components as $component) {
+	$components = get_components_data();
+	if (is_object($components)) {
+		foreach ($components->item as $component) {
 			if ($id == (string) $component->slug) return true;
 		}
 	}
@@ -843,18 +840,17 @@ function component_exists($id) {
  * Check if a component is enabled or disabled
  *
  * @since 2024.3
- * @uses load_components()
- * @uses $components
+ * @since 2026.1.0 Refactored, use function get_components_data()
+ * @uses get_components_data()
  *
  * @param string $id The id of the component to check
  * @return bool|null Null if component does not exist, true if enabled, false if disabled
  */
 function component_enabled($id) {
-	global $components;
 	$id = (string) $id;
-	load_components();
-	if (count($components) > 0) {
-		foreach ($components as $component) {
+	$components = get_components_data();
+	if (is_object($components)) {
+		foreach ($components->item as $component) {
 			if ($id == (string) $component->slug) return (string) $component->disabled != '1';
 		}
 	}
@@ -865,19 +861,18 @@ function component_enabled($id) {
  * Get the title of a component
  *
  * @since 2025.2.0
- * @uses load_components()
- * @uses $components
+ * @since 2026.1.0 Refactored, use function get_components_data()
+ * @uses get_components_data()
  *
  * @param string $id The id of the component to get
  * @param bool $echo If true, echo the result, else return it
  * @return string|null The title of the component or null if not found or echo
  */
 function get_component_title($id, $echo = true) {
-	global $components;
 	$id = (string) $id;
-	load_components();
-	if (count($components) > 0) {
-		foreach ($components as $component) {
+	$components = get_components_data();
+	if (is_object($components)) {
+		foreach ($components->item as $component) {
 			if ($id == (string) $component->slug) {
 				if ($echo) {
 					echo (string) $component->title;
@@ -895,19 +890,18 @@ function get_component_title($id, $echo = true) {
  * Get the description of a component
  *
  * @since 2025.2.0
- * @uses load_components()
- * @uses $components
+ * @since 2026.1.0 Refactored, use function get_components_data()
+ * @uses get_components_data()
  *
  * @param string $id The id of the component to get
  * @param bool $echo If true, echo the result, else return it
  * @return string|null The description of the component or null if not found or echo
  */
 function get_component_description($id, $echo = true) {
-	global $components;
 	$id = (string) $id;
-	load_components();
-	if (count($components) > 0) {
-		foreach ($components as $component) {
+	$components = get_components_data();
+	if (is_object($components)) {
+		foreach ($components->item as $component) {
 			if ($id == (string) $component->slug) {
 				if ($echo) {
 					echo (string) $component->description;

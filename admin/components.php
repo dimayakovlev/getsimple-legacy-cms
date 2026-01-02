@@ -136,11 +136,10 @@ if (isset($_GET['undo'])){
 
 # create components form html
 // $data = getXML($path . $file);
-// @since 2023.3 Use load_components() instead of getXML()
-load_components();
+$components = get_components_data();
 $count = 0;
-if ($components && count($components) > 0) {
-	foreach ($components as $component) {
+if (is_object($components)) {
+	foreach ($components->item as $component) {
 		$count++;
 		$component_disabled = (isset($component->disabled) && (string) $component->disabled == '1');
 		$table .= '<div class="compdiv' . ($component_disabled ? ' disabled' : '') . '" data-slug="' . htmlentities((string) $component->slug, ENT_QUOTES, 'UTF-8') . '" id="section-' . $count . '"><table class="comptable"><tr><td><h4><a href="#section-' . $count . '" class="compdatatoggle">'. htmlentities((string) $component->title, ENT_QUOTES, 'UTF-8', false) . '</a></h4></td>';
@@ -164,7 +163,7 @@ if ($components && count($components) > 0) {
 $listc = ''; $submitclass = '';
 if ($count > 1) {
 	$item = 1;
-	foreach ($components as $component) {
+	foreach ($components->item as $component) {
 		$listc .= '<a id="divlist-' . $item . '" href="#section-' . $item . '" class="component">' . htmlentities((string) $component->title, ENT_QUOTES, 'UTF-8', false) . '</a>';
 		$item++;
 	}

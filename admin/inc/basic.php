@@ -1497,27 +1497,25 @@ function getTransliteration(){
 }
 
 /**
- * Loads components data
+ * Get components data
  * 
- * Loads components data from the components.xml file into the $components global variable. On error, the function sets $components to an empty array
+ * Get components data from the components.xml file
  *
- * @since 2024.3
- * @uses getXML
+ * @since 2026.1.0
  * @uses GSDATAOTHERPATH
- * @uses $components
- * @param bool $force Optional, default is false. If true, will reload components even if already loaded
- * @return bool True if components loaded successfully, false if xml parse error, null if components.xml not found
+ * @return object|null Return SimpleXMLElement object on success, null on error
  */
-function load_components($force = false){
-	global $components;
-	if ($components && $force == false) return true; // Components already loaded
-	$data = getXML(GSDATAOTHERPATH . 'components.xml');
-	if (!$data) {
-		$components = array();
-		return $data; // Return null if components.xml not found or false if xml parse error
+function get_components_data(){
+	static $components = null;
+	if ($components === null) {
+		if (file_exists(GSDATAOTHERPATH . 'components.xml')) {
+			$components = simplexml_load_file(GSDATAOTHERPATH . 'components.xml');
+		}
 	}
-	$components = $data->item;
-	return true;
+	if (is_object($components)) {
+		return $components;
+	}
+	return null;
 }
 
 /**

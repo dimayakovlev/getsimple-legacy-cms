@@ -1503,10 +1503,14 @@ function getTransliteration(){
  *
  * @since 2026.1.0
  * @uses GSDATAOTHERPATH
+ * @param bool $force If true, force to reload cached data
  * @return object|null Return SimpleXMLElement object on success, null on error
  */
-function get_components_data(){
+function get_components_data($force = false){
 	static $components = null;
+	if ((bool) $force) {
+		$components = null;
+	}
 	if ($components === null) {
 		if (file_exists(GSDATAOTHERPATH . 'components.xml')) {
 			$components = simplexml_load_file(GSDATAOTHERPATH . 'components.xml');

@@ -47,7 +47,8 @@ include($GSADMIN . '/inc/common.php');
 exec_action('index-header');
 
 # get page id (url slug) that is being passed via .htaccess mod_rewrite
-$id = isset($_GET['id']) ? lowercase(str_replace(array('..', '/'), '', $_GET['id'])) : 'index';
+$id = (string) filter_input(INPUT_GET, 'id', FILTER_SANITIZE_URL);
+$id = $id ? lowercase(str_replace(array('..', '/', '\\'), '', $id)) : 'index';
 
 // filter to modify page id request
 $id = exec_filter('indexid', $id);

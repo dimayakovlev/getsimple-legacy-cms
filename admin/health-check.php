@@ -37,6 +37,7 @@ get_template('header', cl($SITENAME) . ' &raquo; ' . i18n_r('SUPPORT') . ' &raqu
                 
                 if(defined('GSUSECUSTOMSALT') && GSUSECUSTOMSALT!='') echo '<tr><td>GSUSECUSTOMSALT</td><td><span class="hint">'. i18n_r('YES').'</span></td></tr>'; 
 				else echo '<tr><td>GSUSECUSTOMSALT</td><td><span class="hint">'. i18n_r('NO').'</span></td></tr>';
+				echo '<tr><td>GSCANONICAL</td><td><span class="hint">' . (defined('GSCANONICAL') && (bool) GSCANONICAL ? i18n_r('YES') : i18n_r('NO')) . '</span></td></tr>';
 				echo '<tr><td>GS_404_CUSTOM_SLUG_REDIRECT</td><td><span class="hint">' . (defined('GS_404_CUSTOM_SLUG_REDIRECT') && (bool) GS_404_CUSTOM_SLUG_REDIRECT ? i18n_r('YES') : i18n_r('NO')) . '</span></td></tr>';
 				echo '<tr><td>GS_404_CUSTOM_SLUG</td><td><span class="hint">' . (defined('GS_404_CUSTOM_SLUG') ? var_out(GS_404_CUSTOM_SLUG) : i18n_r('NOT_CONFIGURED')) . '</span></td></tr>';
 				echo '<tr><td>GS_503_CUSTOM_SLUG</td><td><span class="hint">' . (defined('GS_503_CUSTOM_SLUG') ? var_out(GS_503_CUSTOM_SLUG) : i18n_r('NOT_CONFIGURED')) . '</span></td></tr>';

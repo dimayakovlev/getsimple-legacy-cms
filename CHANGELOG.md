@@ -4,6 +4,10 @@ All notable changes of GetSimple Legacy CMS will be documented in this file.
 
 ## [Unreleased]
 
+### Added
+
+- Show the state of the constant `GSCANONICAL` on the *Website Health Check*.
+
 ### Changed
 
 - Function `load_components()` replaced with the function `get_components_data()`. Function `get_component_data()` returns SimpleXMLElements object or null. All functions using function `load_components()` have been updated.

@@ -448,6 +448,7 @@ if(!function_exists('in_arrayi')) {
  * Default function to create the correct url structure for each front-end page
  *
  * @since 2.0
+ * @since 2026.1.0 Added optional $params parameter for query string generation.
  * @uses $PRETTYURLS
  * @uses $SITEURL
  * @uses $PERMALINK
@@ -456,9 +457,10 @@ if(!function_exists('in_arrayi')) {
  * @param string $slug
  * @param string $parent
  * @param string $type Default is 'full', alternative is 'relative'
+ * @param array  $params Optional. Associative array of GET parameters.
  * @return string
  */
-function find_url($slug, $parent, $type='full') {
+function find_url($slug, $parent, $type='full', $params = array()) {
 	global $PRETTYURLS;
 	global $SITEURL;
 	global $PERMALINK;
@@ -498,7 +500,11 @@ function find_url($slug, $parent, $type='full') {
 		$url = $full . $plink;
 	}
 
-	return (string)$url;
+	if ($params) {
+		$url .= ((strpos($url, '?') !== false) ? '&' : '?') . http_build_query($params);
+	}
+
+	return (string) $url;
 }
 
 /**

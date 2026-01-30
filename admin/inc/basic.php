@@ -457,7 +457,7 @@ if(!function_exists('in_arrayi')) {
  * @param string $slug
  * @param string $parent
  * @param string $type Default is 'full', alternative is 'relative'
- * @param array  $params Optional. Associative array of GET parameters.
+ * @param array  $params Optional. Associative array of GET parameters. Key 'id' will be removed from the parameters.
  * @return string
  */
 function find_url($slug, $parent, $type='full', $params = array()) {
@@ -500,8 +500,13 @@ function find_url($slug, $parent, $type='full', $params = array()) {
 		$url = $full . $plink;
 	}
 
-	if ($params) {
-		$url .= ((strpos($url, '?') !== false) ? '&' : '?') . http_build_query($params);
+	if (is_array($params) && !empty($params)) {
+		$temp_params = $params;
+		unset($temp_params['id']);
+		if (!empty($temp_params)) {
+			$separator = (strpos($url, '?') !== false) ? '&' : '?';
+			$url .= $separator . http_build_query($temp_params);
+		}
 	}
 
 	return (string) $url;
